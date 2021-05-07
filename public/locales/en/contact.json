@@ -1,0 +1,33 @@
+{
+    "title": "Contact | R&D | CUSC",
+    "description": "Contact information for the R&D",
+    "mapMaker":{
+        "h1":"Can Tho University Software Center",
+        "p":"01 Ly Tu Trong, An Phu ward, Ninh Kieu district, Can Tho city, Vietnam."
+    },
+    "contact":{
+        "h1":"Contact Info",
+        "phone":{
+            "text":"+84 939 0000 97",
+            "link":"tel:+84 939 0000 97"
+        },
+        "email":{
+            "text":"thviet@ctu.edu.vn",
+            "link":"mailto:thviet@ctu.edu.vn"
+        },
+        "address":
+        {
+            "text":"01 Ly Tu Trong, An Phu ward, Ninh Kieu district, Can Tho city, Vietnam.",
+            "link":"https://goo.gl/maps/Sz9AFegMoxuRU5mXA"
+        }
+       
+    },
+    "contactForm":{
+        "h1":"Contact form",
+        "name":"Your name",
+        "email":"Email",
+        "content":"Content",
+        "sub":"Customer care department will contact you as soon as possible.",
+        "btnSubmitText":"Send"
+    }
+}

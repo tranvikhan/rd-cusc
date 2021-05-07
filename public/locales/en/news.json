@@ -1,0 +1,14 @@
+{
+    "title": "News | R&D | CUSC",
+    "description": "Synthesize R&D activity news and new technology news",
+    
+    "session1":{
+        "h1":"New"
+    },
+    "session2":{
+        "h1":"R&D activitys"
+    }, 
+    "session3":{
+        "h1":"New technology news"
+    }
+}

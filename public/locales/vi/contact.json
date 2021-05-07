@@ -1,0 +1,33 @@
+{
+    "title": "Liên hệ | R&D | CUSC",
+    "description": "Thông tin liên hệ nhóm R&D",
+    "mapMaker":{
+        "h1":"Trung tâm công nghệ phần mềm Đại học Cần Thơ",
+        "p":"01 Lý Tự Trọng, Phường An Phú, Quận Ninh Kiều, Tp. Cần Thơ, Việt Nam."
+    },
+    "contact":{
+        "h1":"Thông tin liên hệ",
+        "phone":{
+            "text":"+84 939 0000 97",
+            "link":"tel:+84 939 0000 97"
+        },
+        "email":{
+            "text":"thviet@ctu.edu.vn",
+            "link":"mailto:thviet@ctu.edu.vn"
+        },
+        "address":
+        {
+            "text":"01 Lý Tự Trọng, Phường An Phú, Quận Ninh Kiều, Tp. Cần Thơ, Việt Nam.",
+            "link":"https://goo.gl/maps/Sz9AFegMoxuRU5mXA"
+        }
+       
+    },
+    "contactForm":{
+        "h1":"Mẫu liên hệ",
+        "name":"Tên của bạn",
+        "email":"Email",
+        "content":"Nội dung",
+        "sub":"Bộ phận chăm sóc khách hàng sẽ liên hệ với bạn trong thời gian sớm nhất.",
+        "btnSubmitText":"Gửi"
+    }
+}

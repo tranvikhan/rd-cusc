@@ -1,0 +1,21 @@
+{
+    "title": "About | R&D | CUSC",
+    "description": "Information introducing the R&D",
+    "session1":{
+        "h1":"Founding",
+        "p":"June 21, 2018"
+    },
+    "session2":{
+        "h1":"Functions ",
+        "g": {
+            "p":"The Research & Development Department functions and duties as follows:",
+            "li1":"Organizing scientific and technological research activities.",
+            "li2":"Advising and consulting on the development orientation of product and service lines.",
+            "li3":"Proposing and implementing scientific and technological solutions to support the development of product lines and services at the CUSC"
+        }
+    },
+    "session3":{
+        "h1":"Organization",
+        "p":"The Research & Development Department is managed directly by the Board of Directors. Organizational structure and activities comply with the Regulation on organizing research activities at Can Tho University Software Center"
+    }
+}

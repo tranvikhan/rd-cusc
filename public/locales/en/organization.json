@@ -1,0 +1,24 @@
+{
+    "title": "Organization | R&D | CUSC",
+    "description": "Organization of personnel of the R&D",
+    "session1":{
+        "h1":"Technology vision",
+        "p":"In order to develop an information technology vision of the future, we focus on fields of high applicability."
+    },
+    "card1":{
+        "h1":"Solve practical problems",
+        "p":"Help people create new products and services, increase production efficiency and develop long-term industry."
+    },
+    "card2":{
+        "h1":"Explore and apply new technology",
+        "p":"Smart control system automation. Combining data sources to predict the nature of future events."
+    },
+    "card3":{
+        "h1":"Deployment cost optimization",
+        "p":"Speed ​​up connection, secure corporate data with an enhanced server solution"
+    },
+    "session2":{
+        "h1":"R&D Team",
+        "p":"We have a team of members who are specialized in many fields, ready to research and develop high-tech products."
+    }
+}

@@ -1,0 +1,68 @@
+{
+    "title": "R&D | CUSC",
+    "description": "Nhóm nghiên cứu và phát triển | Trung tâm công nghệ phần mềm Đại học Cần Thơ",
+    "heading":{
+        "btnBeauty":"Nhóm nghiên cứu",
+        "h1":"Giải pháp công nghệ thông tin toàn diện cho doanh nghiệp",
+        "sub":"Chúng tôi tập trung vào các giải pháp công nghệ mới để ứng dụng hoạt động kinh doanh cho các doanh nghiệp và tổ chức.",
+        "contactForm":{
+            "placeholder":"Nhập email của bạn",
+            "btnSubmit":"Nhận thông tin",
+            "sub":"Bộ phận chăm sóc khách hàng sẽ liên hệ bạn trong thời gian sớm nhất để tư vấn giải pháp dành cho bạn."
+        },
+        "researchArea":{
+            "h1":"Lĩnh vực nghiên cứu của chúng tôi",
+            "p":"Nhằm phát triển tầm nhìn về công nghệ thông tin trong tương lai, chúng tôi tập trung nghiên cứu các lĩnh vực có tính ứng dụng cao.",
+            "card1":{
+                "h1":"Trí thông minh nhân tạo",
+                "p":"Giúp con người tạo ra các sản phẩm và dịch vụ mới, tăng hiệu quả sản xuất và phát triển công nghiệp dài hạn."
+            },
+            "card2":{
+                "h1":"IoT và Dữ liệu lớn",
+                "p":"Tự động hóa hệ thống điều khiển thông minh. Kết hợp các nguồn dữ liệu để dự đoán được tính chất sự việc tương lai."
+            },
+            "card3":{
+                "h1":"Chuyển đổi kỹ thuật số",
+                "p":"Đổi mới hoạt động doanh nghiệp bằng nền tảng số hóa để tăng hiệu quả chi phí và nâng cáo năng suất."
+            },
+            "card4":{
+                "h1":"Hệ thống máy chủ",
+                "p":"Tăng tốc kết nỗi, an toàn bảo mật những dữ liệu trong doanh nghiệp với giải pháp máy chủ được tăng cường"
+            }
+        }
+    },
+    "session1":{
+        "h3":"TƯ VẤN GIẢI PHÁP",
+        "h1":"Nâng cao hiệu quả hoạt động nhờ ứng dụng công nghệ cao.",
+        "p":"Nhóm R&D hỗ trợ tư vấn thiết kế các hệ thống dựa trên nhu cầu của khách hàng với các giải pháp công nghệ hiện đại. Chúng tôi có một đội ngũ chuyên môn trong nhiều lĩnh vực, có thể sẳn sàng tìm kiếm các giải pháp mới.",
+        "btn":"Nhận tư vấn giải pháp"
+    },
+    "session2":{
+        "h3":"HOẠT ĐỘNG HỌC THUẬT",
+        "h1":"Hỗ trợ thực hiện đề tài nghiên cứu nhiều cấp bậc",
+        "card1":{
+            "h1":"Nghiên cứu và báo cáo công nghệ mới để hỗ trợ triển khai dự án",
+            "p":"Nhóm R&D hỗ trợ tư vấn thiết kế các hệ thống dựa trên nhu cầu của khách hàng với các giải pháp công nghệ hiện đại. Chúng tôi có một đội ngũ chuyên môn trong nhiều lĩnh vực, có thể sẳn sàng tìm kiếm các giải pháp mới."
+        },
+        "card2":{
+            "h1":"Tiếp nhận và hướng dẫn sinh viên thực tập, luận văn, niên luận",
+            "p":"Nhóm R&D hỗ trợ tư vấn thiết kế các hệ thống dựa trên nhu cầu của khách hàng với các giải pháp công nghệ hiện đại. Chúng tôi có một đội ngũ chuyên môn trong nhiều lĩnh vực, có thể sẳn sàng tìm kiếm các giải pháp mới."
+        },
+        "card3":{
+            "h1":"Thực hiện đề tài NCKH, dự án cấp Trung tâm, cấp Tỉnh và Thành phố",
+            "p":"Nhóm R&D hỗ trợ tư vấn thiết kế các hệ thống dựa trên nhu cầu của khách hàng với các giải pháp công nghệ hiện đại. Chúng tôi có một đội ngũ chuyên môn trong nhiều lĩnh vực, có thể sẳn sàng tìm kiếm các giải pháp mới."
+        }
+        
+    },
+    "session3":{
+        "h3":"CÁC DỰ ÁN ĐANG TRIỂN KHAI",
+        "h1":"Đa dạng nhiều thể loại nghiên cứu"    
+    },
+    "session4":{
+        "h3":"GIẢI PHÁP NỔI BẬT",
+        "h1":"TỪ PHÒNG NGHIÊN CỨU ĐẾN THỰC TIỄN"    
+    },
+    "session5":{
+        "h1":"ĐƯỢC TIN TƯỞNG BỞI NHỮNG ĐỐI TÁC"
+    }
+}

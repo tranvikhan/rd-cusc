@@ -1,0 +1,68 @@
+{
+    "title": "R&D | CUSC",
+    "description": "Research and development department | Can Tho University Software Center",
+    "heading":{
+        "btnBeauty":"R&D Department",
+        "h1":"Comprehensive information technology solutions for businesses",
+        "sub":"We focus on new technology solutions for the implementation of business operations for businesses and organizations.",
+        "contactForm":{
+            "placeholder":"Enter your email",
+            "btnSubmit":"Receive information",
+            "sub":"Customer care department will contact you in the shortest time to advise the solution for you."
+        },
+        "researchArea":{
+            "h1":"Our research area",
+            "p":"In order to develop an information technology vision of the future, we focus on fields of high applicability.",
+            "card1":{
+                "h1":"Artificial intelligence",
+                "p":"Help people create new products and services, increase production efficiency and develop long-term industry."
+            },
+            "card2":{
+                "h1":"IoT and Big Data",
+                "p":"Smart control system automation. Combining data sources to predict the nature of future events."
+            },
+            "card3":{
+                "h1":"Digital transformer",
+                "p":"Innovate your business with a digital platform to increase cost efficiency and increase productivity."
+            },
+            "card4":{
+                "h1":"Server system",
+                "p":"Speed ​​up connection, secure corporate data with an enhanced server solution"
+            }
+        }
+    },
+    "session1":{
+        "h3":"SOLUTION CONSULTING",
+        "h1":"Improve operational efficiency thanks to the application of high technology.",
+        "p":"The R&D team supports consulting and designing systems based on customers' needs with modern technology solutions. We have a team of professionals in a wide range of fields, ready to look for new solutions.",
+        "btn":"Get solution advice"
+    },
+    "session2":{
+        "h3":"ACADEMIC ACTIVITIES",
+        "h1":"Support implementation of multi-level research topics",
+        "card1":{
+            "h1":"Research and report new technology to support project implementation",
+            "p":"The R&D team supports consulting and designing systems based on customers' needs with modern technology solutions. We have a team of professionals in a wide range of fields, ready to look for new solutions."
+        },
+        "card2":{
+            "h1":"Receive and guide students to practice, dissertation and thesis",
+            "p":"The R&D team supports consulting and designing systems based on customers' needs with modern technology solutions. We have a team of professionals in a wide range of fields, ready to look for new solutions."
+        },
+        "card3":{
+            "h1":"Implementation of scientific research projects, projects at central, provincial and city levels",
+            "p":"The R&D team supports consulting and designing systems based on customers' needs with modern technology solutions. We have a team of professionals in a wide range of fields, ready to look for new solutions."
+        }
+        
+    },
+    "session3":{
+        "h3":"ONGOING PROJECTS",
+        "h1":"Diversity of research genres"    
+    },
+    "session4":{
+        "h3":"HIGHLIGHTS SOLUTIONS",
+        "h1":"FROM RESEARCH TO PRACTICE DEPARTMENT"    
+    },
+    "session5":{
+        "h1":"TRUSTED BY PARTNERS"
+    }
+}

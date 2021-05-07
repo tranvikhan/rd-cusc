@@ -1,0 +1,21 @@
+{
+    "title": "Giới thiệu | R&D | CUSC",
+    "description": "Thông tin giới thiệu nhóm R&D",
+    "session1":{
+        "h1":"Ngày thành lập",
+        "p":"Ngày 21 tháng 6 năm 2018"
+    },
+    "session2":{
+        "h1":"Nhiệm vụ",
+        "g": {
+            "p":"Nhóm Nghiên cứu & Phát triển có chức năng nhiệm vụ như sau:",
+            "li1":"Tổ chức các hoạt động nghiên cứu khoa học và công nghệ.",
+            "li2":"Tham mưu, tư vấn về định hướng phát triển các dòng sản phẩm và dịch vụ.",
+            "li3":"Đề xuất, thực hiện các giải pháp khoa học và công nghệ hỗ trợ quá trình phát triển các dòng sản phâm, dịch vụ tại Trung tâm."
+        }
+    },
+    "session3":{
+        "h1":"Tổ chức",
+        "p":"Nhóm Nghiên cứu & Phát triển được quản lý trực tiếp bởi Ban Giám đốc. Cơ cấu tổ chức và hoạt động tuân thủ theo Quy định tổ chức hoạt động nghiên cứu tại Trung tâm Công nghệ phần mềm Đại học Cần Thơ."
+    }
+}

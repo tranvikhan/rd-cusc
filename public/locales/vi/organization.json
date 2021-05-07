@@ -1,0 +1,24 @@
+{
+    "title": "Nhân sự | R&D | CUSC",
+    "description": "Tổ chức nhân sự của nhóm R&D",
+    "session1":{
+        "h1":"Tầm nhìn về công nghệ",
+        "p":"Nhằm phát triển tầm nhìn về công nghệ thông tin trong tương lai, chúng tôi tập trung nghiên cứu các lĩnh vực có tính ứng dụng cao."
+    },
+    "card1":{
+        "h1":"Giải quyết những vấn đề thực tiễn",
+        "p":"Giúp con người tạo ra các sản phẩm và dịch vụ mới, tăng hiệu quả sản xuất và phát triển công nghiệp dài hạn."
+    },
+    "card2":{
+        "h1":"Tìm tòi và áp dụng công nghệ mới",
+        "p":"Tự động hóa hệ thống điều khiển thông minh. Kết hợp các nguồn dữ liệu để dự đoán được tính chất sự việc tương lai."
+    },
+    "card3":{
+        "h1":"Tối ưu hóa chi phí triển khai",
+        "p":"Tăng tốc kết nỗi, an toàn bảo mật những dữ liệu trong doanh nghiệp với giải pháp máy chủ được tăng cường"
+    },
+    "session2":{
+        "h1":"Thành viên nhóm R&D",
+        "p":"Chúng tôi có đội ngũ các thành viên chuyên môn trong nhiều lĩnh vực, sẳn sàng nghiên cứu và phát triển các sản phẩm công nghệ cao."
+    }
+}

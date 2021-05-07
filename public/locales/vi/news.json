@@ -1,0 +1,14 @@
+{
+    "title": "Tin tức | R&D | CUSC",
+    "description": "Tổng hợp tin tức hoạt động nhóm R&D và tin tức công nghệ mới",
+    
+    "session1":{
+        "h1":"Tin mới"
+    },
+    "session2":{
+        "h1":"Tin hoạt động nhóm R&D"
+    }, 
+    "session3":{
+        "h1":"Tin tức công nghệ mới"
+    }
+}
