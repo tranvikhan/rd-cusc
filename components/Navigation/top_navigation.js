@@ -17,7 +17,7 @@ function TopNavigation() {
       if (scrollPos <= 100) {
         setOpacity(scrollPos / 100)
       } else {
-        setOpacity(0.98)
+        setOpacity(0.9)
       }
     }
     document.addEventListener('scroll', function (e) {
@@ -36,10 +36,10 @@ function TopNavigation() {
 
   return (
     <header
-      style={{ backgroundColor: `rgba(30, 64, 175, ${opacity})` }}
-      className={`fixed top-0 left-0 right-0 z-50 ${
+      className={`backdrop-filter backdrop-blur-lg fixed top-0 left-0 right-0 z-50 ${
         opacity > 0.5 && 'lg:shadow-lg shadow-none'
       }`}
+      style={{ backgroundColor: `rgba(30, 64, 175, ${opacity})` }}
     >
       <Container>
         <div className="flex flex-wrap items-center">

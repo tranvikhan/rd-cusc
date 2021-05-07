@@ -3,10 +3,10 @@ import Container from '../../components/Layout/container'
 import Header from '../../components/Layout/header'
 import Link from 'next/link'
 import WebHead from '../../components/Layout/head'
+import { Pagination } from '@material-ui/lab'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
-import { Pagination } from 'antd'
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -185,7 +185,7 @@ export default function News() {
             />
           </div>
           <div className="pt-8 flex items-center justify-center">
-            <Pagination defaultCurrent={1} total={50} />
+            <Pagination count={10} shape="rounded" />
           </div>
         </Container>
       </section>
@@ -281,7 +281,7 @@ export default function News() {
             />
           </div>
           <div className="pt-8 flex items-center justify-center">
-            <Pagination defaultCurrent={1} total={100} />
+            <Pagination count={10} shape="rounded" />
           </div>
         </Container>
       </section>
