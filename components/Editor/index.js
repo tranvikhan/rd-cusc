@@ -1,6 +1,7 @@
 import 'braft-editor/dist/index.css'
 import React from 'react'
 import BraftEditor from 'braft-editor'
+import Container from '../Layout/container'
 
 export default class BasicDemo extends React.Component {
   state = {
@@ -37,17 +38,22 @@ export default class BasicDemo extends React.Component {
 
     return (
       <>
-        <div className="editor-wrapper">
-          <BraftEditor
-            language="en"
-            value={editorState}
-            onChange={this.handleChange}
-          />
-        </div>
+        <Container>
+          <div className="editor-wrapper border">
+            <BraftEditor
+              language="en"
+              value={editorState}
+              onChange={this.handleChange}
+            />
+          </div>
+        </Container>
+
         <h5 className="bg-red-500 text-white text-center p-4">
           NỘI DUNG ĐƯỢC HIỂN THỊ BÊN DƯỚI
         </h5>
-        <div dangerouslySetInnerHTML={{ __html: outputHTML }}></div>
+        <Container>
+          <div dangerouslySetInnerHTML={{ __html: outputHTML }}></div>
+        </Container>
       </>
     )
   }
