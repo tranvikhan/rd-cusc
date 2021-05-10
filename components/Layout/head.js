@@ -1,5 +1,5 @@
-import Head from "next/head";
-import config from "../../constant/web_config";
+import Head from 'next/head'
+import config from '../../constant/web_config'
 const WebHead = (props) => (
   <Head>
     <title>{props.title}</title>
@@ -12,7 +12,7 @@ const WebHead = (props) => (
       content={
         props.keywords
           ? props.keywords
-          : "R&D,CUSC,CTU,Cần Thơ,Nhóm nghiên cứu và phát triển"
+          : 'R&D,CUSC,CTU,Cần Thơ,Nhóm nghiên cứu và phát triển'
       }
     />
     <meta name="author" content="R&D-CUSC SOFT" />
@@ -49,5 +49,5 @@ const WebHead = (props) => (
 
     <meta property="og:url" content={config.baseURL}></meta>
   </Head>
-);
-export default WebHead;
+)
+export default WebHead
