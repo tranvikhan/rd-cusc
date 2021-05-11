@@ -49,7 +49,7 @@ export default function Projects() {
           <h3 className="text-base leading-6 font-semibold tracking-wide lg:w-2/4">
             {t('session1.p')}
           </h3>
-          <div className="grid lg:grid-cols-4 gap-8  grid-cols-2 mt-10 ">
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-8 grid-cols-1 mt-10">
             <ProjectItem
               href="/"
               imageURL="/assets/img/news/5457306_cover_hinh_anh_ro_net_Galaxy_Z_Flip_3_tinhte.jpg"
@@ -131,19 +131,19 @@ export default function Projects() {
               createAt="04/05/2021"
             />
           </div>
-          <div className="pt-8 flex items-center justify-center">
-            <Pagination count={10} shape="rounded" />
-          </div>
         </Container>
+        <div className="pt-8 flex items-center justify-center">
+          <Pagination count={10} shape="rounded" />
+        </div>
       </section>
     </article>
   )
 }
 
 const NewProject = (props) => (
-  <div className="grid lg:grid-cols-2 gap-0  grid-cols-1 mt-10 ">
-    <div className="flex flex-col justify-center lg:p-8 p-0 py-8">
-      <h1 className="text-white text-xl leading-7 font-bold">
+  <div className="grid lg:grid-cols-2 gap-8  grid-cols-1 mt-10 ">
+    <div className="flex flex-col justify-center">
+      <h1 className="text-white text-xl leading-7 font-bold hover:text-blue-600">
         <Link href={props.href}>{props.title}</Link>
       </h1>
       <div className="flex flex-row items-center py-2">
@@ -157,7 +157,7 @@ const NewProject = (props) => (
         </h3>
       </div>
 
-      <p className="text-indigo-300 text-sm leading-5 font-medium mt-1">
+      <p className="text-indigo-300 text-sm leading-5 font-medium mt-1 text-6-line">
         {props.content}
       </p>
     </div>
@@ -174,28 +174,28 @@ const ProjectItem = (props) => (
   <div>
     <img
       src={props.imageURL}
-      alt="boss"
+      alt="Ảnh dự án"
       className="object-cover h-40 w-full rounded-lg  shadow-lg"
     />
 
-    <div className="flex flex-col justify-center lg:py-0 p-0 py-4">
-      <div className="flex flex-row items-center py-2 justify-between">
-        <div className="flex flex-row items-center">
+    <div className="flex flex-col justify-center lg:py-0 p-0 py-2">
+      <div className="flex flex-row items-center py-2 justify-between flex-wrap-reverse">
+        <div className="flex flex-row items-center ">
           <img
             src={props.author.avatar}
             alt={props.author.name}
             className="object-cover h-8 w-8  rounded-full shadow-lg mr-2 border bg-blue-300"
           />
-          <h3 className="text-gray-600 text-sm font-medium py-1">
+          <h3 className="text-gray-600 text-xs font-medium py-1">
             {props.author.name}
           </h3>
         </div>
 
-        <span className="text-gray-500 text-xs leading-5 font-medium mt-1">
+        <span className="text-gray-500 text-xs leading-5 font-medium mt-1  lg:mb-0 mb-1">
           {props.createAt}
         </span>
       </div>
-      <h1 className="text-black text-base leading-6 font-bold ">
+      <h1 className="text-black text-sm leading-6 font-bold text-2-line hover:text-blue-600">
         <Link href={props.href}>{props.title}</Link>
       </h1>
     </div>

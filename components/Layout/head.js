@@ -3,6 +3,7 @@ import config from '../../constant/web_config'
 const WebHead = (props) => (
   <Head>
     <title>{props.title}</title>
+
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <meta charset="UTF-8" />
     <meta property="og:locale" content="vi_VN"></meta>

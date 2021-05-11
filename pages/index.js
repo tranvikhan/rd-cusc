@@ -31,7 +31,7 @@ export default function Home() {
               </div>
 
               <div className="pt-10 lg:pr-20 pr-0 ">
-                <h1 className="text-white text-5xl font-extrabold tracking-wide leading-tight">
+                <h1 className="text-white lg:text-5xl text-4xl font-extrabold tracking-wide leading-tight">
                   {t('heading.h1')}
                 </h1>
                 <p className="text-base text-blue-200 font-normal mt-5 border-0">
@@ -273,13 +273,13 @@ const PartnerView = (props) => (
     <div
       data-tip={props.name}
       data-for="doitac"
-      className="bg-gray-50 flex justify-center items-center p-6"
+      className="bg-gray-50 flex justify-center items-center lg:p-6 p-4"
     >
       <Link href={props.link ? props.link : '/'}>
         <img
           src={props.imageURL}
           alt={props.name ? props.name : 'Đối tác của R&D CUSC'}
-          className="w-20 h-20 filter  transition duration-300 ease-in-out grayscale brightness-95 contrast-125 cursor-pointer partnerIcon"
+          className="lg:w-20 w-16 lg:h-20 h-16 filter  transition duration-300 ease-in-out grayscale brightness-95 contrast-125 cursor-pointer partnerIcon"
         />
       </Link>
     </div>
@@ -362,8 +362,8 @@ const ContactForm = (props) => (
 )
 
 const CallOutAndText = (props) => (
-  <div className="bg-white bg-opacity-10 cursor-pointer rounded backdrop-blur-2xl px-2 py-2 flex flex-none flex-row text-blue-50 space-x-4 items-center hover:bg-opacity-5 transform  ease-in-out">
-    <div className="bg-white bg-opacity-30 px-2 leading-relaxed rounded ">
+  <div className="bg-white bg-opacity-10 cursor-pointer rounded backdrop-blur-2xl px-2 py-2 flex flex-none flex-row text-blue-50 space-x-4 items-center hover:bg-opacity-5 transform  ease-in-out lg:text-base text-sm">
+    <div className="bg-white bg-opacity-30 px-2 leading-relaxed rounded">
       CUSC SOFTWARE
     </div>
     <div>{props.text}</div>

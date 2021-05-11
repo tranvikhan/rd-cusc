@@ -49,7 +49,7 @@ export default function News() {
             Chúng tôi có đội ngũ các thành viên chuyên môn trong nhiều lĩnh vực
             như: Ai, BigData, IoT, Data Transformation,...
           </h3> */}
-          <div className="grid lg:grid-cols-4 gap-8  grid-cols-2 mt-10 ">
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-8  grid-cols-1 mt-10 ">
             <PostItem
               href="/"
               imageURL="/assets/img/news/5456237_Cover_Nvidia.jpg"
@@ -102,7 +102,7 @@ export default function News() {
             Chúng tôi có đội ngũ các thành viên chuyên môn trong nhiều lĩnh vực
             như: Ai, BigData, IoT, Data Transformation,...
           </h3> */}
-          <div className="grid lg:grid-cols-4 gap-8  grid-cols-2 mt-10 ">
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-8  grid-cols-1 mt-10  ">
             <PostItem
               href="/"
               imageURL="/assets/img/news/5457306_cover_hinh_anh_ro_net_Galaxy_Z_Flip_3_tinhte.jpg"
@@ -184,10 +184,10 @@ export default function News() {
               createAt="04/05/2021"
             />
           </div>
-          <div className="pt-8 flex items-center justify-center">
-            <Pagination count={10} shape="rounded" />
-          </div>
         </Container>
+        <div className="pt-8 flex items-center justify-center">
+          <Pagination count={10} shape="rounded" />
+        </div>
       </section>
       <section className="bg-white py-10">
         <Container>
@@ -198,7 +198,7 @@ export default function News() {
             Chúng tôi có đội ngũ các thành viên chuyên môn trong nhiều lĩnh vực
             như: Ai, BigData, IoT, Data Transformation,...
           </h3> */}
-          <div className="grid lg:grid-cols-4 gap-8  grid-cols-2 mt-10 ">
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-8  grid-cols-1 mt-10 ">
             <PostItem
               href="/"
               imageURL="/assets/img/news/5456237_Cover_Nvidia.jpg"
@@ -280,29 +280,29 @@ export default function News() {
               createAt="04/05/2021"
             />
           </div>
-          <div className="pt-8 flex items-center justify-center">
-            <Pagination count={10} shape="rounded" />
-          </div>
         </Container>
+        <div className="pt-8 flex items-center justify-center">
+          <Pagination count={10} shape="rounded" />
+        </div>
       </section>
     </article>
   )
 }
 
 const NewPost = (props) => (
-  <div className="grid lg:grid-cols-2 gap-0  grid-cols-1 mt-10 ">
+  <div className="grid lg:grid-cols-2 gap-8  grid-cols-1 mt-10 ">
     <img
       src={props.imageURL}
       alt="boss"
       className="object-cover lg:h-80 h-64 w-full rounded-lg  shadow-lg"
     />
 
-    <div className="flex flex-col justify-center lg:p-8 p-0 py-8">
+    <div className="flex flex-col justify-center">
       <span className="text-gray-200 text-sm leading-5 font-medium mt-1">
         {props.createAt}
       </span>
 
-      <h1 className="text-white text-xl leading-7 font-bold">
+      <h1 className="text-white text-xl leading-7 font-bold hover:text-blue-600">
         <Link href={props.href}>{props.title}</Link>
       </h1>
       <div className="flex flex-row items-center py-2">
@@ -316,7 +316,7 @@ const NewPost = (props) => (
         </h3>
       </div>
 
-      <p className="text-indigo-300 text-sm leading-5 font-medium mt-1">
+      <p className="text-indigo-300 text-sm leading-5 font-medium mt-1 text-6-line">
         {props.content}
       </p>
     </div>
@@ -327,19 +327,19 @@ const PostItem = (props) => (
   <div>
     <img
       src={props.imageURL}
-      alt="boss"
+      alt="Ảnh bài viết"
       className="object-cover h-40 w-full rounded-lg  shadow-lg"
     />
 
     <div className="flex flex-col justify-center lg:py-0 p-0 py-2">
-      <div className="flex flex-row items-center lg:py-2 py-0 justify-between flex-wrap-reverse">
+      <div className="flex flex-row items-center py-2 justify-between flex-wrap-reverse">
         <div className="flex flex-row items-center ">
           <img
             src={props.author.avatar}
             alt={props.author.name}
             className="object-cover h-8 w-8  rounded-full shadow-lg mr-2 border bg-blue-300"
           />
-          <h3 className="text-gray-600 text-sm font-medium py-1">
+          <h3 className="text-gray-600 text-xs font-medium py-1">
             {props.author.name}
           </h3>
         </div>
@@ -348,7 +348,7 @@ const PostItem = (props) => (
           {props.createAt}
         </span>
       </div>
-      <h1 className="text-black text-base leading-6 font-bold ">
+      <h1 className="text-black text-sm leading-6 font-bold text-2-line hover:text-blue-600">
         <Link href={props.href}>{props.title}</Link>
       </h1>
     </div>

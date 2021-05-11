@@ -59,14 +59,14 @@ function TopNavigation() {
           </div>
           <label
             htmlFor="menu-toggle"
-            className={`cursor-pointer lg:hidden block text-white`}
+            className={`cursor-pointer lg:hidden block text-white rounded-lg`}
           >
             <div className="bg-white bg-opacity-20 p-2 rounded-lg transition delay-150 duration-300 ease-in-out">
               {btnTogle ? <FiX size={24} /> : <FiMenu size={24} />}
             </div>
           </label>
           <input
-            className="hidden"
+            className="hidden rounded-lg"
             type="checkbox"
             id="menu-toggle"
             checked={btnTogle}
