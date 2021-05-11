@@ -19,7 +19,7 @@ class MyDocument extends Document {
             defer
             crossorigin="anonymous"
             src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0&appId=173398674584337&autoLogAppEvents=1"
-            nonce="GZIBpYSL"
+            nonce="fsqKvQUf"
           ></script>
         </body>
       </Html>

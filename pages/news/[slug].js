@@ -116,17 +116,18 @@ const PostInfo = (props) => (
         </div>
         <div className="flex flex-row items-center py-2 space-x-2">
           <div
-            class="fb-share-button"
+            className="fb-share-button"
             data-href="https://rd-cusc.herokuapp.com/news/123456"
             data-layout="button_count"
             data-size="large"
           >
             <a
               target="_blank"
-              href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
-              class="fb-xfbml-parse-ignore"
+              href="https://rd-cusc.herokuapp.com/news/123456"
+              className="fb-xfbml-parse-ignore cursor-pointer bg-blue-600 text-white rounded text-xs font-semibold block"
+              style={{ padding: 6 }}
             >
-              Chia sẻ
+              Chia sẻ FB
             </a>
           </div>
 
