@@ -1,0 +1,20 @@
+{
+    "title": "Tư vấn giải pháp | R&D | CUSC",
+    "description": "Nhận thông tin tư vấn giải pháp của nhóm R&D",
+    "contactForm":{
+        "h1":"Mẫu nhận tư vấn giải pháp",
+        "name":"Tên của bạn",
+        "email":"Email",
+        "content":"Nội dung",
+        "sub":"Bộ phận chăm sóc khách hàng sẽ liên hệ với bạn trong thời gian sớm nhất.",
+        "btnSubmitText":"Nhận tư vấn"
+    },
+    "session1":{
+        "h1":"Tư vấn giải pháp công nghệ",
+        "description":"Chúng tôi hỗ trợ tư vấn các giải pháp công nghệ hiện đại, hiệu quả, phù hợp với nhu cầu của khách hàng.",
+        "card1":"Giải pháp trí tuệ nhân tạo Ai",
+        "card2":"Giải pháp IoT & Dữ liệu lớn",
+        "card3":"Giải pháp chuyển đổi số",
+        "card4":"Giải pháp hệ thống máy chủ"
+    }
+}

@@ -24,12 +24,16 @@ export default function About() {
       <Header></Header>
       <section className="bg-white py-10">
         <Container>
-          <div className="h-96 flex justify-center items-center text-xl">
+          <div className="h-96 flex flex-col space-y-4 justify-center items-center text-xl">
             <h1>
               {router.locale === 'vi'
                 ? '404 | Không tìm thấy trang'
                 : '404 | Page not found'}
             </h1>
+            <img
+              src="/assets/img/404 Page Not Found _Two Color.svg"
+              alt="Page not found"
+            />
           </div>
         </Container>
       </section>

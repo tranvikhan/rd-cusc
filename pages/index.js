@@ -95,9 +95,11 @@ export default function Home() {
               <p className="font-normal py-5 border-0 text-gray-800">
                 {t('session1.p')}
               </p>
-              <button className="bg-indigo-600 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors">
-                {t('session1.btn')}
-              </button>
+              <Link href="/consulting">
+                <span className=" cursor-pointer bg-indigo-600 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors">
+                  {t('session1.btn')}
+                </span>
+              </Link>
             </div>
             <img
               src="/assets/img/Image Trailling.svg"

@@ -13,7 +13,7 @@ export const getServerSideProps = async (props) => ({
   },
 })
 
-export default function News() {
+export default function News(props) {
   const { t } = useTranslation('organization')
   return (
     <article>
@@ -116,6 +116,26 @@ const PostInfo = (props) => (
         </div>
         <div className="flex flex-row items-center py-2 space-x-2">
           <div
+            class="fb-share-button"
+            data-href="https://rd-cusc.herokuapp.com/news/123456"
+            data-layout="button_count"
+            data-size="large"
+          >
+            <a
+              target="_blank"
+              href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frd-cusc.herokuapp.com%2Fnews%2F123456&amp;src=sdkpreparse"
+              class="fb-xfbml-parse-ignore"
+            >
+              <div
+                className="fb-xfbml-parse-ignore cursor-pointer bg-blue-600 text-white rounded text-xs font-semibold block"
+                style={{ padding: 6 }}
+              >
+                Chia sẻ FB
+              </div>
+            </a>
+          </div>
+
+          {/* <div
             className="fb-share-button"
             data-href="https://rd-cusc.herokuapp.com/news/123456"
             data-layout="button_count"
@@ -129,7 +149,7 @@ const PostInfo = (props) => (
             >
               Chia sẻ FB
             </a>
-          </div>
+          </div> */}
 
           <div
             className="zalo-share-button cursor-pointer bg-blue-500 text-white rounded text-xs font-semibold"

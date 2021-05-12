@@ -133,13 +133,13 @@ const ContactForm = (props) => (
       <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
         <span
           href="#"
-          className="inline-block text-gray-500 max-w-sm lg:mt-0 mt-2"
+          className="text-sm inline-block text-gray-500 lg:w-3/5  lg:mt-0 mt-2"
         >
           {props.sub}
         </span>
         <button
           type="submit"
-          className="bg-indigo-600 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
+          className="lg:w-auto w-full bg-indigo-600 text-white font-bold px-4 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
         >
           {props.btnSubmitText}
         </button>

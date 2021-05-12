@@ -1,0 +1,20 @@
+{
+    "title": "Solution Consulting | R&D | CUSC",
+    "description": "Get solution consulting information from R&D",
+    "contactForm":{
+        "h1":"Solution consultation form",
+        "name":"Your name",
+        "email":"Email",
+        "content":"Content",
+        "sub":"Customer care department will contact you as soon as possible.",
+        "btnSubmitText":"Get solution advice"
+    },
+    "session1":{
+        "h1":"Technology solution consulting",
+        "description":"We assist with consulting with modern, effective technology solutions, in accordance with the needs of customers.",
+        "card1":"Artificial intelligence solutions",
+        "card2":"IoT & Big Data solutions",
+        "card3":"Digital transformer solutions",
+        "card4":"Server system solutions"
+    }
+}
