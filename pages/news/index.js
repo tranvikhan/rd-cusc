@@ -3,7 +3,7 @@ import Container from '../../components/Layout/container'
 import Header from '../../components/Layout/header'
 import Link from 'next/link'
 import WebHead from '../../components/Layout/head'
-import { Pagination } from '@material-ui/lab'
+import { Pagination } from 'antd'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
@@ -186,7 +186,7 @@ export default function News() {
           </div>
         </Container>
         <div className="pt-8 flex items-center justify-center">
-          <Pagination count={10} shape="rounded" />
+          <Pagination defaultCurrent={1} total={50} />
         </div>
       </section>
       <section className="bg-white py-10">
@@ -282,7 +282,7 @@ export default function News() {
           </div>
         </Container>
         <div className="pt-8 flex items-center justify-center">
-          <Pagination count={10} shape="rounded" />
+          <Pagination defaultCurrent={1} total={50} />
         </div>
       </section>
     </article>
@@ -302,9 +302,12 @@ const NewPost = (props) => (
         {props.createAt}
       </span>
 
-      <h1 className="text-white text-xl leading-7 font-bold hover:text-blue-600">
-        <Link href={props.href}>{props.title}</Link>
-      </h1>
+      <Link href={props.href}>
+        <h1 className="cursor-pointer text-white text-xl leading-7 font-bold hover:text-blue-600">
+          {props.title}
+        </h1>
+      </Link>
+
       <div className="flex flex-row items-center py-2">
         <img
           src={props.author.avatar}
@@ -348,9 +351,11 @@ const PostItem = (props) => (
           {props.createAt}
         </span>
       </div>
-      <h1 className="text-black text-sm leading-6 font-bold text-2-line hover:text-blue-600">
-        <Link href={props.href}>{props.title}</Link>
-      </h1>
+      <Link href={props.href}>
+        <h1 className="cursor-pointer text-black text-sm leading-6 font-bold text-2-line hover:text-blue-600">
+          {props.title}
+        </h1>
+      </Link>
     </div>
   </div>
 )

@@ -109,7 +109,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t-2 border-indigo-400 mt-8 text-center text-indigo-400 pt-4">
-          © 2021 CUSC Software. All rights reserved.
+          © 2021 CUSC Software - R&D Department. All rights reserved.
         </div>
       </Container>
     </div>

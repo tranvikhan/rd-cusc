@@ -12,8 +12,8 @@ export default class BasicDemo extends React.Component {
 
   componentDidMount() {
     this.isLivinig = true
-    // 3秒后更改编辑器内容
-    setTimeout(this.setEditorContentAsync, 3000)
+    setTimeout(this.setEditorContentAsync, 0)
+    /// time
   }
 
   componentWillUnmount() {
@@ -48,7 +48,7 @@ export default class BasicDemo extends React.Component {
       <!Doctype html>
       <html>
         <head>
-          <title>Preview Content</title>
+          <title>Bản xem trước nội dung</title>
           <style>
             html,body{
               height: 100%;
@@ -56,6 +56,7 @@ export default class BasicDemo extends React.Component {
               padding: 0;
               overflow: auto;
               background-color: #f1f2f3;
+              font-family: 'Inter', 'sans-serif';
             }
             .container{
               box-sizing: border-box;
@@ -112,31 +113,14 @@ export default class BasicDemo extends React.Component {
 
     return (
       <>
-        <Container>
-          <div className="editor-wrapper">
-            <BraftEditor
-              language="en"
-              value={editorState}
-              onChange={this.handleChange}
-              extendControls={extendControls}
-            />
-          </div>
-        </Container>
-
-        <h5 className="bg-red-500 text-white text-center p-4">
-          NỘI DUNG ĐƯỢC HIỂN THỊ BÊN DƯỚI
-        </h5>
-        <Container>
-          <div
-            className="braft-output-content"
-            dangerouslySetInnerHTML={{ __html: outputHTML }}
-          ></div>
-        </Container>
-        <h5 className="bg-red-500 text-white text-center p-4">HTML</h5>
-        <Container>
-          <div> {outputHTML}</div>
-          {}
-        </Container>
+        <div className="editor-wrapper bo">
+          <BraftEditor
+            language="en"
+            value={editorState}
+            onChange={this.handleChange}
+            extendControls={extendControls}
+          />
+        </div>
       </>
     )
   }

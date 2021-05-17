@@ -80,7 +80,7 @@ function TopNavigation() {
             id="menu"
           >
             <nav>
-              <ul className="lg:flex items-center text-base text-white font-medium lg:space-x-4 lg:pt-0 lg:pl-0 pl-4">
+              <ul className="mb-0 lg:flex items-center text-base text-white font-medium lg:space-x-4 lg:pt-0 lg:pl-0 pl-4">
                 <li
                   onClick={() => {
                     setBtnToggle(false)
@@ -135,7 +135,7 @@ function TopNavigation() {
                 </li>
               </ul>
             </nav>
-            <ul className="lg:flex items-center text-base text-white font-medium lg:space-x-4 lg:pt-0 lg:pl-0 pl-4 lg:mt-0 mt-8">
+            <ul className="mb-0 lg:flex items-center text-base text-white font-medium lg:space-x-4 lg:pt-0 lg:pl-0 pl-4 lg:mt-0 mt-8">
               <li
                 onClick={() => {
                   setBtnToggle(false)

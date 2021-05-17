@@ -1,15 +1,18 @@
 import MainLayout from '../components/Layout/main_layout'
-import 'tailwindcss/tailwind.css'
+
 import '../styles/globals.css'
+import 'antd/dist/antd.css'
+import '../styles/custom.css'
 import { appWithTranslation } from 'next-i18next'
 import ProgressBar from '@badrap/bar-of-progress'
 
 import Router, { useRouter } from 'next/router'
 import React from 'react'
+import AdminLayout from '../components/Layout/admin_layout'
 
 const progress = new ProgressBar({
   size: 2,
-  color: '#ffffff',
+  color: '#93C5FD',
   className: 'bar-of-progress',
   delay: 100,
 })
@@ -23,7 +26,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <div className="tailwind">
       {router.asPath.split('/')[1] === 'admin' ? (
-        <Component {...pageProps} />
+        <AdminLayout>
+          <Component {...pageProps} />
+        </AdminLayout>
       ) : (
         <MainLayout>
           <Component {...pageProps} />

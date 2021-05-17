@@ -1,6 +1,6 @@
+import { BackTop } from 'antd'
 import TopNavigation from '../Navigation/top_navigation'
 import Footer from './footer'
-import { useRouter } from 'next/router'
 
 export default function MainLayout({ children }) {
   return (
@@ -8,6 +8,7 @@ export default function MainLayout({ children }) {
       <TopNavigation />
       {children}
       <Footer />
+      <BackTop />
     </div>
   )
 }

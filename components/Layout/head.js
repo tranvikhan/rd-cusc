@@ -19,13 +19,13 @@ const WebHead = (props) => (
     <meta name="author" content="R&D-CUSC SOFT" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="canonical" href={config.baseURL} />
+    <link rel="canonical" href={process.env.BASE_URL} />
     <meta name="robots" content="index, follow" />
-    <meta property="og:url" content={config.baseURL} />
+    <meta property="og:url" content={process.env.BASE_URL} />
 
     <meta
       property="og:image"
-      content={props.image ? props.image : config.defaultWebImage}
+      content={props.image ? props.image : process.env.WEB_LOGO}
     />
 
     <meta property="og:type" content="article" />
@@ -36,7 +36,7 @@ const WebHead = (props) => (
 
     <meta property="og:site_name" content="CUSC-R&D" />
 
-    <meta property="twitter:url" content={config.baseURL} />
+    <meta property="twitter:url" content={process.env.BASE_URL} />
 
     <meta property="og:title" content={props.pageTitle} />
 
@@ -44,11 +44,11 @@ const WebHead = (props) => (
 
     <meta
       property="twitter:image"
-      content={props.image ? props.image : config.defaultWebImage}
+      content={props.image ? props.image : process.env.WEB_LOGO}
     />
     <meta property="twitter:description" content={props.description} />
 
-    <meta property="og:url" content={config.baseURL}></meta>
+    <meta property="og:url" content={process.env.BASE_URL}></meta>
   </Head>
 )
 export default WebHead
