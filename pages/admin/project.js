@@ -50,7 +50,6 @@ export default function AdminProject() {
                     </Tooltip>
                     <Tooltip title="Làm mới">
                       <Button
-                        shape="circle"
                         icon={<SyncOutlined />}
                         onClick={() => {
                           setLoading(true)

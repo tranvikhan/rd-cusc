@@ -3,9 +3,8 @@ import Filter from 'bad-words'
 const filter = new Filter()
 var bcrypt = require('bcryptjs')
 import excuteQuery from '../../../db'
-import NextCors from 'nextjs-cors'
 import verifyToken from '../../../middleware/verifyToken'
-
+import NextCors from 'nextjs-cors'
 export default async (req, res) => {
   await NextCors(req, res, {
     // Options
@@ -20,36 +19,27 @@ export default async (req, res) => {
   }
   if (!userToken.role === 'root') {
     result.Unauthorized(res, 'Không có quyền truy cập')
-    return
   }
-  if (req.method === 'POST') {
+  if (req.method === 'PATCH') {
     try {
-      let hashPassword = bcrypt.hashSync(req.body.password, 8)
-
-      const db_res = await excuteQuery({
-        query:
-          'INSERT INTO `user`(`username`,`password`,`name_vi`,`name_en`,`role`) VALUES (?,?,?,?,?)',
-        values: [
-          filter.clean(req.body.username),
-          hashPassword,
-          filter.clean(req.body.name_vi),
-          filter.clean(req.body.name_en),
-          req.body.role && req.body.role === 'admin' ? 'admin' : 'user',
-        ],
+      let hashPassword = bcrypt.hashSync(req.body.new_password, 8)
+      let results2 = await excuteQuery({
+        query: 'UPDATE  `user` SET `password`=? WHERE `id` =?',
+        values: [hashPassword, req.body.user_id],
       })
-      if (db_res.error) {
-        if (db_res.error.code === 'ER_DUP_ENTRY') {
-          result.BadRequest(res, 'Tên đăng nhập đã tồn tại')
-          return
-        }
-        result.BadRequest(res, db_res)
+
+      if (results2.changedRows === 0) {
+        result.BadRequest(res, 'Tài khoản không tồn tại')
         return
       }
-      result.Ok(res, 'Đăng ký thành công')
+      if (results2.error) {
+        result.BadRequest(res, 'Lỗi truy vấn')
+        return
+      }
+      result.Ok(res, 'Đổi mật khẩu thành công')
       return
     } catch (error) {
       result.ServerError(res, 'Lỗi truy vấn')
-      return
     }
   } else {
     result.ServerError(res, 'Không hỗ trợ api này')

@@ -150,9 +150,8 @@ export default function Home() {
               <CatoryViewProject
                 isMain
                 imageURL="/assets/img/famer.jpg"
-                enTitle="SMART GARDENT"
-                viTitle="GIẢI PHÁP NÔNG NGHIỆP THÔNG MINH"
-                content="We build innovative systems and processes that allow
+                name="GIẢI PHÁP NÔNG NGHIỆP THÔNG MINH"
+                description="We build innovative systems and processes that allow
                       farmers to streamline operations and increase food
                       production efficiency."
               />
@@ -161,9 +160,8 @@ export default function Home() {
             <div className="lg:flex lg:col-span-1 hidden ">
               <CatoryViewProject
                 imageURL="/assets/img/school.jpg"
-                enTitle="SMART school"
-                viTitle="GIẢI PHÁP TRƯỜNG HỌC THÔNG MINH"
-                content="We build innovative systems and processes that allow
+                name="GIẢI PHÁP TRƯỜNG HỌC THÔNG MINH"
+                description="We build innovative systems and processes that allow
                       farmers to streamline operations and increase food
                       production efficiency."
               />
@@ -171,9 +169,8 @@ export default function Home() {
             <div className="lg:flex lg:col-span-1 hidden ">
               <CatoryViewProject
                 imageURL="/assets/img/datatranf.jpg"
-                enTitle="Digital Transformation"
-                viTitle="Chuyển đổi số"
-                content="We build innovative systems and processes that allow
+                name="Chuyển đổi số"
+                description="We build innovative systems and processes that allow
                       farmers to streamline operations and increase food
                       production efficiency."
               />
@@ -309,14 +306,11 @@ const CatoryViewProject = (props) => (
       }`}
     >
       <div className={props.isMain ? 'lg:pt-60 pt-0' : 'pt-0'}>
-        <h3 className="text-sm text-white leading-6 font-normal tracking-wide uppercase mb-1">
-          {props.enTitle}
-        </h3>
         <h1 className="my-2 text-white text-xl   leading-7 font-bold uppercase">
-          {props.viTitle}
+          {props.name}
         </h1>
         <p className=" text-sm text-white leading-5 font-normal ">
-          {props.content}
+          {props.description}
         </p>
       </div>
     </div>

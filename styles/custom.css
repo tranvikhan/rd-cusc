@@ -2,3 +2,7 @@
   background: white;
   padding: 0 45px;
 }
+.avatar-uploader > .ant-upload {
+  width: 147px;
+  height: 98px;
+}

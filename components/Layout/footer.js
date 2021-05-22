@@ -34,13 +34,17 @@ export default function Footer() {
             <p className="py-4">
               {router.locale === 'vi' ? (
                 <Link href="https://goo.gl/maps/Sz9AFegMoxuRU5mXA">
-                  Địa chỉ: 01 Lý Tự Trọng, Phường An Phú, Quận Ninh Kiều, Tp.
-                  Cần Thơ, Việt Nam.
+                  <span className="text-indigo-200 cursor-pointer">
+                    Địa chỉ: 01 Lý Tự Trọng, Phường An Phú, Quận Ninh Kiều, Tp.
+                    Cần Thơ, Việt Nam.
+                  </span>
                 </Link>
               ) : (
                 <Link href="https://goo.gl/maps/Sz9AFegMoxuRU5mXA">
-                  Address: 01 Ly Tu Trong, An Phu ward, Ninh Kieu district, Can
-                  Tho city, Vietnam.
+                  <span className="text-indigo-200 cursor-pointer">
+                    Address: 01 Ly Tu Trong, An Phu ward, Ninh Kieu district,
+                    Can Tho city, Vietnam.
+                  </span>
                 </Link>
               )}
             </p>

@@ -7,6 +7,7 @@ import WebHead from '../components/Layout/head'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { FaPhoneSquareAlt, FaEnvelope } from 'react-icons/fa'
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -66,7 +67,7 @@ export default function Home() {
             imageURL="/assets/img/users/thViet.jpg"
             name="Trần Hoàng Việt"
             role="Trưởng nhóm R&D"
-            link={{ facebook: '/', linkedin: '/' }}
+            link={{ email: '/', phone: '/' }}
             introduce="Odio nisi, lectus dis nulla. Ultrices maecenas vitae rutrum
                 dolor ultricies donec risus sodales. Tempus quis et. Odio nisi,
                 lectus dis nulla. Ultrices maecenas vitae rutrum dolor ultricies
@@ -78,20 +79,20 @@ export default function Home() {
               imageURL="/assets/img/users/lhPhat.jpg"
               name="Lê Hữu Phát "
               role="Thành viên phụ trách Server System"
-              link={{ facebook: '/', linkedin: '/' }}
+              link={{ email: '/', phone: '/' }}
             />
             <CardTeamView
               imageURL="/assets/img/users/dhNghia.jpg"
               name="Đặng Hiếu Nghĩa"
               role="Thành viên phụ trách Ai, Big Data"
-              link={{ facebook: '/', linkedin: '/' }}
+              link={{ email: '/', phone: '/' }}
             />
 
             <CardTeamView
               imageURL="/assets/img/users/tvKhan.jpg"
               name="Trần Vi Khan"
               role="Thành viên phụ trách IoT"
-              link={{ facebook: '/', linkedin: '/' }}
+              link={{ email: '/', phone: '/' }}
             />
           </div>
         </Container>
@@ -109,32 +110,20 @@ const CardBossView = (props) => (
     />
 
     <div className="flex flex-col justify-center lg:p-8 p-0 py-8">
-      <h1 className="text-black text-lg leading-7 font-bold">{props.name}</h1>
+      <Link href="/profile/1">
+        <h1 className="text-black text-lg leading-7 font-bold cursor-pointer transition duration-200 ease-in-out hover:text-indigo-600">
+          {props.name}
+        </h1>
+      </Link>
+
       <h1 className="text-indigo-600 text-base font-medium py-1">
         {props.role}
       </h1>
-      <SocialLink
-        facebook={props.link.facebook}
-        linkedin={props.link.linkedin}
-      />
+
       <p className="text-gray-800 text-sm leading-5 font-medium mt-1">
         {props.introduce}
       </p>
     </div>
-  </div>
-)
-
-const SocialLink = (props) => (
-  <div className="flex flex-row space-x-4 py-2">
-    <Link href={props.facebook}>
-      <img src="/assets/img/svg_icons/fbIcon.svg" className="cursor-pointer" />
-    </Link>
-    <Link href={props.linkedin}>
-      <img
-        src="/assets/img/svg_icons/linkedinIcon.svg"
-        className="cursor-pointer"
-      />
-    </Link>
   </div>
 )
 
@@ -146,14 +135,15 @@ const CardTeamView = (props) => (
       className="object-cover h-60 w-full rounded-lg  shadow-lg"
     />
     <div className="py-8">
-      <h1 className="text-black text-lg leading-7 font-bold">{props.name}</h1>
+      <Link href="/profile/1">
+        <h1 className="text-black text-lg leading-7 font-bold cursor-pointer transition duration-200 ease-in-out hover:text-indigo-600">
+          {props.name}
+        </h1>
+      </Link>
+
       <h1 className="text-indigo-600 text-base font-medium py-1">
         {props.role}
       </h1>
-      <SocialLink
-        facebook={props.link.facebook}
-        linkedin={props.link.linkedin}
-      />
     </div>
   </div>
 )

@@ -14,12 +14,12 @@ import ImageUpload from '../../Upload/imageUpload'
 import dynamic from 'next/dynamic'
 import React from 'react'
 
-const BasicDemo = dynamic(() => import('../../../components/Editor'), {
+const BasicDemo = dynamic(() => import('../../Editor'), {
   ssr: false,
 })
 const { TabPane } = Tabs
 
-export default function NewProject() {
+export default function NewPost() {
   const [isModalVisible, setIsModalVisible] = useState(true)
   const [loading, setLoading] = React.useState(false)
   const showModal = () => {
@@ -35,7 +35,7 @@ export default function NewProject() {
   }
   return (
     <Modal
-      title="Thêm dự án mới"
+      title="Viết bài mới"
       closable={false}
       width={1300}
       centered
@@ -51,19 +51,20 @@ export default function NewProject() {
         </Button>,
       ]}
     >
-      <ProjectFormMain />
+      <PostFormMain />
       <Tabs defaultActiveKey="1">
         <TabPane tab="Tiếng Việt" key="1">
-          <ProjectFormDetail lang="vi" />
+          <PostFormDetail lang="vi" />
         </TabPane>
         <TabPane tab="English" key="2">
-          <ProjectFormDetail lang="en" />
+          <PostFormDetail lang="en" />
         </TabPane>
       </Tabs>
     </Modal>
   )
 }
-const ProjectFormMain = (props) => {
+
+const PostFormMain = (props) => {
   return (
     <Form labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
       <Row gutter={[16, 16]}>
@@ -76,18 +77,26 @@ const ProjectFormMain = (props) => {
             </Select>
           </Form.Item>
         </Col>
+        <Col lg={12} md={24} xs={24}>
+          <Form.Item label="Danh mục" name="category">
+            <Select defaultValue={1} style={{ width: '100%' }}>
+              <Select.Option value={1}>Tin hoạt động R&D</Select.Option>
+              <Select.Option value={2}>Tin tức CN mới</Select.Option>
+            </Select>
+          </Form.Item>
+        </Col>
       </Row>
     </Form>
   )
 }
 
-const ProjectFormDetail = (props) => {
+const PostFormDetail = (props) => {
   const mapLang = {
     vi: {
-      name: {
-        label: 'Tên dự án',
-        placeholder: 'Nhập tên dự án',
-        require: 'Vui lòng nhập tên dự án',
+      title: {
+        label: 'Tiêu đề',
+        placeholder: 'Nhập tiêu đề',
+        require: 'Vui lòng nhập tiêu đề',
       },
       description: {
         label: 'Mô tả',
@@ -99,34 +108,32 @@ const ProjectFormDetail = (props) => {
         placeholder: 'Nhập từ khóa',
       },
       image: {
-        label: 'Ảnh dự án',
-        placeholder: 'Chọn ảnh dự án',
-        require: 'Vui lòng chọn ảnh cho dự án',
+        label: 'Ảnh bài viết',
+        placeholder: 'Chọn ảnh bài viết',
+        require: 'Vui lòng chọn ảnh cho bài viết',
       },
-
       content: 'Nội dung',
     },
     en: {
-      name: {
-        label: 'Project name',
-        placeholder: 'Enter project name',
-        require: 'Please fill in project name',
+      title: {
+        label: 'Title',
+        placeholder: 'Enter title',
+        require: 'Please fill in title',
       },
       description: {
-        label: 'Project description',
-        placeholder: 'Enter project description',
-        require: 'Please fill in project description',
+        label: 'Description',
+        placeholder: 'Enter description',
+        require: 'Please fill in description',
       },
       tags: {
         label: 'Tags',
         placeholder: 'Enter keywords',
       },
       image: {
-        label: 'Project thumbnail',
-        placeholder: 'Choose project thumbnail',
-        require: 'Please choose project thumbnail',
+        label: 'Thumbnail',
+        placeholder: 'Choose thumbnail',
+        require: 'Please choose thumbnail',
       },
-
       content: 'Content',
     },
   }
@@ -135,13 +142,13 @@ const ProjectFormDetail = (props) => {
       <Row gutter={[16, 16]}>
         <Col lg={12} md={24} xs={24}>
           <Form.Item
-            label={mapLang[props.lang].name.label}
-            name="name"
+            label={mapLang[props.lang].title.label}
+            name="title"
             rules={[
-              { required: true, message: mapLang[props.lang].name.require },
+              { required: true, message: mapLang[props.lang].title.require },
             ]}
           >
-            <Input placeholder={mapLang[props.lang].name.placeholder} />
+            <Input placeholder={mapLang[props.lang].title.placeholder} />
           </Form.Item>
 
           <Form.Item
@@ -170,7 +177,6 @@ const ProjectFormDetail = (props) => {
               placeholder={mapLang[props.lang].tags.placeholder}
             ></Select>
           </Form.Item>
-
           <Form.Item
             label={mapLang[props.lang].image.label}
             name="image"

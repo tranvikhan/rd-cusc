@@ -156,7 +156,7 @@ export default function ProjectShowTable() {
           value: 1,
         },
       ],
-      onFilter: (value, record) => record.status.indexOf(value) === 0,
+      onFilter: (value, record) => record.approved === value,
       render: (approved) => (
         <Tag color={approved === 0 ? 'red' : 'green'}>
           {approved === 0 ? 'Chờ duyệt' : 'Đã duyệt'}
@@ -184,7 +184,7 @@ export default function ProjectShowTable() {
       onFilter: (value, record) => record.show_lang.indexOf(value) === 0,
       render: (show_lang) =>
         show_lang.split(',').map((i) => (
-          <Tag color={i === 'vi' ? 'red' : 'cyan'} key={i}>
+          <Tag color={i === 'vi' ? 'magenta' : 'cyan'} key={i}>
             {i}
           </Tag>
         )),

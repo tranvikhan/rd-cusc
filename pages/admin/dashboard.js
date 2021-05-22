@@ -22,7 +22,7 @@ const TopUserChart = dynamic(
 )
 
 const { Meta } = Card
-export default function AdminHome() {
+export default function AdminDashBoard() {
   return (
     <article>
       <WebHead

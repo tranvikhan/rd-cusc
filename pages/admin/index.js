@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { LoadingOutlined } from '@ant-design/icons'
 const useUser = () => ({ user: 'Khan', loading: false })
-export default function Admin() {
+export default function AdminHome() {
   const { user, loading } = useUser()
   const router = useRouter()
   useEffect(() => {

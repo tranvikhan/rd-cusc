@@ -20,8 +20,24 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons'
 const { Option } = Select
+const data = []
+for (let i = 0; i < 50; i++) {
+  data.push({
+    key: i,
+    email: i + 'tranvikhan@gmail.com',
+    image: '',
+    title: 'Tin tức có tiêu đề thứ  ' + i,
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    author: 'Trần Vi Khan ' + i,
+    show_lang:
+      Math.random() > 0.3 ? (Math.random() > 0.6 ? 'vi' : 'en') : 'vi,en',
+    created_at: '14/05/2021',
+    approved: Math.random() > 0.5 ? 1 : 0,
+    category: Math.random() > 0.5 ? 1 : 2,
+  })
+}
 
-export default function ProjectHideTable() {
+export default function PostShowTable() {
   const [state, setState] = React.useState({
     searchText: '',
     searchedColumn: '',
@@ -123,7 +139,7 @@ export default function ProjectHideTable() {
 
   const columns = [
     {
-      title: 'Ảnh dự án',
+      title: 'Ảnh bài viết',
       dataIndex: 'image',
       key: 'image',
       render: (status) => (
@@ -135,13 +151,12 @@ export default function ProjectHideTable() {
       ),
     },
     {
-      title: 'Tên dự án',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Tiêu đề',
+      dataIndex: 'title',
+      key: 'title',
 
-      ...getColumnSearchProps('name', 'tên dự án'),
+      ...getColumnSearchProps('title', 'tiêu đề'),
     },
-
     {
       title: 'Trạng thái',
       dataIndex: 'approved',
@@ -161,6 +176,25 @@ export default function ProjectHideTable() {
         <Tag color={approved === 0 ? 'red' : 'green'}>
           {approved === 0 ? 'Chờ duyệt' : 'Đã duyệt'}
         </Tag>
+      ),
+    },
+    {
+      title: 'Danh mục',
+      dataIndex: 'category',
+      key: 'category',
+      filters: [
+        {
+          text: 'Hoạt động R&D',
+          value: 1,
+        },
+        {
+          text: 'Tin tức CN',
+          value: 2,
+        },
+      ],
+      onFilter: (value, record) => record.category === value,
+      render: (category) => (
+        <Tag>{category === 1 ? 'Hoạt động R&D' : 'Tin tức CN'}</Tag>
       ),
     },
     {
@@ -190,10 +224,10 @@ export default function ProjectHideTable() {
         )),
     },
     {
-      title: 'Người viết',
-      dataIndex: 'writer',
-      key: 'writer',
-      ...getColumnSearchProps('writer', 'người viết'),
+      title: 'Tác giả',
+      dataIndex: 'author',
+      key: 'author',
+      ...getColumnSearchProps('author', 'tác giả'),
     },
     {
       title: 'Thời gian',
@@ -211,15 +245,6 @@ export default function ProjectHideTable() {
           icon={<MoreOutlined />}
           overlay={() => (
             <Menu>
-              <Menu.Item icon={<PlusOutlined />}>
-                <Popconfirm
-                  title="Xác nhận hiển thị dự án này"
-                  okText="Hiển thị"
-                  cancelText="Hủy"
-                >
-                  Hiển thị
-                </Popconfirm>
-              </Menu.Item>
               <Menu.Item icon={<EditOutlined />}>Chỉnh sửa</Menu.Item>
 
               {record.approved === 0 && (
@@ -235,14 +260,14 @@ export default function ProjectHideTable() {
               )}
               <Menu.Item danger icon={<DeleteOutlined />}>
                 <Popconfirm
-                  title="Xác nhận xóa vĩnh viễn dự án"
+                  title="Xác nhận chuyển đến bản nháp？"
                   okText="Chấp nhận"
                   cancelText="Hủy"
                   onConfirm={() => {
                     console.log(record)
                   }}
                 >
-                  Xóa vĩnh viễn
+                  Bản nháp
                 </Popconfirm>
               </Menu.Item>
             </Menu>
@@ -251,21 +276,6 @@ export default function ProjectHideTable() {
       ),
     },
   ]
-  const data = []
-  for (let i = 0; i < 50; i++) {
-    data.push({
-      key: i,
-      email: i + 'tranvikhan@gmail.com',
-      image: '',
-      name: 'Dự án nông nghiệp thông minh IOT phân hệ trồng nấm thứ  ' + i,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
-      writer: 'Trần Vi Khan ' + i,
-      show_lang:
-        Math.random() > 0.3 ? (Math.random() > 0.6 ? 'vi' : 'en') : 'vi,en',
-      created_at: '14/05/2021',
-      approved: Math.random() > 0.5 ? 1 : 0,
-    })
-  }
 
   const [selectedRowKeys, setSelectedKeys] = React.useState([])
   const rowSelection = {
@@ -274,9 +284,8 @@ export default function ProjectHideTable() {
   }
   const [actionType, setActionType] = React.useState('approved')
   const actionMap = {
-    show: 'Hiển thị',
     approved: 'Đã duyệt',
-    delete: 'Xóa vĩnh viễn',
+    hide: 'Bản nháp',
   }
   return (
     <Table
@@ -300,8 +309,8 @@ export default function ProjectHideTable() {
             onChange={(val) => setActionType(val)}
             style={{ width: 120 }}
           >
-            <Option value="show">{actionMap['show']}</Option>
             <Option value="approved">{actionMap['approved']}</Option>
+
             <Option value="hide">{actionMap['hide']}</Option>
           </Select>
           <Popconfirm

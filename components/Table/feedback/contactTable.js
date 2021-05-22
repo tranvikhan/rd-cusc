@@ -1,7 +1,7 @@
 import { Button, Popconfirm, Space, Table, Tag, Input, Select } from 'antd'
 import React from 'react'
 import Highlighter from 'react-highlight-words'
-import { SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined, DownloadOutlined } from '@ant-design/icons'
 const { Option } = Select
 
 export default function ContactTable() {
@@ -120,22 +120,22 @@ export default function ContactTable() {
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'approved',
+      key: 'approved',
       filters: [
         {
           text: 'Đang chờ',
-          value: 'pending',
+          value: 0,
         },
         {
-          text: 'Đã phản hồi',
-          value: 'feedback',
+          text: 'Đã xử lý',
+          value: 1,
         },
       ],
-      onFilter: (value, record) => record.status.indexOf(value) === 0,
-      render: (status) => (
-        <Tag color={status === 'pending' ? 'red' : 'green'}>
-          {status === 'pending' ? 'Đang chờ' : 'Đã phản hồi'}
+      onFilter: (value, record) => record.approved === value,
+      render: (approved) => (
+        <Tag color={approved === 0 ? 'red' : 'green'}>
+          {approved === 0 ? 'Đang chờ' : 'Đã xử lý'}
         </Tag>
       ),
     },
@@ -162,7 +162,7 @@ export default function ContactTable() {
               Xóa
             </a>
           </Popconfirm>
-          {record.status === 'pending' && (
+          {record.approved === 0 && (
             <Popconfirm
               title="Chọn hành động"
               okText="Đã phản hồi"
@@ -185,7 +185,7 @@ export default function ContactTable() {
       name: 'Trần Vi Khan ' + i,
       content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
       time: '14/05/2021',
-      status: Math.random() > 0.5 ? 'pending' : 'feedback',
+      approved: Math.random() > 0.5 ? 0 : 1,
     })
   }
 
@@ -200,47 +200,52 @@ export default function ContactTable() {
     delete: 'Xóa',
   }
   return (
-    <Table
-      scroll={{ x: 1100 }}
-      rowSelection={rowSelection}
-      columns={columns}
-      dataSource={data}
-      expandable={{
-        expandedRowRender: (record) => (
-          <div>
-            <span className="font-medium">Nội dung: </span>
-            <span style={{ margin: 0 }}>{record.content}</span>
-          </div>
-        ),
-      }}
-      footer={() => (
-        <Space size="middle">
-          <Select
-            defaultValue={actionType}
-            value={actionType}
-            onChange={(val) => setActionType(val)}
-            style={{ width: 120 }}
-          >
-            <Option value="feedback">{actionMap['feedback']}</Option>
+    <>
+      <Space size="middle" className="mb-4">
+        <Button icon={<DownloadOutlined />}>Tải về danh sách</Button>
+      </Space>
+      <Table
+        scroll={{ x: 1100 }}
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={data}
+        expandable={{
+          expandedRowRender: (record) => (
+            <div>
+              <span className="font-medium">Nội dung: </span>
+              <span style={{ margin: 0 }}>{record.content}</span>
+            </div>
+          ),
+        }}
+        footer={() => (
+          <Space size="middle">
+            <Select
+              defaultValue={actionType}
+              value={actionType}
+              onChange={(val) => setActionType(val)}
+              style={{ width: 120 }}
+            >
+              <Option value="feedback">{actionMap['feedback']}</Option>
 
-            <Option value="delete">{actionMap['delete']}</Option>
-          </Select>
-          <Popconfirm
-            disabled={selectedRowKeys.length === 0}
-            title={
-              'Xác nhận hành động "' +
-              actionMap[actionType] +
-              '" với ' +
-              selectedRowKeys.length +
-              ' trường dữ liệu'
-            }
-            okText="Thực thi"
-            cancelText="Hủy"
-          >
-            <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
-          </Popconfirm>
-        </Space>
-      )}
-    />
+              <Option value="delete">{actionMap['delete']}</Option>
+            </Select>
+            <Popconfirm
+              disabled={selectedRowKeys.length === 0}
+              title={
+                'Xác nhận hành động "' +
+                actionMap[actionType] +
+                '" với ' +
+                selectedRowKeys.length +
+                ' trường dữ liệu'
+              }
+              okText="Thực thi"
+              cancelText="Hủy"
+            >
+              <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
+            </Popconfirm>
+          </Space>
+        )}
+      />
+    </>
   )
 }

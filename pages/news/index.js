@@ -314,9 +314,9 @@ const NewPost = (props) => (
           alt={props.author.name}
           className="object-cover h-8 w-8  rounded-full shadow-lg mr-2 border bg-purple-50"
         />
-        <h3 className="text-blue-50 text-sm font-medium py-1">
+        <span className="text-blue-50 text-sm font-medium py-1">
           {props.author.name}
-        </h3>
+        </span>
       </div>
 
       <p className="text-indigo-300 text-sm leading-5 font-medium mt-1 text-6-line">
@@ -342,9 +342,9 @@ const PostItem = (props) => (
             alt={props.author.name}
             className="object-cover h-8 w-8  rounded-full shadow-lg mr-2 border bg-blue-300"
           />
-          <h3 className="text-gray-600 text-xs font-medium py-1">
+          <span className="text-gray-600 text-xs font-medium py-1">
             {props.author.name}
-          </h3>
+          </span>
         </div>
 
         <span className="text-gray-500 text-xs leading-5 font-medium mt-1  lg:mb-0 mb-1">

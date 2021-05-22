@@ -1,7 +1,12 @@
 import { Button, Popconfirm, Space, Table, Tag, Input, Select } from 'antd'
 import React from 'react'
 import Highlighter from 'react-highlight-words'
-import { SearchOutlined } from '@ant-design/icons'
+import {
+  SearchOutlined,
+  SendOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons'
+import Link from 'next/link'
 const { Option } = Select
 
 export default function ReceiveInformationTable() {
@@ -114,22 +119,22 @@ export default function ReceiveInformationTable() {
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'approved',
+      key: 'approved',
       filters: [
         {
           text: 'Đang chờ',
-          value: 'pending',
+          value: 0,
         },
         {
           text: 'Đã xử lý',
-          value: 'processed',
+          value: 1,
         },
       ],
-      onFilter: (value, record) => record.status.indexOf(value) === 0,
-      render: (status) => (
-        <Tag color={status === 'pending' ? 'red' : 'green'}>
-          {status === 'pending' ? 'Đang chờ' : 'Đã xử lý'}
+      onFilter: (value, record) => record.approved === value,
+      render: (approved) => (
+        <Tag color={approved === 0 ? 'red' : 'green'}>
+          {approved === 0 ? 'Đang chờ' : 'Đã xử lý'}
         </Tag>
       ),
     },
@@ -156,14 +161,14 @@ export default function ReceiveInformationTable() {
               Xóa
             </a>
           </Popconfirm>
-          {record.status === 'pending' && (
+          {record.approved === 0 && (
             <Popconfirm
               title="Chọn hành động"
-              okText="Chấp nhận yêu cầu"
+              okText="Chấp nhận"
               cancelText="Hủy yêu cầu"
             >
               <a href="#" className="text-gray-600 font-medium">
-                Duyệt
+                Xử lý
               </a>
             </Popconfirm>
           )}
@@ -177,7 +182,7 @@ export default function ReceiveInformationTable() {
       key: i,
       email: i + 'tranvikhan@gmail.com',
       time: '12:00:05 14/05/2021',
-      status: Math.random() > 0.5 ? 'pending' : 'processed',
+      approved: Math.random() > 0.5 ? 0 : 1,
     })
   }
 
@@ -193,39 +198,47 @@ export default function ReceiveInformationTable() {
     delete: 'Xóa',
   }
   return (
-    <Table
-      scroll={{ x: 1100 }}
-      rowSelection={rowSelection}
-      columns={columns}
-      dataSource={data}
-      footer={() => (
-        <Space size="middle">
-          <Select
-            defaultValue={actionType}
-            value={actionType}
-            onChange={(val) => setActionType(val)}
-            style={{ width: 120 }}
-          >
-            <Option value="accept">{actionMap['accept']}</Option>
-            <Option value="cancel">{actionMap['cancel']}</Option>
-            <Option value="delete">{actionMap['delete']}</Option>
-          </Select>
-          <Popconfirm
-            disabled={selectedRowKeys.length === 0}
-            title={
-              'Xác nhận hành động "' +
-              actionMap[actionType] +
-              '" với ' +
-              selectedRowKeys.length +
-              ' trường dữ liệu'
-            }
-            okText="Thực thi"
-            cancelText="Hủy"
-          >
-            <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
-          </Popconfirm>
-        </Space>
-      )}
-    />
+    <>
+      <Space size="middle" className="mb-4">
+        <Button icon={<DownloadOutlined />}>Tải về danh sách</Button>
+        <Link href="mailto:thviet@ctu.edu.vn,tranvikhan@gmail.com">
+          <Button icon={<SendOutlined />}>Gửi email</Button>
+        </Link>
+      </Space>
+      <Table
+        scroll={{ x: 1100 }}
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={data}
+        footer={() => (
+          <Space size="middle">
+            <Select
+              defaultValue={actionType}
+              value={actionType}
+              onChange={(val) => setActionType(val)}
+              style={{ width: 120 }}
+            >
+              <Option value="accept">{actionMap['accept']}</Option>
+              <Option value="cancel">{actionMap['cancel']}</Option>
+              <Option value="delete">{actionMap['delete']}</Option>
+            </Select>
+            <Popconfirm
+              disabled={selectedRowKeys.length === 0}
+              title={
+                'Xác nhận hành động "' +
+                actionMap[actionType] +
+                '" với ' +
+                selectedRowKeys.length +
+                ' trường dữ liệu'
+              }
+              okText="Thực thi"
+              cancelText="Hủy"
+            >
+              <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
+            </Popconfirm>
+          </Space>
+        )}
+      />
+    </>
   )
 }

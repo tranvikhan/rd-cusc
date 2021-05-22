@@ -34,6 +34,8 @@ import {
   MailOutlined,
   FormOutlined,
   ProjectOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
 } from '@ant-design/icons'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -60,13 +62,11 @@ function AdminLayout({ children }) {
     <Menu>
       <div className="p-4">
         <Title level={5}>Trần Hoàng Việt</Title>
-        <Text>thviet@cit.ctu.edu.vn</Text>
+        <Text>thviet</Text>
         <Divider style={{ margin: '8px 0' }} />
       </div>
       <Menu.Item icon={<InfoCircleOutlined />}>Thông tin</Menu.Item>
-      <Menu.Item icon={<CodeOutlined />}>
-        <Link href="/test">Console</Link>
-      </Menu.Item>
+
       <Menu.Item danger icon={<LogoutOutlined />}>
         Đăng xuất
       </Menu.Item>
@@ -137,6 +137,7 @@ function AdminLayout({ children }) {
       ) : (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
+            trigger={null}
             collapsible
             collapsed={collapsed}
             onCollapse={onCollapse}
@@ -190,7 +191,18 @@ function AdminLayout({ children }) {
           <Layout className="site-layout">
             <Header className="site-layout-header">
               <Row>
-                <Col span={24} className="text-right">
+                <Col span={4} className="text-left">
+                  {React.createElement(
+                    collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+                    {
+                      className: 'trigger',
+                      onClick: () => {
+                        setCollapsed(!collapsed)
+                      },
+                    }
+                  )}
+                </Col>
+                <Col span={20} className="text-right">
                   <Space size="middle">
                     <Popover
                       title="Thông báo"

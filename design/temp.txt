@@ -146,7 +146,6 @@ CREATE TABLE `setting`(
     `email_html` MEDIUMTEXT NOT NULL DEFAULT '',
     `email_host` VARCHAR(150) NOT NULL DEFAULT '',
     `email_port` INT NOT NULL DEFAULT 587,
-    `email_secure` BOOLEAN NOT NULL DEFAULT FALSE,
     `email_auth_username` VARCHAR(150) NOT NULL DEFAULT '',
     `email_auth_password` VARCHAR(200) NOT NULL DEFAULT '',
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

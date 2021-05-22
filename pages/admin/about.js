@@ -20,6 +20,14 @@ export default function AdminAbout() {
             <Card bordered={false}>
               <Typography>
                 <Title level={3}>Giới thiệu</Title>
+                <div className="flex justify-center items-center border border-blue-800 rounded p-4 mb-4">
+                  <img
+                    src="/assets/img/logoCuscRD.svg"
+                    alt="logo"
+                    className="h-40"
+                  />
+                </div>
+
                 <Paragraph>
                   In the process of internal desktop applications development,
                   many different design specs and implementations would be
@@ -46,6 +54,27 @@ export default function AdminAbout() {
             <Card bordered={false}>
               <Typography>
                 <Title level={3}>Nội quy</Title>
+                <Paragraph>
+                  In the process of internal desktop applications development,
+                  many different design specs and implementations would be
+                  involved, which might cause designers and developers
+                  difficulties and duplication and reduce the efficiency of
+                  development.
+                </Paragraph>
+                <Paragraph>
+                  <ul>
+                    <li>A</li>
+                    <li>B</li>
+                    <li>C</li>
+                  </ul>
+                </Paragraph>
+              </Typography>
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card bordered={false}>
+              <Typography>
+                <Title level={3}>Hướng dẫn viết bài</Title>
                 <Paragraph>
                   In the process of internal desktop applications development,
                   many different design specs and implementations would be

@@ -7,7 +7,7 @@ import ContactTable from '../../components/Table/feedback/contactTable'
 import AdvisoryTable from '../../components/Table/feedback/advisoryTable'
 
 const { Meta } = Card
-export default function AdminHome() {
+export default function AdminFeedback() {
   const [key, setKey] = React.useState('tab1')
   const [loading, setLoading] = React.useState(false)
   const contentList = {
@@ -47,7 +47,6 @@ export default function AdminHome() {
               extra={
                 <Tooltip title="Làm mới">
                   <Button
-                    shape="circle"
                     icon={<SyncOutlined />}
                     onClick={() => {
                       setLoading(true)

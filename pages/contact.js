@@ -33,7 +33,7 @@ export default function Contact() {
         <Container className="transform  -translate-y-16">
           <div
             id="map"
-            className="lg:h-96 h-72 w-full rounded-lg  shadow-xl  transform   xl:translate-y-32 lg:translate-y-44 translate-y-32 p-2 bg-white"
+            className="lg:h-96 h-72  rounded-lg  shadow-xl  transform   xl:translate-y-32 lg:translate-y-44 translate-y-32 p-2 bg-white"
           >
             <MapWithNoSSR
               popupText={
@@ -49,7 +49,7 @@ export default function Contact() {
       <section className="bg-white py-10">
         <Container>
           <div className="grid lg:grid-cols-2 gap-8 md:grid-cols-1  grid-cols-1 ">
-            <div className="flex flex-col bg-blue-50 p-10 rounded space-y-4">
+            <div className="flex flex-col bg-blue-50 p-10 rounded space-y-6">
               <Heading1>{t('contact.h1')}</Heading1>
 
               <ContactItem
@@ -85,10 +85,10 @@ export default function Contact() {
 }
 const ContactItem = (props) => (
   <div className="flex flex-row text-base font-normal text-gray-900">
-    <div className="w-8 h-8 pr-4"> {props.icon}</div>
+    <div className="flex pr-4"> {props.icon}</div>
     <div>
-      <Link className="leading-5 " href={props.href}>
-        {props.text}
+      <Link href={props.href}>
+        <span className="text-gray-900 cursor-pointer">{props.text}</span>
       </Link>
     </div>
   </div>

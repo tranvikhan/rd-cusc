@@ -143,6 +143,9 @@ export default function Projects() {
 const NewProject = (props) => (
   <div className="grid lg:grid-cols-2 gap-8  grid-cols-1 mt-10 ">
     <div className="flex flex-col justify-center">
+      <span className="text-gray-200 text-sm leading-5 font-medium mt-1">
+        {props.createAt}
+      </span>
       <Link href={props.href}>
         <h1 className="cursor-pointer text-white text-xl leading-7 font-bold hover:text-blue-600">
           {props.title}
@@ -154,9 +157,9 @@ const NewProject = (props) => (
           alt={props.author.name}
           className="object-cover h-8 w-8  rounded-full shadow-lg mr-2 border bg-purple-50"
         />
-        <h3 className="text-blue-50 text-sm font-medium py-1">
+        <span className="text-blue-50 text-sm font-medium">
           {props.author.name}
-        </h3>
+        </span>
       </div>
 
       <p className="text-indigo-300 text-sm leading-5 font-medium mt-1 text-6-line">
@@ -188,9 +191,9 @@ const ProjectItem = (props) => (
             alt={props.author.name}
             className="object-cover h-8 w-8  rounded-full shadow-lg mr-2 border bg-blue-300"
           />
-          <h3 className="text-gray-600 text-xs font-medium py-1">
+          <span className="text-gray-600 text-xs font-medium py-1">
             {props.author.name}
-          </h3>
+          </span>
         </div>
 
         <span className="text-gray-500 text-xs leading-5 font-medium mt-1  lg:mb-0 mb-1">
