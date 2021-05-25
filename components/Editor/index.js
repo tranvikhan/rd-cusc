@@ -25,6 +25,7 @@ export default class BasicDemo extends React.Component {
       editorState: editorState,
       outputHTML: editorState.toHTML(),
     })
+    console.log(editorState.toRAW())
   }
 
   setEditorContentAsync = () => {

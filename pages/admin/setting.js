@@ -256,7 +256,7 @@ const AutoEmailSetting = (props) => {
           </Form.Item>
           <Form.Item
             label="Nội dung HTML"
-            name="subject_autoEmail"
+            name="html_autoEmail"
             rules={[
               {
                 required: true,

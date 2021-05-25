@@ -3,7 +3,6 @@ import excuteQuery from '../../../db'
 import verifyToken from '../../../middleware/verifyToken'
 import NextCors from 'nextjs-cors'
 const fs = require('fs')
-
 export default async (req, res) => {
   await NextCors(req, res, {
     // Options
@@ -11,43 +10,30 @@ export default async (req, res) => {
     origin: '*',
     optionsSuccessStatus: 200,
   })
+
   let { slug } = req.query
   if (req.method === 'GET') {
-    /*  Get all user or get show user ---------------------------------------------------- */
+    /*  Get application with option---------------------------------------------------- */
     try {
-      if (slug === 'all' || slug === 'all-show') {
+      let userToken = await verifyToken(req)
+      if (!userToken) {
+        result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
+        return
+      }
+
+      if (slug === 'all') {
         const db_res = await excuteQuery({
-          query:
-            slug === 'all'
-              ? 'SELECT `id`, `username`, `role`, `position_vi`, `position_en`, `name_vi`, `name_en`, `avatar`,`saying_vi`, `saying_en`, `show`, `created_at`, `updated_at` FROM `user`'
-              : 'SELECT `id`, `username`, `role`, `position_vi`, `position_en`, `name_vi`, `name_en`, `avatar`,`saying_vi`, `saying_en`, `show`, `created_at`, `updated_at` FROM `user` WHERE `show` = 1',
+          query: 'SELECT * FROM `application`',
           values: [],
         })
-
         if (db_res.error) {
           result.BadRequest(res, db_res)
-          return
-        }
-        result.Ok(res, db_res)
-      } else if (parseInt(slug)) {
-        /*Get detail user ---------------------------------------------------- */
-        const db_res = await excuteQuery({
-          query:
-            'SELECT `id`, `username`, `role`, `position_vi`, `position_en`, `name_vi`, `name_en`, `avatar`, `birth_day`, `national_vi`, `national_en`, `gender`, `address_vi`, `address_en`, `email`, `phone`, `saying_vi`, `saying_en`, `cv`, `show`, `created_at`, `updated_at` FROM `user` WHERE `id`= ?',
-          values: [parseInt(slug)],
-        })
-        if (db_res.error) {
-          result.BadRequest(res, db_res)
-          return
-        }
-        if (!db_res[0]) {
-          result.BadRequest(res, 'Không tìm thấy user')
           return
         }
         result.Ok(res, db_res)
         return
       } else {
-        result.BadRequest(res, 'Không tìm thấy user')
+        result.BadRequest(res, 'Không hỗ trợ api')
         return
       }
     } catch (e) {
@@ -55,44 +41,85 @@ export default async (req, res) => {
       return
     }
   }
-
-  if (req.method === 'DELETE') {
-    /*  Delete user ----------------------------------------------------------------------- */
+  if (req.method === 'POST') {
+    /*  Add new application with option---------------------------------------------------- */
     try {
       let userToken = await verifyToken(req)
       if (!userToken) {
         result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
         return
       }
-      if (userToken.role !== 'root') {
+      if (userToken.role !== 'admin' && userToken.role !== 'root') {
+        result.Unauthorized(res, 'Không có quyền truy cập')
+        return
+      }
+      if (slug === 'add') {
+        const db_res = await excuteQuery({
+          query:
+            'INSERT INTO `application`( `name_vi`, `name_en`, `domain`,`show`) VALUES (?,?,?,?)',
+          values: [
+            req.body.name_vi,
+            req.body.name_en,
+            req.body.domain,
+            req.body.show,
+          ],
+        })
+        if (db_res.error && db_res.error.code === 'ER_DUP_ENTRY') {
+          result.BadRequest(res, 'Bạn đã thêm ứng dụng này trước đó')
+          return
+        }
+        if (db_res.error) {
+          result.BadRequest(res, db_res)
+          return
+        }
+        result.Ok(res, 'Thêm ứng dụng thành công!')
+        return
+      } else {
+        result.BadRequest(res, 'Không hỗ trợ api')
+        return
+      }
+    } catch (e) {
+      result.ServerError(res, 'Lỗi hệ thống')
+      return
+    }
+  }
+  if (req.method === 'DELETE') {
+    /*  Delete application ----------------------------------------------------------------------- */
+
+    try {
+      let userToken = await verifyToken(req)
+      if (!userToken) {
+        result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
+        return
+      }
+      if (userToken.role !== 'admin' && userToken.role !== 'root') {
         result.Unauthorized(res, 'Không có quyền truy cập')
         return
       }
       if (parseInt(slug)) {
         const db_res_1 = await excuteQuery({
-          query: 'SELECT `avatar` FROM `user`  WHERE `id`=?',
+          query: 'SELECT `image` FROM `application`  WHERE `id`=?',
           values: [parseInt(slug)],
         })
         if (db_res_1.error) {
           result.BadRequest(res, db_res_1)
           return
         }
-        if (db_res_1[0] && db_res_1[0].avatar) {
-          let old_path = db_res_1[0].avatar
-          if (old_path !== 'upload/userAvatar/default.jpg')
+        if (db_res_1[0] && db_res_1[0].image) {
+          let old_path = db_res_1[0].image
+          if (old_path !== 'upload/appImage/default.jpg')
             console.log('./public/' + old_path)
           fs.unlink('./public/' + old_path, () => {
             return
           })
         }
-
         const db_res = await excuteQuery({
-          query: 'DELETE FROM `user`  WHERE `id`=?',
+          query: 'DELETE FROM `application`  WHERE `id`=?',
           values: [parseInt(slug)],
         })
 
         if (db_res.affectedRows === 0) {
-          result.BadRequest(res, 'Không tìm thấy user')
+          result.BadRequest(res, 'Không tìm tháy ứng dụng có id= ' + slug)
           return
         }
         if (db_res.error) {
@@ -103,7 +130,7 @@ export default async (req, res) => {
         result.Ok(res, 'Xóa thành công')
         return
       } else {
-        result.BadRequest(res, 'Không tìm thấy user')
+        result.BadRequest(res, 'Không tìm tháy ứng dụng có id= ' + slug)
         return
       }
     } catch (e) {
@@ -112,14 +139,14 @@ export default async (req, res) => {
     }
   }
   if (req.method === 'PATCH') {
-    /*  Edit user ----------------------------------------------------------------------- */
+    /*  Edit application ----------------------------------------------------------------------- */
     try {
       let userToken = await verifyToken(req)
       if (!userToken) {
         result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
         return
       }
-      if (userToken.role !== 'root') {
+      if (userToken.role !== 'admin' && userToken.role !== 'root') {
         result.Unauthorized(res, 'Không có quyền truy cập')
         return
       }
@@ -135,14 +162,17 @@ export default async (req, res) => {
         if (arr_options.length > 0) {
           const db_res = await excuteQuery({
             query:
-              'UPDATE `user` SET ' +
+              'UPDATE `application` SET ' +
               sql_option.substring(0, sql_option.length - 2) +
               ' WHERE `id`=?',
             values: [...arr_options, parseInt(slug)],
           })
-
+          if (db_res.error && db_res.error.code === 'ER_DUP_ENTRY') {
+            result.BadRequest(res, 'Domain bị trùng với ứng dụng trước đó')
+            return
+          }
           if (db_res.affectedRows === 0) {
-            result.BadRequest(res, 'Không tìm thấy user')
+            result.BadRequest(res, 'Không tìm tháy ứng dụng có id= ' + slug)
             return
           }
           if (db_res.error) {
@@ -150,14 +180,14 @@ export default async (req, res) => {
             return
           }
 
-          result.Ok(res, 'Cập nhật thành công')
+          result.Ok(res, 'Cập nhật ứng dụng thành công')
           return
         } else {
           result.BadRequest(res, 'Lỗi truy vấn')
           return
         }
       } else {
-        result.BadRequest(res, 'Không tìm thấy user')
+        result.BadRequest(res, 'Không tìm tháy ứng dụng có id= ' + slug)
         return
       }
     } catch (e) {

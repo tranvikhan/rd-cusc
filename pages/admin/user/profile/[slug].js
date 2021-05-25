@@ -222,7 +222,7 @@ export default function AdminUser() {
                       <Form.Item label="Email" name="email">
                         <Input placeholder="Nhập email" />
                       </Form.Item>
-                      <Form.Item label="Số điện thoại" name="name_en">
+                      <Form.Item label="Số điện thoại" name="phone">
                         <Input placeholder="Nhập số điện thoại" />
                       </Form.Item>
                       <Form.Item label="CV" name="cv">
@@ -233,7 +233,7 @@ export default function AdminUser() {
                       <Form.Item label="Địa chỉ (vi)" name="address_vi">
                         <Input placeholder="Nhập địa chỉ tiếng Việt" />
                       </Form.Item>
-                      <Form.Item label="Địa chỉ (vi)" name="address_en">
+                      <Form.Item label="Địa chỉ (en)" name="address_en">
                         <Input placeholder="Nhập địa chỉ tiếng Anh" />
                       </Form.Item>
                     </Col>

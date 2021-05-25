@@ -17,10 +17,14 @@ export default async (req, res) => {
     origin: '*',
     optionsSuccessStatus: 200,
   })
-  const { user_id } = req.query
+  const { application_id } = req.query
   let userToken = await verifyToken(req)
   if (!userToken) {
     result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
+    return
+  }
+  if (userToken.role !== 'admin' && userToken.role !== 'root') {
+    result.Unauthorized(res, 'Không có quyền truy cập')
     return
   }
   if (req.method !== 'POST') {
@@ -30,7 +34,7 @@ export default async (req, res) => {
 
   try {
     const form = new formidable.IncomingForm()
-    form.uploadDir = './public/upload/userAvatar/'
+    form.uploadDir = './public/upload/appImage/'
     //xử lý upload
     form.parse(req, function (err, fields, files) {
       //path tmp trên server
@@ -44,16 +48,15 @@ export default async (req, res) => {
       }
 
       let str_arr = files.file.name.split('.')
-      let id_user_upload = userToken.role !== 'root' ? userToken.id : user_id
-      let newFileName = id_user_upload + '.' + str_arr[str_arr.length - 1]
+      let newFileName = application_id + '.' + str_arr[str_arr.length - 1]
       //thiết lập path mới cho files
       let newpath = form.uploadDir + newFileName
-      let newpathDB = 'upload/userAvatar/' + newFileName
+      let newpathDB = 'upload/appImage/' + newFileName
       fs.rename(path, newpath, async function (err) {
         if (err) throw err
         let db_res = await excuteQuery({
-          query: 'UPDATE  `user` SET `avatar`=? WHERE `id` =?',
-          values: [newpathDB, id_user_upload],
+          query: 'UPDATE  `application` SET `image`=? WHERE `id` =?',
+          values: [newpathDB, application_id],
         })
         if (db_res.error) {
           result.BadRequest(res, 'Lỗi truy vấn')
