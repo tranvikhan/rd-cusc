@@ -72,7 +72,10 @@ export default async (req, res) => {
           result.BadRequest(res, db_res)
           return
         }
-        result.Ok(res, 'Thêm ứng dụng thành công!')
+        result.Ok(res, {
+          message: 'Thêm ứng dụng thành công!',
+          obj: { id: db_res.insertId, ...req.body },
+        })
         return
       } else {
         result.BadRequest(res, 'Không hỗ trợ api')
@@ -127,7 +130,10 @@ export default async (req, res) => {
           return
         }
 
-        result.Ok(res, 'Xóa thành công')
+        result.Ok(res, {
+          message: 'Xóa ứng dụng thành công',
+          obj: { id: parseInt(slug) },
+        })
         return
       } else {
         result.BadRequest(res, 'Không tìm tháy ứng dụng có id= ' + slug)
@@ -179,8 +185,11 @@ export default async (req, res) => {
             result.BadRequest(res, db_res)
             return
           }
+          result.Ok(res, {
+            message: 'Cập nhật ứng dụng thành công',
+            obj: { id: parseInt(slug), ...req.body },
+          })
 
-          result.Ok(res, 'Cập nhật ứng dụng thành công')
           return
         } else {
           result.BadRequest(res, 'Lỗi truy vấn')

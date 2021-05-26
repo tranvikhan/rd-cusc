@@ -2,7 +2,7 @@ const result = require('../../../helper/result.helps')
 import excuteQuery from '../../../db'
 import verifyToken from '../../../middleware/verifyToken'
 import NextCors from 'nextjs-cors'
-
+import AddFeedbackNoti from '../../../helper/notification/addFeedback'
 export default async (req, res) => {
   await NextCors(req, res, {
     // Options
@@ -59,6 +59,7 @@ export default async (req, res) => {
             req.body.type,
           ],
         })
+
         if (db_res.error && db_res.error.code === 'ER_DUP_ENTRY') {
           result.BadRequest(res, 'Bạn đã gửi mẫu này trước đó!')
           return
@@ -67,13 +68,23 @@ export default async (req, res) => {
           result.BadRequest(res, db_res)
           return
         }
-        result.Ok(res, 'Gửi thông tin thành công!')
+        await AddFeedbackNoti(
+          db_res.insertId,
+          req.body.name,
+          req.body.email,
+          req.body.type
+        )
+        result.Ok(res, {
+          message: 'Gửi thông tin thành công!',
+          obj: { id: db_res.insertId, ...req.body },
+        })
         return
       } else {
         result.BadRequest(res, 'Không hỗ trợ api')
         return
       }
     } catch (e) {
+      console.log(e)
       result.ServerError(res, 'Lỗi hệ thống')
       return
     }
@@ -106,7 +117,10 @@ export default async (req, res) => {
           return
         }
 
-        result.Ok(res, 'Xóa thành công')
+        result.Ok(res, {
+          message: 'Xóa phản hồi thành công!',
+          obj: { id: parseInt(slug) },
+        })
         return
       } else {
         result.BadRequest(res, 'Không tìm phản hồi có id= ' + slug)
@@ -144,7 +158,10 @@ export default async (req, res) => {
           return
         }
 
-        result.Ok(res, 'Xác nhận thành công')
+        result.Ok(res, {
+          message: 'Xác nhận phản hồi thành công!',
+          obj: { id: parseInt(slug) },
+        })
         return
       } else {
         result.BadRequest(res, 'Không tìm phản hồi có id= ' + slug)

@@ -7,6 +7,9 @@ import {
   BsPersonFill,
 } from 'react-icons/bs'
 import dynamic from 'next/dynamic'
+import useSWR from 'swr'
+import { useAuth } from '../../hook/useAuth'
+import { getAllAnalysisAPI } from '../../axios/analysis'
 
 const AccessChart = dynamic(
   () => import('../../components/Chart/accessChart'),
@@ -21,8 +24,19 @@ const TopUserChart = dynamic(
   }
 )
 
+const analysisFetcher = async (type, user) => {
+  if (user) {
+    return await getAllAnalysisAPI(user.jwt)
+  } else {
+    return null
+  }
+}
 const { Meta } = Card
 export default function AdminDashBoard() {
+  const { user } = useAuth()
+  const { data, error } = useSWR(['getAnalysis', user], analysisFetcher, {
+    refreshInterval: 2000,
+  })
   return (
     <article>
       <WebHead
@@ -40,7 +54,7 @@ export default function AdminDashBoard() {
                     <BsFilePost size={28} />
                   </div>
                 }
-                title="12"
+                title={data ? data.total_post + '' : '--'}
                 description="Bài viết"
               />
             </Card>
@@ -53,7 +67,7 @@ export default function AdminDashBoard() {
                     <BsFillBriefcaseFill size={28} />
                   </div>
                 }
-                title="5"
+                title={data ? data.total_project + '' : '--'}
                 description="Dự án"
               />
             </Card>
@@ -66,7 +80,7 @@ export default function AdminDashBoard() {
                     <BsPersonFill size={28} />
                   </div>
                 }
-                title="3"
+                title={data ? data.total_user + '' : '--'}
                 description="Thành viên"
               />
             </Card>
@@ -79,19 +93,29 @@ export default function AdminDashBoard() {
                     <BsInboxesFill size={28} />
                   </div>
                 }
-                title="124"
+                title={data ? data.total_feedback + '' : '--'}
                 description="Phản hồi"
               />
             </Card>
           </Col>
           <Col lg={15} md={15} xs={24}>
             <Card title="Lược truy cập" bordered={false}>
-              <AccessChart />
+              <AccessChart
+                data={
+                  data && data.log_access.length > 0 ? [...data.log_access] : []
+                }
+              />
             </Card>
           </Col>
           <Col lg={9} md={9} xs={24}>
             <Card title="Thành viên tích cực" bordered={false}>
-              <TopUserChart />
+              <TopUserChart
+                data={
+                  data && data.ranking.length > 0
+                    ? data.ranking.map((rk) => ({ x: rk.name_vi, y: rk.total }))
+                    : []
+                }
+              />
             </Card>
           </Col>
         </Row>

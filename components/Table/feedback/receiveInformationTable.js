@@ -7,9 +7,11 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons'
 import Link from 'next/link'
+import moment from 'moment'
+import ExportCSV from '../../Export/exportCSV'
 const { Option } = Select
 
-export default function ReceiveInformationTable() {
+export default function ReceiveInformationTable(props) {
   const [state, setState] = React.useState({
     searchText: '',
     searchedColumn: '',
@@ -140,8 +142,10 @@ export default function ReceiveInformationTable() {
     },
     {
       title: 'Thời gian',
-      dataIndex: 'time',
+      dataIndex: 'created_at',
       key: 'time',
+      render: (text, record) =>
+        moment(record.created_at).format('DD-MM-YYYY HH:mm:ss'),
     },
     {
       title: 'Hành động',
@@ -154,7 +158,7 @@ export default function ReceiveInformationTable() {
             okText="Chấp nhận"
             cancelText="Hủy"
             onConfirm={() => {
-              console.log(record)
+              props.onDelete(record.id)
             }}
           >
             <a href="#" className="text-red-600 font-medium">
@@ -166,6 +170,12 @@ export default function ReceiveInformationTable() {
               title="Chọn hành động"
               okText="Chấp nhận"
               cancelText="Hủy yêu cầu"
+              onConfirm={() => {
+                props.onApproved(record.id)
+              }}
+              onCancel={() => {
+                props.onDelete(record.id)
+              }}
             >
               <a href="#" className="text-gray-600 font-medium">
                 Xử lý
@@ -176,15 +186,6 @@ export default function ReceiveInformationTable() {
       ),
     },
   ]
-  const data = []
-  for (let i = 0; i < 50; i++) {
-    data.push({
-      key: i,
-      email: i + 'tranvikhan@gmail.com',
-      time: '12:00:05 14/05/2021',
-      approved: Math.random() > 0.5 ? 0 : 1,
-    })
-  }
 
   const [selectedRowKeys, setSelectedKeys] = React.useState([])
   const rowSelection = {
@@ -197,19 +198,42 @@ export default function ReceiveInformationTable() {
     cancel: 'Hủy yêu cầu',
     delete: 'Xóa',
   }
+  const [emailList, setEmailList] = React.useState('')
+  React.useEffect(() => {
+    if (props.data) {
+      let str = ''
+      props.data.forEach((fb) => {
+        if (fb.approved) {
+          str = str + fb.email + ','
+        }
+      })
+      setEmailList(str)
+    } else {
+      setEmailList('')
+    }
+  }, [props.data])
   return (
     <>
       <Space size="middle" className="mb-4">
-        <Button icon={<DownloadOutlined />}>Tải về danh sách</Button>
-        <Link href="mailto:thviet@ctu.edu.vn,tranvikhan@gmail.com">
-          <Button icon={<SendOutlined />}>Gửi email</Button>
+        <ExportCSV
+          csvData={props.data ? props.data : []}
+          fileName="Danh Sach Nguoi Nhan Tin"
+        />
+        <Link href={'mailto:' + emailList}>
+          <Button
+            icon={<SendOutlined />}
+            disabled={(props.data && props.data.length === 0) || !props.data}
+          >
+            Gửi email
+          </Button>
         </Link>
       </Space>
       <Table
         scroll={{ x: 1100 }}
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={data}
+        rowKey="id"
+        dataSource={props.data ? props.data : []}
         footer={() => (
           <Space size="middle">
             <Select
@@ -233,6 +257,13 @@ export default function ReceiveInformationTable() {
               }
               okText="Thực thi"
               cancelText="Hủy"
+              onConfirm={() => {
+                if (actionType === 'accept') {
+                  props.onApprovedAll(selectedRowKeys)
+                } else {
+                  props.onDeleteAll(selectedRowKeys)
+                }
+              }}
             >
               <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
             </Popconfirm>

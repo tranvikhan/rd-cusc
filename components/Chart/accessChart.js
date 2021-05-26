@@ -1,25 +1,8 @@
+import moment from 'moment'
 import React from 'react'
 import Chart from 'react-apexcharts'
 
-const AccessChart = () => {
-  const getDaysInMonth = (month, year) => {
-    var date = new Date(year, month, 1)
-    var days = []
-    var idx = 0
-    while (date.getMonth() === month && idx < 15) {
-      var d = new Date(date)
-      days.push(
-        d.getDate() + ' ' + d.toLocaleString('en-us', { month: 'short' })
-      )
-      date.setDate(date.getDate() + 1)
-      idx += 1
-    }
-    return days
-  }
-
-  var now = new Date()
-  var labels = getDaysInMonth(now.getMonth(), now.getFullYear())
-
+const AccessChart = (props) => {
   const apexLineChartWithLables = {
     chart: {
       height: 296,
@@ -51,7 +34,6 @@ const AccessChart = () => {
     colors: ['#3B82F6'],
     xaxis: {
       type: 'string',
-      categories: labels,
       tooltip: {
         enabled: false,
       },
@@ -83,18 +65,42 @@ const AccessChart = () => {
       x: { show: false },
     },
   }
-
-  const apexLineChartWithLablesData = [
-    {
-      name: 'Lược truy cập',
-      data: [10, 20, 5, 15, 10, 20, 15, 25, 20, 30, 25, 40, 30, 50, 35],
-    },
-  ]
-
+  const [currentData, setCurrentData] = React.useState([])
+  React.useEffect(() => {
+    let now = new Date()
+    let newData = []
+    for (let i = 15; i >= 0; i--) {
+      var date = new Date()
+      date.setDate(now.getDate() - i)
+      let lable = moment(date).format('DD-MM')
+      let check = false
+      props.data.forEach((dt) => {
+        if (moment(dt.date).format('DD-MM') == lable) {
+          newData.push({
+            x: lable,
+            y: dt.total,
+          })
+          check = true
+        }
+      })
+      if (!check) {
+        newData.push({
+          x: lable,
+          y: 0,
+        })
+      }
+    }
+    setCurrentData(newData)
+  }, [props.data])
   return (
     <Chart
       options={apexLineChartWithLables}
-      series={apexLineChartWithLablesData}
+      series={[
+        {
+          name: 'Lược truy cập',
+          data: [...currentData],
+        },
+      ]}
       type="area"
       className="apex-charts mt-3"
       height={296}

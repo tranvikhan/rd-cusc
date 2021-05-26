@@ -29,6 +29,7 @@ export default async (req, res) => {
           return
         }
         result.Ok(res, db_res)
+        return
       } else if (parseInt(slug)) {
         /*Get detail user ---------------------------------------------------- */
         const db_res = await excuteQuery({
@@ -68,7 +69,17 @@ export default async (req, res) => {
         result.Unauthorized(res, 'Không có quyền truy cập')
         return
       }
-      if (parseInt(slug)) {
+      if (parseInt(slug) && parseInt(slug) !== 1) {
+        const db_res_0 = await excuteQuery({
+          query:
+            'UPDATE `post` SET `author` = ?  WHERE `author`=? ; ' +
+            'UPDATE `project` SET `writer` = ?  WHERE `writer`=?',
+          values: [1, parseInt(slug), 1, parseInt(slug)],
+        })
+        if (db_res_0.error) {
+          result.BadRequest(res, db_res_0)
+          return
+        }
         const db_res_1 = await excuteQuery({
           query: 'SELECT `avatar` FROM `user`  WHERE `id`=?',
           values: [parseInt(slug)],
@@ -80,10 +91,9 @@ export default async (req, res) => {
         if (db_res_1[0] && db_res_1[0].avatar) {
           let old_path = db_res_1[0].avatar
           if (old_path !== 'upload/userAvatar/default.jpg')
-            console.log('./public/' + old_path)
-          fs.unlink('./public/' + old_path, () => {
-            return
-          })
+            fs.unlink('./public/' + old_path, () => {
+              return
+            })
         }
 
         const db_res = await excuteQuery({
@@ -100,7 +110,10 @@ export default async (req, res) => {
           return
         }
 
-        result.Ok(res, 'Xóa thành công')
+        result.Ok(res, {
+          message: 'Xóa thành công tài khoản người dùng',
+          obj: { id: parseInt(slug) },
+        })
         return
       } else {
         result.BadRequest(res, 'Không tìm thấy user')
@@ -150,7 +163,10 @@ export default async (req, res) => {
             return
           }
 
-          result.Ok(res, 'Cập nhật thành công')
+          result.Ok(res, {
+            message: 'Cập nhật thông tin người dùng thành công',
+            obj: { id: parseInt(slug), ...req.body },
+          })
           return
         } else {
           result.BadRequest(res, 'Lỗi truy vấn')

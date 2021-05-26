@@ -9,6 +9,7 @@ import ProgressBar from '@badrap/bar-of-progress'
 import Router, { useRouter } from 'next/router'
 import React from 'react'
 import AdminLayout from '../components/Layout/admin_layout'
+import { AuthProvider } from '../hook/useAuth'
 
 const progress = new ProgressBar({
   size: 2,
@@ -26,9 +27,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <div className="tailwind">
       {router.asPath.split('/')[1] === 'admin' ? (
-        <AdminLayout>
-          <Component {...pageProps} />
-        </AdminLayout>
+        <AuthProvider>
+          <AdminLayout>
+            <Component {...pageProps} />
+          </AdminLayout>
+        </AuthProvider>
       ) : (
         <MainLayout>
           <Component {...pageProps} />

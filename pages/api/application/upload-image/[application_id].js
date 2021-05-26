@@ -62,7 +62,10 @@ export default async (req, res) => {
           result.BadRequest(res, 'Lỗi truy vấn')
           return
         }
-        result.Ok(res, { path: newpathDB })
+        result.Ok(res, {
+          message: 'Cập nhật ảnh bài viết thành công',
+          obj: { id: parseInt(application_id), image: newpathDB },
+        })
         return
       })
     })

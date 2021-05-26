@@ -1,12 +1,12 @@
 import Chart from 'react-apexcharts'
-export default function TopUserChart() {
+export default function TopUserChart(props) {
   return (
     <Chart
       options={chartOption}
       series={[
         {
           name: 'Bài đăng',
-          data: [21, 22, 10, 28],
+          data: [...props.data],
         },
       ]}
       type="bar"
@@ -53,7 +53,6 @@ const chartOption = {
     show: false,
   },
   xaxis: {
-    categories: [['thViet'], ['dhNghia'], ['hxPhat'], ['tvKhan']],
     labels: {
       style: {
         colors: colors,

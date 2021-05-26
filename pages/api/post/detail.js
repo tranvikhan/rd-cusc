@@ -52,7 +52,7 @@ export default async (req, res) => {
 
           return
         }
-        result.Ok(res, db_res)
+        result.Ok(res, db_res[0])
         return
       }
       result.BadRequest(res, 'Không tìm thấy bài viết này')

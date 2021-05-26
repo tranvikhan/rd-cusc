@@ -2,9 +2,11 @@ import { Button, Popconfirm, Space, Table, Tag, Input, Select } from 'antd'
 import React from 'react'
 import Highlighter from 'react-highlight-words'
 import { SearchOutlined, DownloadOutlined } from '@ant-design/icons'
+import ExportCSV from '../../Export/exportCSV'
+import moment from 'moment'
 const { Option } = Select
 
-export default function AdvisoryTable() {
+export default function AdvisoryTable(props) {
   const [state, setState] = React.useState({
     searchText: '',
     searchedColumn: '',
@@ -141,8 +143,10 @@ export default function AdvisoryTable() {
     },
     {
       title: 'Thời gian',
-      dataIndex: 'time',
+      dataIndex: 'created_at',
       key: 'time',
+      render: (text, record) =>
+        moment(record.created_at).format('DD-MM-YYYY HH:mm:ss'),
     },
     {
       title: 'Hành động',
@@ -155,7 +159,7 @@ export default function AdvisoryTable() {
             okText="Chấp nhận"
             cancelText="Hủy"
             onConfirm={() => {
-              console.log(record)
+              props.onDelete(record.id)
             }}
           >
             <a href="#" className="text-red-600 font-medium">
@@ -167,6 +171,9 @@ export default function AdvisoryTable() {
               title="Chọn hành động"
               okText="Đã phản hồi"
               cancelText="Tiếp tục đợi"
+              onConfirm={() => {
+                props.onApproved(record.id)
+              }}
             >
               <a href="#" className="text-gray-600 font-medium">
                 Xử lý
@@ -177,17 +184,6 @@ export default function AdvisoryTable() {
       ),
     },
   ]
-  const data = []
-  for (let i = 0; i < 50; i++) {
-    data.push({
-      key: i,
-      email: i + 'tranvikhan@gmail.com',
-      name: 'Trần Vi Khan ' + i,
-      content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
-      time: '14/05/2021',
-      approved: Math.random() > 0.5 ? 0 : 1,
-    })
-  }
 
   const [selectedRowKeys, setSelectedKeys] = React.useState([])
   const rowSelection = {
@@ -202,13 +198,17 @@ export default function AdvisoryTable() {
   return (
     <>
       <Space size="middle" className="mb-4">
-        <Button icon={<DownloadOutlined />}>Tải về danh sách</Button>
+        <ExportCSV
+          csvData={props.data ? props.data : []}
+          fileName="Danh Sach Nguoi Can Tu Van"
+        />
       </Space>
       <Table
         scroll={{ x: 1100 }}
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={data}
+        rowKey="id"
+        dataSource={props.data ? props.data : []}
         expandable={{
           expandedRowRender: (record) => (
             <div>
@@ -240,6 +240,13 @@ export default function AdvisoryTable() {
               }
               okText="Thực thi"
               cancelText="Hủy"
+              onConfirm={() => {
+                if (actionType === 'feedback') {
+                  props.onApprovedAll(selectedRowKeys)
+                } else {
+                  props.onDeleteAll(selectedRowKeys)
+                }
+              }}
             >
               <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
             </Popconfirm>

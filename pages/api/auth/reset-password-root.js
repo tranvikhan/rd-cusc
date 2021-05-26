@@ -36,7 +36,10 @@ export default async (req, res) => {
         result.BadRequest(res, 'Lỗi truy vấn')
         return
       }
-      result.Ok(res, 'Đổi mật khẩu thành công')
+      result.Ok(res, {
+        message: 'Đổi mật khẩu thành công',
+        obj: { id: req.body.user_id },
+      })
       return
     } catch (error) {
       result.ServerError(res, 'Lỗi truy vấn')

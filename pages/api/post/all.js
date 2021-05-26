@@ -12,7 +12,7 @@ export default async (req, res) => {
   })
 
   if (req.method === 'GET') {
-    /*  Get feedback with option---------------------------------------------------- */
+    /*  Get project with option---------------------------------------------------- */
 
     const { category, page, limit, lang } = req.query
 
@@ -33,6 +33,7 @@ export default async (req, res) => {
       }
       let sql_limit = parseInt(limit) < 1 ? 1 : parseInt(limit)
       let total_pages = Math.ceil(db_res[0].total / sql_limit)
+      total_pages = total_pages == 0 ? 1 : total_pages
       let page_sql =
         parseInt(page) > total_pages
           ? total_pages

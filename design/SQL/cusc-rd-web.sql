@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 21, 2021 lúc 07:17 PM
+-- Thời gian đã tạo: Th5 23, 2021 lúc 02:15 PM
 -- Phiên bản máy phục vụ: 10.4.18-MariaDB
 -- Phiên bản PHP: 7.3.28
 
@@ -49,6 +49,7 @@ CREATE TABLE `feedback` (
   `name` text DEFAULT '',
   `email` varchar(100) NOT NULL DEFAULT '',
   `content` text DEFAULT '',
+  `type` varchar(50) NOT NULL DEFAULT 'get_news',
   `approved` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -83,6 +84,7 @@ CREATE TABLE `notification` (
   `style` varchar(200) DEFAULT 'success',
   `ref_id` int(11) DEFAULT NULL,
   `link` varchar(200) DEFAULT '#',
+  `is_new` tinyint(1)  NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -114,12 +116,24 @@ CREATE TABLE `post` (
 
 CREATE TABLE `post_category` (
   `id` int(11) NOT NULL,
-  `name` text NOT NULL DEFAULT '',
+  `name_vi` text NOT NULL DEFAULT '',
+  `name_en` text NOT NULL DEFAULT '',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+--
+-- Đang đổ dữ liệu cho bảng `post_category`
+--
+INSERT INTO `post_category`(`id`,`name_vi`, `name_en`)
+VALUES(
+    1,
+    'Hoạt động nhóm R&D',
+    'R&D Activity'
+);
+INSERT INTO `post_category`(`id`,`name_vi`, `name_en`)
+VALUES(2,'Công nghệ', 'Tech news');
 -- --------------------------------------------------------
+
 
 --
 -- Cấu trúc bảng cho bảng `post_lang`
@@ -187,6 +201,30 @@ CREATE TABLE `setting` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `setting`
+--
+
+INSERT INTO `setting` (`id`, `setting_name`, `setting_value`, `created_at`, `updated_at`) VALUES
+(1, 'project_homePage_mode', 'auto', '2021-05-22 14:24:53', '2021-05-22 14:24:53'),
+(2, 'project_1', '', '2021-05-22 14:24:53', '2021-05-22 14:26:07'),
+(3, 'project_2', '', '2021-05-22 14:24:53', '2021-05-22 14:26:18'),
+(4, 'project_3', '', '2021-05-22 14:24:53', '2021-05-22 14:26:21'),
+(5, 'project_projectPage_mode', 'auto', '2021-05-22 14:24:53', '2021-05-22 14:27:06'),
+(6, 'project_projectPage', '', '2021-05-22 14:24:53', '2021-05-22 14:27:22'),
+(7, 'post_newsPage_mode', 'auto', '2021-05-22 14:24:53', '2021-05-22 14:27:38'),
+(8, 'post_newPage', '', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
+(9, 'user_organizationPage_mode', 'auto', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
+(10, 'user_organizationPage', '', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
+(11, 'auto_email_mode', 'off', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
+(12, 'email_autoEmail', '', '2021-05-22 14:31:51', '2021-05-22 14:32:18'),
+(13, 'host_autoEmail', '', '2021-05-22 14:31:51', '2021-05-22 14:32:15'),
+(14, 'port_autoEmail', '', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
+(15, 'username_autoEmail', '', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
+(16, 'password_autoEmail', '', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
+(17, 'subject_autoEmail', 'R&D-CUSC Thông tin phản hồi', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
+(18, 'html_autoEmail', '<p>Nội dung</p>', '2021-05-22 14:31:52', '2021-05-22 14:31:52');
+
 -- --------------------------------------------------------
 
 --
@@ -206,7 +244,7 @@ CREATE TABLE `user` (
   `birth_day` date DEFAULT '2000-01-01',
   `national_vi` tinytext DEFAULT 'Việt Nam',
   `national_en` tinytext DEFAULT 'Viet Nam',
-  `gender` tinytext DEFAULT 'Nam',
+  `gender` tinytext DEFAULT 'male',
   `address_vi` tinytext DEFAULT '',
   `address_en` tinytext DEFAULT '',
   `email` varchar(100) DEFAULT '#',
@@ -224,7 +262,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `role`, `position_vi`, `position_en`, `name_vi`, `name_en`, `avatar`, `birth_day`, `national_vi`, `national_en`, `gender`, `address_vi`, `address_en`, `email`, `phone`, `saying_vi`, `saying_en`, `cv`, `show`, `created_at`, `updated_at`) VALUES
-(1, 'thviet', '$2a$08$iQcicVFpbgJxMFTqEhIjreDOCO2B1u7Z7Hno2psYz59KARJ.2zWmC', 'root', 'Trưởng nhóm R&D', 'Head of the R&D department', 'Trần Hoàng Việt', 'Tran Hoang Viet', 'upload/userAvatar/default.jpg', '2000-01-01', 'Việt Nam', 'Viet Nam', 'Nam', '', '', '#', '+84 ', '', '', '#', 1, '2021-05-20 12:15:24', '2021-05-21 17:15:55');
+(1, 'thviet', '$2a$08$qznKdv9znpW2BGHNmCbUi.G1GgO0l5tSCIcOd5BlqSPBzFIx9kvqy', 'root', 'Trưởng nhóm R&D', 'Head of the R&D department', 'Trần Hoàng Việt', 'Tran Hoang Viet', 'upload/userAvatar/default.jpg', '2000-01-01', 'Việt Nam', 'Viet Nam', 'Nam', '', '', '#', '+84 ', '', '', '#', 1, '2021-05-20 12:15:24', '2021-05-22 13:06:22');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -235,21 +273,20 @@ INSERT INTO `user` (`id`, `username`, `password`, `role`, `position_vi`, `positi
 --
 ALTER TABLE `application`
   ADD PRIMARY KEY (`id`);
-
+ALTER TABLE `cusc-rd-web`.`application` ADD UNIQUE `ONLY ONE APP DOMAIN` (`domain`(150));
 --
 -- Chỉ mục cho bảng `feedback`
 --
 ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ONLY ONE EMAIL AND TYPE` (`type`,`email`);
 ALTER TABLE `feedback` ADD FULLTEXT KEY `EMAIL_SEARCH` (`email`);
 
 --
 -- Chỉ mục cho bảng `log`
 --
 ALTER TABLE `log`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `DATE_CREATED` (`created_at`),
-  ADD KEY `USER_ID_LOG` (`user`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `notification`
@@ -349,7 +386,7 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT cho bảng `post_category`
 --
 ALTER TABLE `post_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `post_lang`
@@ -373,7 +410,7 @@ ALTER TABLE `project_lang`
 -- AUTO_INCREMENT cho bảng `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
@@ -384,12 +421,6 @@ ALTER TABLE `user`
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
-
---
--- Các ràng buộc cho bảng `log`
---
-ALTER TABLE `log`
-  ADD CONSTRAINT `USER_ID_LOG` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Các ràng buộc cho bảng `notification`

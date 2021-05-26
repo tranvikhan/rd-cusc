@@ -45,7 +45,10 @@ export default async (req, res) => {
         result.BadRequest(res, db_res)
         return
       }
-      result.Ok(res, 'Đăng ký thành công')
+      result.Ok(res, {
+        message: 'Đăng ký người dùng mới thành công',
+        obj: { id: db_res.insertId, ...req.body },
+      })
       return
     } catch (error) {
       result.ServerError(res, 'Lỗi truy vấn')
