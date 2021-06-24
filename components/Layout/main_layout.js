@@ -4,11 +4,12 @@ import Footer from './footer'
 
 export default function MainLayout({ children }) {
   return (
-    <div>
+    <>
       <TopNavigation />
-      {children}
+      <div className="min-h-screen"> {children}</div>
+
       <Footer />
       <BackTop />
-    </div>
+    </>
   )
 }

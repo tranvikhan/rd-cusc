@@ -45,7 +45,7 @@ export default async (req, res) => {
           result.BadRequest(res, 'Không tìm thấy user')
           return
         }
-        result.Ok(res, db_res)
+        result.Ok(res, db_res[0])
         return
       } else {
         result.BadRequest(res, 'Không tìm thấy user')
@@ -90,10 +90,11 @@ export default async (req, res) => {
         }
         if (db_res_1[0] && db_res_1[0].avatar) {
           let old_path = db_res_1[0].avatar
-          if (old_path !== 'upload/userAvatar/default.jpg')
+          if (old_path !== 'upload/userAvatar/default.jpg') {
             fs.unlink('./public/' + old_path, () => {
               return
             })
+          }
         }
 
         const db_res = await excuteQuery({
@@ -132,7 +133,7 @@ export default async (req, res) => {
         result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
         return
       }
-      if (userToken.role !== 'root') {
+      if (userToken.role !== 'root' && userToken.id != parseInt(slug)) {
         result.Unauthorized(res, 'Không có quyền truy cập')
         return
       }

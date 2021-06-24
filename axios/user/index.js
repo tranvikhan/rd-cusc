@@ -20,10 +20,12 @@ exports.getDetailUserAPI = async function (id) {
 }
 
 exports.uploadAvatarAPI = async function (file, id, jwt) {
+  let formData = new FormData()
+  formData.append('file', file)
   return await AxiosClient({
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data', Authorization: jwt },
-    data: { file: file },
+    data: formData,
     url: '/api/user/upload-avatar/' + id,
   })
 }

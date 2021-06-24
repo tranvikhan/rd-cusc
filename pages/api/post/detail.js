@@ -23,7 +23,7 @@ export default async (req, res) => {
             lang +
             '` AS `author_name`, `post`.`category`, `post_category`.`name_' +
             lang +
-            '` AS `category_name`, `post`.`published_at`, `post`.`created_at`, `post`.`image`, `post_lang`.`title`, `post_lang`.`description`,`post_lang`.`content`  FROM `post_lang` INNER JOIN `post` ON `post`.`id` = `post_lang`.`post` INNER JOIN `user` ON `user`.`id` = `post`.`author` INNER JOIN `post_category` ON `post_category`.`id` = `post`.`category` WHERE `post`.`approved`=1 AND `post`.`show`=1 AND `post`.`id` = ? AND `post_lang`.`lang` =?',
+            '` AS `category_name`, `post`.`published_at`, `post`.`created_at`, `post`.`image`, `post_lang`.`title`, `post_lang`.`description`,`post_lang`.`tags`,`post_lang`.`content`  FROM `post_lang` INNER JOIN `post` ON `post`.`id` = `post_lang`.`post` INNER JOIN `user` ON `user`.`id` = `post`.`author` INNER JOIN `post_category` ON `post_category`.`id` = `post`.`category` WHERE `post`.`approved`=1 AND `post`.`show`=1 AND `post`.`id` = ? AND `post_lang`.`lang` =?',
           values: [parseInt(id), lang === 'en' ? 'en' : 'vi'],
         })
         if (db_res.error) {

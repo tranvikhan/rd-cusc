@@ -110,11 +110,11 @@ export default async (req, res) => {
         }
         if (db_res_1[0] && db_res_1[0].image) {
           let old_path = db_res_1[0].image
-          if (old_path !== 'upload/appImage/default.jpg')
-            console.log('./public/' + old_path)
-          fs.unlink('./public/' + old_path, () => {
-            return
-          })
+          if (old_path !== 'upload/appImage/default.jpg') {
+            fs.unlink('./public/' + old_path, () => {
+              return
+            })
+          }
         }
         const db_res = await excuteQuery({
           query: 'DELETE FROM `application`  WHERE `id`=?',

@@ -30,6 +30,11 @@ export default function AdminFeedback() {
       revalidateOnFocus: false,
     }
   )
+  React.useEffect(() => {
+    if (error) {
+      message.error(error.info, 2)
+    }
+  }, [error])
   const tabListNoTitle = [
     {
       key: 'get-news',
@@ -78,18 +83,21 @@ export default function AdminFeedback() {
     },
     [user]
   )
+
   const handleApprovedAll = useCallback(
-    (rows) => {
+    async (rows) => {
       if (user) {
-        rows.forEach(async (id) => {
+        await rows.forEach(async (id) => {
           try {
-            await approvedFeedbackAPI(id, 1, user.jwt)
+            let res = await approvedFeedbackAPI(id, 1, user.jwt)
           } catch (e) {
             console.log(e)
           }
         })
         message.success('Đã xử lý ' + rows.length + ' phản hồi', 1)
-        mutate()
+        setTimeout(() => {
+          mutate()
+        }, 1000)
       } else {
         message.error('Lỗi xác thực người dùng', 1)
       }
@@ -97,17 +105,19 @@ export default function AdminFeedback() {
     [user]
   )
   const handleDeleteAll = useCallback(
-    (rows) => {
+    async (rows) => {
       if (user) {
-        rows.forEach(async (id) => {
+        await rows.forEach(async (id) => {
           try {
-            await deleteFeedbackAPI(id, user.jwt)
+            let res = await deleteFeedbackAPI(id, user.jwt)
           } catch (e) {
             console.log(e)
           }
         })
         message.success('Đã xóa thành công ' + rows.length + ' phản hồi', 1)
-        mutate()
+        setTimeout(() => {
+          mutate()
+        }, 1000)
       } else {
         message.error('Lỗi xác thực người dùng', 1)
       }

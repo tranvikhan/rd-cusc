@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  Col,
-  Layout,
-  List,
-  Popconfirm,
-  Row,
-  Tooltip,
-} from 'antd'
+import { Button, Card, Layout, List, message, Popconfirm, Tooltip } from 'antd'
 import WebHead from '../../components/Layout/head'
 import {
   SettingOutlined,
@@ -18,60 +8,43 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons'
 import Link from 'next/link'
-import NewApplication from '../../components/Form/application/newApplication'
+import ApplicationFormAction from '../../components/Form/application'
+import { deleteAppAPI, getAllAppAPI } from '../../axios/application'
+import useSWR from 'swr'
+import { useAuth } from '../../hook/useAuth'
+import React from 'react'
 
 const { Meta } = Card
-const data = [
-  {
-    id: 1,
-    name_vi: 'HỆ THỐNG ISO',
-    name_en: 'ISO SYSTEM',
-    domain: 'https://iso.cusc.vn',
-    image: '/assets/img/iso.PNG',
-    show: true,
-  },
-  {
-    id: 2,
-    name_vi: 'PHÒNG HỢP TRỰC TUYẾN',
-    name_en: 'MEET ROOM SYSTEM',
-    domain: 'https://cusc-meet.ddns.net',
-    image: '/assets/img/meet.PNG',
-    show: true,
-  },
-  {
-    id: 3,
-    name_vi: 'PHÒNG HỢP TRỰC TUYẾN 2',
-    name_en: 'MEET ROOM SYSTEM 2',
-    domain: 'https://cusc-meet.ddns.net',
-    image: '/assets/img/meet.PNG',
-    show: false,
-  },
 
-  {
-    id: 4,
-    name_vi: 'PHÒNG HỢP TRỰC TUYẾN 3',
-    name_en: 'MEET ROOM SYSTEM 3',
-    domain: 'https://cusc-meet.ddns.net',
-    image: '/assets/img/meet.PNG',
-    show: false,
-  },
-  {
-    id: 5,
-    name_vi: 'PHÒNG HỢP TRỰC TUYẾN 4',
-    name_en: 'MEET ROOM SYSTEM 4',
-    domain: 'https://cusc-meet.ddns.net',
-    image: '/assets/img/meet.PNG',
-    show: false,
-  },
-]
-const user = {
-  role: 'admin',
+const applicationFetcher = async (type, user) => {
+  if (user) {
+    return await getAllAppAPI(user.jwt)
+  } else {
+    return null
+  }
 }
-
 export default function AdminApp() {
+  const { user } = useAuth()
+  const { data, error, isValidating, mutate } = useSWR(
+    ['getAppAdmin', user],
+    applicationFetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  )
+  const [applicationForm, setApplicationForm] = React.useState(null)
   return (
     <>
-      <NewApplication />
+      {applicationForm && (
+        <ApplicationFormAction
+          user={user}
+          data={applicationForm}
+          toggle={(value) => {
+            setApplicationForm(null)
+            if (value) mutate()
+          }}
+        />
+      )}
       <article>
         <WebHead
           title="Ứng dụng | Admin"
@@ -80,12 +53,19 @@ export default function AdminApp() {
         />
         <Layout>
           <Card
+            loading={isValidating}
             bordered={false}
             title="Danh sách ứng dụng"
             extra={
-              user.role === 'admin' && (
+              user.role !== 'user' && (
                 <Tooltip title="Thêm ứng dụng">
-                  <Button type="primary" icon={<PlusOutlined />}>
+                  <Button
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={() => {
+                      setApplicationForm('new')
+                    }}
+                  >
                     Thêm ứng dụng
                   </Button>
                 </Tooltip>
@@ -100,8 +80,8 @@ export default function AdminApp() {
                   <Card
                     type="inner"
                     actions={
-                      user.role === 'admin' && [
-                        appItem.show ? (
+                      user.role !== 'user' && [
+                        appItem.show === 1 ? (
                           <Tooltip title="Đang hiển thị">
                             <PushpinOutlined key="show" />
                           </Tooltip>
@@ -110,31 +90,43 @@ export default function AdminApp() {
                             <EyeInvisibleOutlined key="hide" />
                           </Tooltip>
                         ),
-                        <Tooltip title="Cài đặt">
+                        <Tooltip title="Chỉnh sửa">
                           <SettingOutlined
                             key="setting"
                             onClick={() => {
-                              console.log('setting')
+                              setApplicationForm(appItem)
                             }}
                           />
                         </Tooltip>,
-                        <Tooltip title="Xóa">
-                          <Popconfirm
-                            title="Xác nhận xóa ứng dụng"
-                            okText="OK"
-                            cancelText="Hủy"
-                            key="delete"
-                          >
-                            <DeleteOutlined />
-                          </Popconfirm>
-                        </Tooltip>,
+                        <Popconfirm
+                          title="Xác nhận xóa ứng dụng"
+                          okText="OK"
+                          cancelText="Hủy"
+                          key="delete"
+                          onConfirm={() => {
+                            if (user) {
+                              deleteAppAPI(appItem.id, user.jwt)
+                                .then((res) => {
+                                  mutate()
+                                  message.success(res.message, 1.5)
+                                })
+                                .catch((err) => {
+                                  message.error(err.info, 2)
+                                })
+                            } else {
+                              message.error('Lỗi xác thực người dùng', 2)
+                            }
+                          }}
+                        >
+                          <DeleteOutlined />
+                        </Popconfirm>,
                       ]
                     }
                     cover={
                       <img
                         className="object-cover h-44 w-full filter brightness-90"
                         alt={appItem.name_vi}
-                        src={appItem.image}
+                        src={'/' + appItem.image}
                       />
                     }
                   >

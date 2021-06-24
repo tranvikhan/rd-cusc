@@ -6,3 +6,12 @@
   width: 147px;
   height: 98px;
 }
+
+.homepage-image-uploader > .ant-upload {
+  width: 100%;
+  height: auto;
+}
+
+.ant-carousel .slick-dots-bottom {
+  bottom: -34px;
+}

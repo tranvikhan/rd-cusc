@@ -146,7 +146,7 @@ export default function ContactTable(props) {
       dataIndex: 'created_at',
       key: 'time',
       render: (text, record) =>
-        moment(record.created_at).format('DD-MM-YYYY HH:mm:ss'),
+        moment(record.created_at).format('HH:mm DD-MM-YYYY'),
     },
     {
       title: 'Hành động',

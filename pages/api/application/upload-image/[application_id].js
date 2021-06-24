@@ -33,6 +33,24 @@ export default async (req, res) => {
   }
 
   try {
+    const db_res_1 = await excuteQuery({
+      query: 'SELECT `image` FROM `application`  WHERE `id`=?',
+      values: [parseInt(application_id)],
+    })
+    if (db_res_1.error) {
+      result.BadRequest(res, db_res_1)
+      return
+    }
+    console.log(db_res_1)
+    if (db_res_1[0] && db_res_1[0].image) {
+      let old_path = db_res_1[0].image
+      if (old_path !== 'upload/appImage/default.jpg') {
+        fs.unlink('./public/' + old_path, () => {
+          return
+        })
+      }
+    }
+
     const form = new formidable.IncomingForm()
     form.uploadDir = './public/upload/appImage/'
     //xử lý upload
@@ -63,7 +81,7 @@ export default async (req, res) => {
           return
         }
         result.Ok(res, {
-          message: 'Cập nhật ảnh bài viết thành công',
+          message: 'Cập nhật ảnh ứng dụng thành công',
           obj: { id: parseInt(application_id), image: newpathDB },
         })
         return

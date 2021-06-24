@@ -25,7 +25,7 @@ export default async function ApprovedPostNoti(user, id) {
   try {
     let user_name = await getUserName(user)
     let post_info = await getPostInfo(id)
-    if (user_name && post_info) {
+    if (user_name && post_info && post_info[0].author != user) {
       let title =
         post_info[0].show_lang === 'en'
           ? post_info[1].title

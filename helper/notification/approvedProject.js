@@ -25,7 +25,7 @@ export default async function ApprovedProjectNoti(user, id) {
   try {
     let user_name = await getUserName(user)
     let project_info = await getProjectInfo(id)
-    if (user_name && project_info) {
+    if (user_name && project_info && project_info[0].writer != user) {
       let project_name =
         project_info[0].show_lang === 'en'
           ? project_info[1].name

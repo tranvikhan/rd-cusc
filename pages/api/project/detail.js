@@ -21,7 +21,7 @@ export default async (req, res) => {
           query:
             'SELECT `project`.`id`,`project`.`show_lang`, `project`.`writer`,`project_lang`.`lang`,`user`.`avatar`, `user`.`name_' +
             lang +
-            '` AS `writer_name`, `project`.`published_at`, `project`.`created_at`, `project`.`image`, `project_lang`.`name`, `project_lang`.`description`,`project_lang`.`content`  FROM `project_lang` INNER JOIN `project` ON `project`.`id` = `project_lang`.`project` INNER JOIN `user` ON `user`.`id` = `project`.`writer`  WHERE `project`.`approved`=1 AND `project`.`show`=1 AND `project`.`id` = ? AND `project_lang`.`lang` =?',
+            '` AS `writer_name`, `project`.`published_at`, `project`.`created_at`, `project`.`image`, `project_lang`.`name`, `project_lang`.`description`,`project_lang`.`tags`,`project_lang`.`content`  FROM `project_lang` INNER JOIN `project` ON `project`.`id` = `project_lang`.`project` INNER JOIN `user` ON `user`.`id` = `project`.`writer`  WHERE `project`.`approved`=1 AND `project`.`show`=1 AND `project`.`id` = ? AND `project_lang`.`lang` =?',
           values: [parseInt(id), lang === 'en' ? 'en' : 'vi'],
         })
         if (db_res.error) {

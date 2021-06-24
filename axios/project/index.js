@@ -14,14 +14,14 @@ exports.getDetailProjectAPI = async function (id, lang) {
   })
 }
 
-exports.getAllPostAdminAPI = async function (show, jwt) {
+exports.getAllProjectAdminAPI = async function (show, jwt) {
   return await AxiosClient({
     method: 'get',
     headers: { Authorization: jwt },
     url: '/api/project/admin/all?show=' + show,
   })
 }
-exports.getDetailPostAdminAPI = async function (id, jwt) {
+exports.getDetailProjectAdminAPI = async function (id, jwt) {
   return await AxiosClient({
     method: 'get',
     headers: { Authorization: jwt },
@@ -29,11 +29,13 @@ exports.getDetailPostAdminAPI = async function (id, jwt) {
   })
 }
 exports.uploadProjectImageAPI = async function (file, id, jwt) {
+  let formData = new FormData()
+  formData.append('file', file)
   return await AxiosClient({
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data', Authorization: jwt },
-    data: { file: file },
-    url: 'api/project/admin/upload-image/' + id,
+    data: formData,
+    url: '/api/project/admin/upload-image/' + id,
   })
 }
 
@@ -97,7 +99,7 @@ exports.editProjectAPI = async function (id, values, jwt) {
 	}
 } */
 
-exports.addProjectAPI = async function (id, values, jwt) {
+exports.addProjectAPI = async function (values, jwt) {
   return await AxiosClient({
     method: 'post',
     headers: { 'Content-Type': 'application/json', Authorization: jwt },

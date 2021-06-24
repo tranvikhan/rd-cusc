@@ -59,8 +59,20 @@
         "h1":"Đa dạng nhiều thể loại nghiên cứu"    
     },
     "session4":{
-        "h3":"GIẢI PHÁP NỔI BẬT",
-        "h1":"TỪ PHÒNG NGHIÊN CỨU ĐẾN THỰC TIỄN"    
+        "h3":"QUY TRÌNH NGHIÊN CỨU",
+        "h1":"TỪ Ý TƯỞNG NGHIÊN CỨU ĐẾN SẢN PHẨM",
+        "card1":{
+            "h1":"Nghiên cứu khả thi",
+            "p":"Xác định mức độ khả thi của ý tưởng, các giải pháp công nghệ áp dụng và dự toán nguồn lực"
+        },
+        "card2":{
+            "h1":"Triển khai thực hiện",
+            "p":"Nghiên cứu xây dựng sản phẩm theo quy trình phát triển phần mềm"
+        },
+        "card3":{
+            "h1":"Sản phẩm đầu ra",
+            "p":"Triển khai sản phẩm đến khách hàng, bảo trì sản phẩm"
+        }    
     },
     "session5":{
         "h1":"ĐƯỢC TIN TƯỞNG BỞI NHỮNG ĐỐI TÁC"

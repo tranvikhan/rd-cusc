@@ -29,51 +29,57 @@ export default async (req, res) => {
   }
 
   try {
-    if (
-      userToken.role === 'admin' ||
-      userToken.role === 'root' ||
-      parseInt(post_id) === userToken.id
-    ) {
-      const form = new formidable.IncomingForm()
-      form.uploadDir = './public/upload/postImage/'
-      //xử lý upload
-      form.parse(req, function (err, fields, files) {
-        //path tmp trên server
-        let path = files.file.path
-        if (files.file.type.split('/')[0] !== 'image') {
-          fs.unlink(path, () => {
-            return
-          })
-          result.BadRequest(res, 'Sai định dạng')
-          return
-        }
-
-        let str_arr = files.file.name.split('.')
-        let newFileName = post_id + '.' + str_arr[str_arr.length - 1]
-        //thiết lập path mới cho files
-        let newpath = form.uploadDir + newFileName
-        let newpathDB = 'upload/postImage/' + newFileName
-        fs.rename(path, newpath, async function (err) {
-          if (err) throw err
-          let db_res = await excuteQuery({
-            query: 'UPDATE `post` SET `image`=? WHERE `id` =?',
-            values: [newpathDB, parseInt(post_id)],
-          })
-          if (db_res.error) {
-            result.BadRequest(res, 'Lỗi truy vấn')
-            return
-          }
-          result.Ok(res, {
-            message: 'Cập nhật ảnh bài viết thành công',
-            obj: { id: parseInt(post_id), image: newpathDB },
-          })
-          return
-        })
-      })
-    } else {
-      result.Unauthorized(res, 'Không có quyền truy cập')
+    const db_res_1 = await excuteQuery({
+      query: 'SELECT `image` FROM `post`  WHERE `id`=?',
+      values: [parseInt(post_id)],
+    })
+    if (db_res_1.error) {
+      result.BadRequest(res, db_res_1)
       return
     }
+    if (db_res_1[0] && db_res_1[0].image) {
+      let old_path = db_res_1[0].image
+      if (old_path !== 'upload/postImage/default.jpg')
+        fs.unlink('./public/' + old_path, () => {
+          return
+        })
+    }
+    const form = new formidable.IncomingForm()
+    form.uploadDir = './public/upload/postImage/'
+    //xử lý upload
+    form.parse(req, function (err, fields, files) {
+      //path tmp trên server
+      let path = files.file.path
+      if (files.file.type.split('/')[0] !== 'image') {
+        fs.unlink(path, () => {
+          return
+        })
+        result.BadRequest(res, 'Sai định dạng')
+        return
+      }
+
+      let str_arr = files.file.name.split('.')
+      let newFileName = post_id + '.' + str_arr[str_arr.length - 1]
+      //thiết lập path mới cho files
+      let newpath = form.uploadDir + newFileName
+      let newpathDB = 'upload/postImage/' + newFileName
+      fs.rename(path, newpath, async function (err) {
+        if (err) throw err
+        let db_res = await excuteQuery({
+          query: 'UPDATE `post` SET `image`=? WHERE `id` =?',
+          values: [newpathDB, parseInt(post_id)],
+        })
+        if (db_res.error) {
+          result.BadRequest(res, 'Lỗi truy vấn')
+          return
+        }
+        result.Ok(res, {
+          message: 'Cập nhật ảnh bài viết thành công',
+          obj: { id: parseInt(post_id), image: newpathDB },
+        })
+        return
+      })
+    })
   } catch (e) {
     result.ServerError(res, 'Lỗi server')
     return

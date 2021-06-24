@@ -197,6 +197,7 @@ CREATE TABLE `setting` (
   `id` int(11) NOT NULL,
   `setting_name` varchar(150) NOT NULL DEFAULT '',
   `setting_value` mediumtext NOT NULL DEFAULT '',
+  `value_type` varchar(150) NOT NULL DEFAULT 'string',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -204,26 +205,162 @@ CREATE TABLE `setting` (
 --
 -- Đang đổ dữ liệu cho bảng `setting`
 --
-
-INSERT INTO `setting` (`id`, `setting_name`, `setting_value`, `created_at`, `updated_at`) VALUES
-(1, 'project_homePage_mode', 'auto', '2021-05-22 14:24:53', '2021-05-22 14:24:53'),
-(2, 'project_1', '', '2021-05-22 14:24:53', '2021-05-22 14:26:07'),
-(3, 'project_2', '', '2021-05-22 14:24:53', '2021-05-22 14:26:18'),
-(4, 'project_3', '', '2021-05-22 14:24:53', '2021-05-22 14:26:21'),
-(5, 'project_projectPage_mode', 'auto', '2021-05-22 14:24:53', '2021-05-22 14:27:06'),
-(6, 'project_projectPage', '', '2021-05-22 14:24:53', '2021-05-22 14:27:22'),
-(7, 'post_newsPage_mode', 'auto', '2021-05-22 14:24:53', '2021-05-22 14:27:38'),
-(8, 'post_newPage', '', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
-(9, 'user_organizationPage_mode', 'auto', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
-(10, 'user_organizationPage', '', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
-(11, 'auto_email_mode', 'off', '2021-05-22 14:31:51', '2021-05-22 14:31:51'),
-(12, 'email_autoEmail', '', '2021-05-22 14:31:51', '2021-05-22 14:32:18'),
-(13, 'host_autoEmail', '', '2021-05-22 14:31:51', '2021-05-22 14:32:15'),
-(14, 'port_autoEmail', '', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
-(15, 'username_autoEmail', '', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
-(16, 'password_autoEmail', '', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
-(17, 'subject_autoEmail', 'R&D-CUSC Thông tin phản hồi', '2021-05-22 14:31:52', '2021-05-22 14:31:52'),
-(18, 'html_autoEmail', '<p>Nội dung</p>', '2021-05-22 14:31:52', '2021-05-22 14:31:52');
+INSERT INTO `setting`(
+    `id`,
+    `setting_name`,
+    `setting_value`,
+    `value_type`,
+    `created_at`,
+    `updated_at`
+)
+VALUES(
+    1,
+    'homeImage_mode',
+    'default',
+    'string',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:24:53'
+),(
+    2,
+    'homeImage_1_show',
+    '0',
+    'boolean',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:26:07'
+),(
+    3,
+    'homeImage_1',
+    'upload/homePageImage/default.jpg',
+    'string',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:26:18'
+),(
+    4,
+    'homeImage_2_show',
+    '0',
+    'boolean',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:26:21'
+),(
+    5,
+    'homeImage_2',
+    'upload/homePageImage/default.jpg',
+    'string',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:27:06'
+),(
+    6,
+    'homeImage_3_show',
+    '0',
+    'boolean',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:27:22'
+),(
+    7,
+    'homeImage_3',
+    'upload/homePageImage/default.jpg',
+    'string',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:27:06'
+),(
+    8,
+    'homeProject_mode',
+    'auto',
+    'string',
+    '2021-05-22 14:24:53',
+    '2021-05-22 14:27:38'
+),(
+    9,
+    'homeProject_1',
+    '0',
+    'number',
+    '2021-05-22 14:31:51',
+    '2021-05-22 14:31:51'
+),(
+    10,
+    'homeProject_2',
+    '0',
+    'number',
+    '2021-05-22 14:31:51',
+    '2021-05-22 14:31:51'
+),(
+    11,
+    'homeProject_3',
+    '0',
+    'number',
+    '2021-05-22 14:31:51',
+    '2021-05-22 14:31:51'
+),(
+    12,
+    'pageProject_mode',
+    'auto',
+    'string',
+    '2021-05-22 14:31:51',
+    '2021-05-22 14:31:51'
+),(
+    13,
+    'pageProject_1',
+    '0',
+    'number',
+    '2021-05-22 14:31:51',
+    '2021-05-22 14:32:18'
+),(
+    14,
+    'pageProject_2',
+    '0',
+    'number',
+    '2021-05-22 14:31:51',
+    '2021-05-22 14:32:15'
+),(
+    15,
+    'pageProject_3',
+    '0',
+    'number',
+    '2021-05-22 14:31:52',
+    '2021-05-22 14:31:52'
+),(
+    16,
+    'pageNews_mode',
+    'auto',
+    'string',
+    '2021-05-22 14:31:52',
+    '2021-05-22 14:31:52'
+),(
+    17,
+    'pageNews_1',
+    '0',
+    'number',
+    '2021-05-22 14:31:52',
+    '2021-05-22 14:31:52'
+),(
+    18,
+    'pageNews_2',
+    '0',
+    'number',
+    '2021-05-22 14:31:52',
+    '2021-05-22 14:31:52'
+),(
+    19,
+    'pageNews_3',
+    '0',
+    'number',
+    '2021-05-22 14:31:52',
+    '2021-05-22 14:31:52'
+),(
+    20,
+    'userTop_mode',
+    'root',
+    'string',
+    '2021-05-22 14:31:52',
+    '2021-05-22 14:31:52'
+),(
+    21,
+    'userTop',
+    '0',
+    'number',
+    '2021-05-22 14:31:52',
+    '2021-05-22 14:31:52'
+);
 
 -- --------------------------------------------------------
 
@@ -410,7 +547,7 @@ ALTER TABLE `project_lang`
 -- AUTO_INCREMENT cho bảng `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT cho bảng `user`

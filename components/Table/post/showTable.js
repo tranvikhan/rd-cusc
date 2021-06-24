@@ -19,25 +19,10 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from '@ant-design/icons'
+import moment from 'moment'
 const { Option } = Select
-const data = []
-for (let i = 0; i < 50; i++) {
-  data.push({
-    key: i,
-    email: i + 'tranvikhan@gmail.com',
-    image: '',
-    title: 'Tin tức có tiêu đề thứ  ' + i,
-    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
-    author: 'Trần Vi Khan ' + i,
-    show_lang:
-      Math.random() > 0.3 ? (Math.random() > 0.6 ? 'vi' : 'en') : 'vi,en',
-    created_at: '14/05/2021',
-    approved: Math.random() > 0.5 ? 1 : 0,
-    category: Math.random() > 0.5 ? 1 : 2,
-  })
-}
 
-export default function PostShowTable() {
+export default function PostShowTable(props) {
   const [state, setState] = React.useState({
     searchText: '',
     searchedColumn: '',
@@ -139,24 +124,26 @@ export default function PostShowTable() {
 
   const columns = [
     {
-      title: 'Ảnh bài viết',
+      title: 'Ảnh dự án',
       dataIndex: 'image',
       key: 'image',
-      render: (status) => (
+      width: 120,
+      render: (image) => (
         <img
-          src="/assets/img/famer.jpg"
+          src={'/' + image}
           alt="famer"
           className="object-cover h-14 w-20 rounded"
         />
       ),
     },
     {
-      title: 'Tiêu đề',
+      title: 'Tên dự án',
       dataIndex: 'title',
       key: 'title',
-
-      ...getColumnSearchProps('title', 'tiêu đề'),
+      width: 220,
+      ...getColumnSearchProps('title', 'tên dự án'),
     },
+
     {
       title: 'Trạng thái',
       dataIndex: 'approved',
@@ -179,28 +166,10 @@ export default function PostShowTable() {
       ),
     },
     {
-      title: 'Danh mục',
-      dataIndex: 'category',
-      key: 'category',
-      filters: [
-        {
-          text: 'Hoạt động R&D',
-          value: 1,
-        },
-        {
-          text: 'Tin tức CN',
-          value: 2,
-        },
-      ],
-      onFilter: (value, record) => record.category === value,
-      render: (category) => (
-        <Tag>{category === 1 ? 'Hoạt động R&D' : 'Tin tức CN'}</Tag>
-      ),
-    },
-    {
       title: 'Ngôn ngữ',
       dataIndex: 'show_lang',
       key: 'show_lang',
+      width: 120,
       filters: [
         {
           text: 'Tiếng Việt',
@@ -224,17 +193,40 @@ export default function PostShowTable() {
         )),
     },
     {
+      title: 'Danh mục',
+      dataIndex: 'category',
+      key: 'category',
+      filters: [
+        {
+          text: 'Hoạt động động nhóm R&D',
+          value: 1,
+        },
+        {
+          text: 'Công Nghệ',
+          value: 2,
+        },
+      ],
+      onFilter: (value, record) => record.category === value,
+      render: (category, record) => <Tag>{record.category_name}</Tag>,
+    },
+    {
       title: 'Tác giả',
-      dataIndex: 'author',
-      key: 'author',
-      ...getColumnSearchProps('author', 'tác giả'),
+      dataIndex: 'author_name',
+      key: 'author_name',
+      ...getColumnSearchProps('author_name', 'tác giả'),
     },
     {
       title: 'Thời gian',
       dataIndex: 'created_at',
       key: 'created_at',
+      render: (created_at) => moment(created_at).format('HH:mm DD-MM-YYYY'),
     },
-
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      ...getColumnSearchProps('id', 'mã dự án'),
+    },
     {
       title: 'Hành động',
       key: 'action',
@@ -245,14 +237,24 @@ export default function PostShowTable() {
           icon={<MoreOutlined />}
           overlay={() => (
             <Menu>
-              <Menu.Item icon={<EditOutlined />}>Chỉnh sửa</Menu.Item>
+              <Menu.Item
+                icon={<EditOutlined />}
+                onClick={() => {
+                  props.onEdit(record.id)
+                }}
+              >
+                Chỉnh sửa
+              </Menu.Item>
 
-              {record.approved === 0 && (
+              {record.approved === 0 && props.role && props.role != 'user' && (
                 <Menu.Item icon={<PlusOutlined />}>
                   <Popconfirm
                     title="Chọn hành động"
                     okText="Đã duyệt"
                     cancelText="Tiếp tục đợi"
+                    onConfirm={() => {
+                      props.onApproved(record.id)
+                    }}
                   >
                     Duyệt
                   </Popconfirm>
@@ -264,7 +266,7 @@ export default function PostShowTable() {
                   okText="Chấp nhận"
                   cancelText="Hủy"
                   onConfirm={() => {
-                    console.log(record)
+                    props.onHide(record.id)
                   }}
                 >
                   Bản nháp
@@ -276,7 +278,6 @@ export default function PostShowTable() {
       ),
     },
   ]
-
   const [selectedRowKeys, setSelectedKeys] = React.useState([])
   const rowSelection = {
     selectedRowKeys,
@@ -287,12 +288,16 @@ export default function PostShowTable() {
     approved: 'Đã duyệt',
     hide: 'Bản nháp',
   }
+  React.useEffect(() => {
+    if (props.role && props.role === 'user') setActionType('hide')
+  }, [props.role])
   return (
     <Table
       scroll={{ x: 1100 }}
       rowSelection={rowSelection}
       columns={columns}
-      dataSource={data}
+      dataSource={props.data}
+      rowKey="id"
       expandable={{
         expandedRowRender: (record) => (
           <div>
@@ -309,7 +314,9 @@ export default function PostShowTable() {
             onChange={(val) => setActionType(val)}
             style={{ width: 120 }}
           >
-            <Option value="approved">{actionMap['approved']}</Option>
+            {props.role && props.role != 'user' && (
+              <Option value="approved">{actionMap['approved']}</Option>
+            )}
 
             <Option value="hide">{actionMap['hide']}</Option>
           </Select>
@@ -324,6 +331,13 @@ export default function PostShowTable() {
             }
             okText="Thực thi"
             cancelText="Hủy"
+            onConfirm={() => {
+              if (actionType === 'approved') {
+                props.onApprovedAll(selectedRowKeys)
+              } else {
+                props.onHideAll(selectedRowKeys)
+              }
+            }}
           >
             <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
           </Popconfirm>

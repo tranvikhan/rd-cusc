@@ -3,7 +3,7 @@ import Container from '../../components/Layout/container'
 import Header from '../../components/Layout/header'
 import Link from 'next/link'
 import WebHead from '../../components/Layout/head'
-import { Pagination } from 'antd'
+import { Carousel, Pagination } from 'antd'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
@@ -26,17 +26,41 @@ export default function News() {
       <Header>
         <Container>
           <div className="pb-8">
-            <NewPost
-              href="/news/123456"
-              imageURL="/assets/img/news/5456237_Cover_Nvidia.jpg"
-              title="Lộ thông tin GeForce RTX 3080 Ti, công bố ngày 31/05, bán ra trong tháng 6"
-              content="Trước đây có tin đồn là những chiếc card đồ họa RTX 3000 series bản nâng cấp sẽ được ra mắt vào ngày 18/05, với chiếc RTX 3080 Ti và 3070 Ti. Tuy nhiên theo nguồn tin mà Overclocking.com dẫn lại, thì ngày ra mắt đã bị dời sang ngày 31/05, và sẽ bán ra vào tháng 06 tới. Cụ thể hơn, RTX 3080 Ti sẽ bán vào ngày 02/06, và RTX 3070 Ti sẽ bán vào ngày 09/06. Không rõ lý do vì sao Nvidia dời ngày ra mắt hai chiếc card đồ họa cao cấp này, nhưng cũng cần nhớ là cái ngày 18/05 kể trên cũng chưa được Nvidia xác nhận chính thức."
-              author={{
-                avatar: '/assets/img/users/thViet.jpg',
-                name: 'Trần Hoàng Việt',
-              }}
-              createAt="04/05/2021"
-            />
+            <Carousel autoplay>
+              <NewPost
+                href="/news/123456"
+                imageURL="/assets/img/news/5456237_Cover_Nvidia.jpg"
+                title="Lộ thông tin GeForce RTX 3080 Ti, công bố ngày 31/05, bán ra trong tháng 6"
+                content="Trước đây có tin đồn là những chiếc card đồ họa RTX 3000 series bản nâng cấp sẽ được ra mắt vào ngày 18/05, với chiếc RTX 3080 Ti và 3070 Ti. Tuy nhiên theo nguồn tin mà Overclocking.com dẫn lại, thì ngày ra mắt đã bị dời sang ngày 31/05, và sẽ bán ra vào tháng 06 tới. Cụ thể hơn, RTX 3080 Ti sẽ bán vào ngày 02/06, và RTX 3070 Ti sẽ bán vào ngày 09/06. Không rõ lý do vì sao Nvidia dời ngày ra mắt hai chiếc card đồ họa cao cấp này, nhưng cũng cần nhớ là cái ngày 18/05 kể trên cũng chưa được Nvidia xác nhận chính thức."
+                author={{
+                  avatar: '/assets/img/users/thViet.jpg',
+                  name: 'Trần Hoàng Việt',
+                }}
+                createAt="04/05/2021"
+              />
+              <NewPost
+                href="/news/123456"
+                imageURL="/assets/img/news/5456237_Cover_Nvidia.jpg"
+                title="Lộ thông tin GeForce RTX 3080 Ti, công bố ngày 31/05, bán ra trong tháng 6"
+                content="Trước đây có tin đồn là những chiếc card đồ họa RTX 3000 series bản nâng cấp sẽ được ra mắt vào ngày 18/05, với chiếc RTX 3080 Ti và 3070 Ti. Tuy nhiên theo nguồn tin mà Overclocking.com dẫn lại, thì ngày ra mắt đã bị dời sang ngày 31/05, và sẽ bán ra vào tháng 06 tới. Cụ thể hơn, RTX 3080 Ti sẽ bán vào ngày 02/06, và RTX 3070 Ti sẽ bán vào ngày 09/06. Không rõ lý do vì sao Nvidia dời ngày ra mắt hai chiếc card đồ họa cao cấp này, nhưng cũng cần nhớ là cái ngày 18/05 kể trên cũng chưa được Nvidia xác nhận chính thức."
+                author={{
+                  avatar: '/assets/img/users/thViet.jpg',
+                  name: 'Trần Hoàng Việt',
+                }}
+                createAt="04/05/2021"
+              />
+              <NewPost
+                href="/news/123456"
+                imageURL="/assets/img/news/5456237_Cover_Nvidia.jpg"
+                title="Lộ thông tin GeForce RTX 3080 Ti, công bố ngày 31/05, bán ra trong tháng 6"
+                content="Trước đây có tin đồn là những chiếc card đồ họa RTX 3000 series bản nâng cấp sẽ được ra mắt vào ngày 18/05, với chiếc RTX 3080 Ti và 3070 Ti. Tuy nhiên theo nguồn tin mà Overclocking.com dẫn lại, thì ngày ra mắt đã bị dời sang ngày 31/05, và sẽ bán ra vào tháng 06 tới. Cụ thể hơn, RTX 3080 Ti sẽ bán vào ngày 02/06, và RTX 3070 Ti sẽ bán vào ngày 09/06. Không rõ lý do vì sao Nvidia dời ngày ra mắt hai chiếc card đồ họa cao cấp này, nhưng cũng cần nhớ là cái ngày 18/05 kể trên cũng chưa được Nvidia xác nhận chính thức."
+                author={{
+                  avatar: '/assets/img/users/thViet.jpg',
+                  name: 'Trần Hoàng Việt',
+                }}
+                createAt="04/05/2021"
+              />
+            </Carousel>
           </div>
         </Container>
       </Header>
@@ -93,15 +117,12 @@ export default function News() {
           </div>
         </Container>
       </section>
-      <section className="bg-white py-10">
+      <section className="bg-white py-10" id="rdnews">
         <Container>
           <h1 className="text-2xl leading-8 font-extrabold text-black mb-1">
             {t('session2.h1')}
           </h1>
-          {/*  <h3 className="text-base leading-6 font-semibold tracking-wide ">
-            Chúng tôi có đội ngũ các thành viên chuyên môn trong nhiều lĩnh vực
-            như: Ai, BigData, IoT, Data Transformation,...
-          </h3> */}
+
           <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-8  grid-cols-1 mt-10  ">
             <PostItem
               href="/"
@@ -189,15 +210,12 @@ export default function News() {
           <Pagination defaultCurrent={1} total={50} />
         </div>
       </section>
-      <section className="bg-white py-10">
+      <section className="bg-white py-10" id="technews">
         <Container>
           <h1 className="text-2xl leading-8 font-extrabold text-black mb-1">
             {t('session3.h1')}
           </h1>
-          {/*  <h3 className="text-base leading-6 font-semibold tracking-wide ">
-            Chúng tôi có đội ngũ các thành viên chuyên môn trong nhiều lĩnh vực
-            như: Ai, BigData, IoT, Data Transformation,...
-          </h3> */}
+
           <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-8  grid-cols-1 mt-10 ">
             <PostItem
               href="/"

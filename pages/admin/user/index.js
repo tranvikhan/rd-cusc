@@ -1,4 +1,13 @@
-import { Button, Card, Layout, List, Popconfirm, Tooltip } from 'antd'
+import {
+  Button,
+  Card,
+  Layout,
+  List,
+  Popconfirm,
+  Tooltip,
+  Space,
+  message,
+} from 'antd'
 import WebHead from '../../../components/Layout/head'
 import {
   EditOutlined,
@@ -8,58 +17,50 @@ import {
   DeleteOutlined,
   UserOutlined,
   KeyOutlined,
+  SyncOutlined,
+  SketchOutlined,
 } from '@ant-design/icons'
 import Link from 'next/link'
 import NewAccount from '../../../components/Form/user/newAccount'
+import { useAuth } from '../../../hook/useAuth'
+import { deleteUserAPI, getAllUserAPI } from '../../../axios/user'
+import useSWR from 'swr'
+import { useRouter } from 'next/dist/client/router'
+import React from 'react'
 
 const { Meta } = Card
-const data = [
-  {
-    id: 1,
-    name_vi: 'Trần Hoàng Việt',
-    name_en: 'Viet Tran',
-    position_vi: 'Trưởng nhóm R&D',
-    image: '/assets/img/users/thViet.jpg',
-    show: true,
-    role: 'admin',
-  },
-  {
-    id: 2,
-    name_vi: 'Lê Hữu Phát',
-    name_en: 'Phat Le',
-    position_vi: 'Thành viên phụ trách Server System',
-    image: '/assets/img/users/lhPhat.jpg',
-    show: true,
-    role: 'user',
-  },
-  {
-    id: 3,
-    name_vi: 'Đặng Hiếu Nghĩa',
-    name_en: 'Nghia Dang',
-    position_vi: 'Thành viên phụ trách Ai, Big Data',
-    image: '/assets/img/users/dhNghia.jpg',
-    show: false,
-    role: 'user',
-  },
-
-  {
-    id: 4,
-    name_vi: 'Trần Vi Khan',
-    name_en: 'Khan Tran',
-    position_vi: 'Thành viên phụ trách IoT',
-    image: '/assets/img/users/tvKhan.jpg',
-    show: false,
-    role: 'user',
-  },
-]
-const user = {
-  role: 'admin',
+const userFetcher = async (type) => {
+  return await getAllUserAPI()
 }
 
 export default function AdminUser() {
+  const { user } = useAuth()
+  const { data, error, isValidating, mutate } = useSWR('getUser', userFetcher, {
+    revalidateOnFocus: false,
+  })
+  const router = useRouter()
+  const [loading, setLoading] = React.useState(false)
+  React.useEffect(() => {
+    if (error) {
+      message.error(error.info, 2)
+    }
+  }, [error])
+  const [modalNewAccount, setModalNewAccount] = React.useState(false)
   return (
     <>
-      <NewAccount />
+      {modalNewAccount && (
+        <NewAccount
+          user={user}
+          data={data ? data : []}
+          isShow={modalNewAccount}
+          toggle={(type) => {
+            if (type === 'success') {
+              mutate()
+            }
+            setModalNewAccount(false)
+          }}
+        />
+      )}
       <article>
         <WebHead
           title="Thành viên | Admin"
@@ -70,35 +71,56 @@ export default function AdminUser() {
           <Card
             bordered={false}
             title="Danh sách thành viên"
+            loading={isValidating || loading}
             extra={
-              user.role === 'admin' && (
-                <Tooltip title="Tạo tài khoản">
-                  <Button type="primary" icon={<UserAddOutlined />}>
-                    Tạo tài khoản
-                  </Button>
+              <Space size="middle">
+                {user.role === 'root' && (
+                  <Tooltip title="Tạo tài khoản">
+                    <Button
+                      type="primary"
+                      icon={<UserAddOutlined />}
+                      onClick={() => {
+                        setModalNewAccount(true)
+                      }}
+                    >
+                      Tạo tài khoản
+                    </Button>
+                  </Tooltip>
+                )}
+                <Tooltip title="Làm mới">
+                  <Button
+                    icon={<SyncOutlined />}
+                    onClick={() => {
+                      mutate()
+                    }}
+                  />
                 </Tooltip>
-              )
+              </Space>
             }
           >
             <List
               grid={{ gutter: 16, xs: 1, sm: 1, md: 2, lg: 4, xl: 4, xxl: 4 }}
-              dataSource={data}
-              renderItem={(appItem) => (
+              dataSource={data ? data : []}
+              renderItem={(userItem) => (
                 <List.Item>
                   <Card
                     type="inner"
                     actions={
-                      user.role === 'admin' && [
-                        appItem.role === 'admin' ? (
-                          <Tooltip title="Amin">
+                      user.role === 'root' && [
+                        userItem.role === 'admin' ? (
+                          <Tooltip title="Admin">
                             <KeyOutlined key="admin" />
+                          </Tooltip>
+                        ) : userItem.role === 'root' ? (
+                          <Tooltip title="Root">
+                            <SketchOutlined key="root" />
                           </Tooltip>
                         ) : (
                           <Tooltip title="Thành viên">
                             <UserOutlined key="user" />
                           </Tooltip>
                         ),
-                        appItem.show ? (
+                        userItem.show ? (
                           <Tooltip title="Đang hiển thị ở trang tổ chức">
                             <PushpinOutlined key="show" />
                           </Tooltip>
@@ -108,42 +130,57 @@ export default function AdminUser() {
                           </Tooltip>
                         ),
                         <Tooltip title="Chỉnh sửa thông tin">
-                          <Link href="/admin/user/profile/1">
-                            <EditOutlined
-                              key="setting"
-                              onClick={() => {
-                                console.log('setting')
-                              }}
-                            />
-                          </Link>
+                          <EditOutlined
+                            key="setting"
+                            onClick={() => {
+                              router.push('/admin/user/profile/' + userItem.id)
+                            }}
+                          />
                         </Tooltip>,
-                        <Tooltip title="Xóa thành viên">
-                          <Popconfirm
-                            title="Xác nhận xóa thành viên"
-                            okText="OK"
-                            cancelText="Hủy"
-                            key="delete"
-                          >
-                            <DeleteOutlined />
-                          </Popconfirm>
-                        </Tooltip>,
+
+                        <Popconfirm
+                          disabled={userItem.role === 'root'}
+                          title="Xác nhận xóa thành viên"
+                          okText="OK"
+                          cancelText="Hủy"
+                          key="delete"
+                          onConfirm={() => {
+                            if (user) {
+                              setLoading(true)
+                              deleteUserAPI(userItem.id, user.jwt)
+                                .then((res) => {
+                                  mutate()
+                                  setLoading(false)
+                                  message.success(res.message, 1.5)
+                                })
+                                .catch((err) => {
+                                  setLoading(false)
+                                  message.error(err.info, 1.5)
+                                })
+                            } else {
+                              message.error('Lỗi xác thực người dùng', 1.5)
+                            }
+                          }}
+                        >
+                          <DeleteOutlined />
+                        </Popconfirm>,
                       ]
                     }
                     cover={
                       <img
                         className="object-cover h-44 w-full filter brightness-90"
-                        alt={appItem.name_vi}
-                        src={appItem.image}
+                        alt={userItem.name_vi}
+                        src={'/' + userItem.avatar}
                       />
                     }
                   >
                     <Meta
                       title={
-                        <Link href={'/profile/' + appItem.id}>
-                          {appItem.name_vi}
+                        <Link href={'/profile/' + userItem.id}>
+                          {userItem.name_vi}
                         </Link>
                       }
-                      description={appItem.position_vi}
+                      description={userItem.position_vi}
                     />
                   </Card>
                 </List.Item>

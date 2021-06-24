@@ -54,8 +54,8 @@ export default async (req, res) => {
           const db_res = await excuteQuery({
             query:
               userToken.role === 'user'
-                ? 'SELECT `post`.`id`,`post`.`approved`,`post`.`show`,`post`.`show_lang`, `post`.`author`,`post_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `author_name`, `post`.`category`, `post_category`.`name_vi` AS `category_name`, `post`.`published_at`,  `post`.`created_at`, `post`.`image`, `post_lang`.`title`, `post_lang`.`description`,`post_lang`.`content`  FROM `post_lang` INNER JOIN `post` ON `post`.`id` = `post_lang`.`post` INNER JOIN `user` ON `user`.`id` = `post`.`author` INNER JOIN `post_category` ON `post_category`.`id` = `post`.`category` WHERE  `post`.`author`=? AND `post`.`id` = ?; '
-                : 'SELECT `post`.`id`,`post`.`approved`,`post`.`show`,`post`.`show_lang`, `post`.`author`,`post_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `author_name`, `post`.`category`, `post_category`.`name_vi` AS `category_name`, `post`.`published_at`, `post`.`created_at`, `post`.`image`, `post_lang`.`title`, `post_lang`.`description`,`post_lang`.`content`  FROM `post_lang` INNER JOIN `post` ON `post`.`id` = `post_lang`.`post` INNER JOIN `user` ON `user`.`id` = `post`.`author` INNER JOIN `post_category` ON `post_category`.`id` = `post`.`category` WHERE  `post`.`id` = ?',
+                ? 'SELECT `post`.`id`,`post`.`approved`,`post`.`show`,`post`.`show_lang`, `post`.`author`,`post_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `author_name`, `post`.`category`, `post_category`.`name_vi` AS `category_name`, `post`.`published_at`,  `post`.`created_at`, `post`.`image`, `post_lang`.`title`, `post_lang`.`description`,`post_lang`.`tags`,`post_lang`.`content`  FROM `post_lang` INNER JOIN `post` ON `post`.`id` = `post_lang`.`post` INNER JOIN `user` ON `user`.`id` = `post`.`author` INNER JOIN `post_category` ON `post_category`.`id` = `post`.`category` WHERE  `post`.`author`=? AND `post`.`id` = ?; '
+                : 'SELECT `post`.`id`,`post`.`approved`,`post`.`show`,`post`.`show_lang`, `post`.`author`,`post_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `author_name`, `post`.`category`, `post_category`.`name_vi` AS `category_name`, `post`.`published_at`, `post`.`created_at`, `post`.`image`, `post_lang`.`title`, `post_lang`.`description`,`post_lang`.`tags`,`post_lang`.`content`  FROM `post_lang` INNER JOIN `post` ON `post`.`id` = `post_lang`.`post` INNER JOIN `user` ON `user`.`id` = `post`.`author` INNER JOIN `post_category` ON `post_category`.`id` = `post`.`category` WHERE  `post`.`id` = ?',
             values:
               userToken.role === 'user'
                 ? [userToken.id, parseInt(id)]
@@ -229,13 +229,11 @@ export default async (req, res) => {
         result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
         return
       }
-      if (
-        parseInt(slug) &&
-        (userToken.role === 'admin' ||
-          userToken.role === 'root' ||
-          userToken.id === parseInt(slug))
-      ) {
-        if (req.body.approved != null) {
+      if (parseInt(slug)) {
+        if (
+          req.body.approved != null &&
+          (userToken.role === 'admin' || userToken.role === 'root')
+        ) {
           const db_res = await excuteQuery({
             query: 'UPDATE `post` SET  `approved`=? WHERE `id`=?',
             values: [req.body.approved, parseInt(slug)],
@@ -250,6 +248,22 @@ export default async (req, res) => {
 
           result.Ok(res, {
             message: 'Đã duyệt bài viết',
+            obj: { id: parseInt(slug) },
+          })
+          return
+        } else if (req.body.show_hide != null) {
+          const db_res_show = await excuteQuery({
+            query: 'UPDATE `post` SET  `show`=? WHERE `id`=?',
+            values: [req.body.show_hide, parseInt(slug)],
+          })
+          if (db_res_show.error) {
+            result.BadRequest(res, db_res_show)
+            return
+          }
+          result.Ok(res, {
+            message: req.body.show
+              ? 'Đã hiển thị bài viết'
+              : 'Đã ẩn bài viết vào bản nháp',
             obj: { id: parseInt(slug) },
           })
           return

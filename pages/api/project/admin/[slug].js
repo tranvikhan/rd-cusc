@@ -6,7 +6,13 @@ import AddProjectNoti from '../../../../helper/notification/addProject'
 import ApprovedProjectNoti from '../../../../helper/notification/approvedProject'
 import DeleteProjectNoti from '../../../../helper/notification/deleteProject'
 const fs = require('fs')
-
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10240kb',
+    },
+  },
+}
 export default async (req, res) => {
   await NextCors(req, res, {
     // Options
@@ -54,8 +60,8 @@ export default async (req, res) => {
           const db_res = await excuteQuery({
             query:
               userToken.role === 'user'
-                ? 'SELECT `project`.`id`,`project`.`approved`,`project`.`show`,`project`.`show_lang`, `project`.`writer`,`project_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `writer_name`,`project`.`published_at`,  `project`.`created_at`, `project`.`image`, `project_lang`.`name`, `project_lang`.`description`,`project_lang`.`content`  FROM `project_lang` INNER JOIN `project` ON `project`.`id` = `project_lang`.`project` INNER JOIN `user` ON `user`.`id` = `project`.`writer`  WHERE  `project`.`writer`=? AND `project`.`id` = ?; '
-                : 'SELECT `project`.`id`,`project`.`approved`,`project`.`show`,`project`.`show_lang`, `project`.`writer`,`project_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `writer_name`,`project`.`published_at`, `project`.`created_at`, `project`.`image`, `project_lang`.`name`, `project_lang`.`description`,`project_lang`.`content`  FROM `project_lang` INNER JOIN `project` ON `project`.`id` = `project_lang`.`project` INNER JOIN `user` ON `user`.`id` = `project`.`writer`  WHERE  `project`.`id` = ?',
+                ? 'SELECT `project`.`id`,`project`.`approved`,`project`.`show`,`project`.`show_lang`, `project`.`writer`,`project_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `writer_name`,`project`.`published_at`,  `project`.`created_at`, `project`.`image`, `project_lang`.`name`, `project_lang`.`description`,`project_lang`.`tags`,`project_lang`.`content`,  FROM `project_lang` INNER JOIN `project` ON `project`.`id` = `project_lang`.`project` INNER JOIN `user` ON `user`.`id` = `project`.`writer`  WHERE  `project`.`writer`=? AND `project`.`id` = ?; '
+                : 'SELECT `project`.`id`,`project`.`approved`,`project`.`show`,`project`.`show_lang`, `project`.`writer`,`project_lang`.`lang`,`user`.`avatar`, `user`.`name_vi` AS `writer_name`,`project`.`published_at`, `project`.`created_at`, `project`.`image`, `project_lang`.`name`, `project_lang`.`description`,`project_lang`.`tags`,`project_lang`.`content`  FROM `project_lang` INNER JOIN `project` ON `project`.`id` = `project_lang`.`project` INNER JOIN `user` ON `user`.`id` = `project`.`writer`  WHERE  `project`.`id` = ?',
             values:
               userToken.role === 'user'
                 ? [userToken.id, parseInt(id)]
@@ -228,13 +234,11 @@ export default async (req, res) => {
         result.Unauthorized(res, 'Thiếu token hoặc token hết hạn')
         return
       }
-      if (
-        parseInt(slug) &&
-        (userToken.role === 'admin' ||
-          userToken.role === 'root' ||
-          userToken.id === parseInt(slug))
-      ) {
-        if (req.body.approved != null) {
+      if (parseInt(slug)) {
+        if (
+          req.body.approved != null &&
+          (userToken.role === 'admin' || userToken.role === 'root')
+        ) {
           const db_res = await excuteQuery({
             query: 'UPDATE `project` SET  `approved`=? WHERE `id`=?',
             values: [req.body.approved, parseInt(slug)],
@@ -249,6 +253,22 @@ export default async (req, res) => {
           }
           result.Ok(res, {
             message: 'Đã duyệt dự án',
+            obj: { id: parseInt(slug) },
+          })
+          return
+        } else if (req.body.show_hide != null) {
+          const db_res_show = await excuteQuery({
+            query: 'UPDATE `project` SET  `show`=? WHERE `id`=?',
+            values: [req.body.show_hide, parseInt(slug)],
+          })
+          if (db_res_show.error) {
+            result.BadRequest(res, db_res_show)
+            return
+          }
+          result.Ok(res, {
+            message: req.body.show
+              ? 'Đã hiển thị dự án'
+              : 'Đã ẩn dự án vào bản nháp',
             obj: { id: parseInt(slug) },
           })
           return

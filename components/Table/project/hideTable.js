@@ -19,9 +19,10 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from '@ant-design/icons'
+import moment from 'moment'
 const { Option } = Select
 
-export default function ProjectHideTable() {
+export default function ProjectHideTable(props) {
   const [state, setState] = React.useState({
     searchText: '',
     searchedColumn: '',
@@ -126,9 +127,9 @@ export default function ProjectHideTable() {
       title: 'Ảnh dự án',
       dataIndex: 'image',
       key: 'image',
-      render: (status) => (
+      render: (image) => (
         <img
-          src="/assets/img/famer.jpg"
+          src={'/' + image}
           alt="famer"
           className="object-cover h-14 w-20 rounded"
         />
@@ -138,7 +139,7 @@ export default function ProjectHideTable() {
       title: 'Tên dự án',
       dataIndex: 'name',
       key: 'name',
-
+      width: 300,
       ...getColumnSearchProps('name', 'tên dự án'),
     },
 
@@ -191,14 +192,21 @@ export default function ProjectHideTable() {
     },
     {
       title: 'Người viết',
-      dataIndex: 'writer',
-      key: 'writer',
-      ...getColumnSearchProps('writer', 'người viết'),
+      dataIndex: 'writer_name',
+      key: 'writer_name',
+      ...getColumnSearchProps('writer_name', 'người viết'),
     },
     {
       title: 'Thời gian',
       dataIndex: 'created_at',
       key: 'created_at',
+      render: (created_at) => moment(created_at).format('HH:mm DD-MM-YYYY'),
+    },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      ...getColumnSearchProps('id', 'mã dự án'),
     },
 
     {
@@ -216,18 +224,31 @@ export default function ProjectHideTable() {
                   title="Xác nhận hiển thị dự án này"
                   okText="Hiển thị"
                   cancelText="Hủy"
+                  onConfirm={() => {
+                    props.onShow(record.id)
+                  }}
                 >
                   Hiển thị
                 </Popconfirm>
               </Menu.Item>
-              <Menu.Item icon={<EditOutlined />}>Chỉnh sửa</Menu.Item>
+              <Menu.Item
+                icon={<EditOutlined />}
+                onClick={() => {
+                  props.onEdit(record.id)
+                }}
+              >
+                Chỉnh sửa
+              </Menu.Item>
 
-              {record.approved === 0 && (
+              {record.approved === 0 && props.role && props.role != 'user' && (
                 <Menu.Item icon={<PlusOutlined />}>
                   <Popconfirm
                     title="Chọn hành động"
                     okText="Đã duyệt"
                     cancelText="Tiếp tục đợi"
+                    onConfirm={() => {
+                      props.onApproved(record.id)
+                    }}
                   >
                     Duyệt
                   </Popconfirm>
@@ -239,7 +260,7 @@ export default function ProjectHideTable() {
                   okText="Chấp nhận"
                   cancelText="Hủy"
                   onConfirm={() => {
-                    console.log(record)
+                    props.onDelete(record.id)
                   }}
                 >
                   Xóa vĩnh viễn
@@ -251,21 +272,6 @@ export default function ProjectHideTable() {
       ),
     },
   ]
-  const data = []
-  for (let i = 0; i < 50; i++) {
-    data.push({
-      key: i,
-      email: i + 'tranvikhan@gmail.com',
-      image: '',
-      name: 'Dự án nông nghiệp thông minh IOT phân hệ trồng nấm thứ  ' + i,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
-      writer: 'Trần Vi Khan ' + i,
-      show_lang:
-        Math.random() > 0.3 ? (Math.random() > 0.6 ? 'vi' : 'en') : 'vi,en',
-      created_at: '14/05/2021',
-      approved: Math.random() > 0.5 ? 1 : 0,
-    })
-  }
 
   const [selectedRowKeys, setSelectedKeys] = React.useState([])
   const rowSelection = {
@@ -278,12 +284,16 @@ export default function ProjectHideTable() {
     approved: 'Đã duyệt',
     delete: 'Xóa vĩnh viễn',
   }
+  React.useEffect(() => {
+    if (props.role && props.role === 'user') setActionType('show')
+  }, [props.role])
   return (
     <Table
       scroll={{ x: 1100 }}
       rowSelection={rowSelection}
       columns={columns}
-      dataSource={data}
+      dataSource={props.data}
+      rowKey="id"
       expandable={{
         expandedRowRender: (record) => (
           <div>
@@ -301,8 +311,10 @@ export default function ProjectHideTable() {
             style={{ width: 120 }}
           >
             <Option value="show">{actionMap['show']}</Option>
-            <Option value="approved">{actionMap['approved']}</Option>
-            <Option value="hide">{actionMap['hide']}</Option>
+            {props.role && props.role != 'user' && (
+              <Option value="approved">{actionMap['approved']}</Option>
+            )}
+            <Option value="delete">{actionMap['delete']}</Option>
           </Select>
           <Popconfirm
             disabled={selectedRowKeys.length === 0}
@@ -315,6 +327,15 @@ export default function ProjectHideTable() {
             }
             okText="Thực thi"
             cancelText="Hủy"
+            onConfirm={() => {
+              if (actionType === 'approved') {
+                props.onApprovedAll(selectedRowKeys)
+              } else if (actionType === 'show') {
+                props.onShowAll(selectedRowKeys)
+              } else {
+                props.onDeleteAll(selectedRowKeys)
+              }
+            }}
           >
             <Button disabled={selectedRowKeys.length === 0}>Hành động</Button>
           </Popconfirm>

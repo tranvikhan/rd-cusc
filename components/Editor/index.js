@@ -2,49 +2,34 @@ import 'braft-editor/dist/index.css'
 import 'braft-editor/dist/output.css'
 import React from 'react'
 import BraftEditor from 'braft-editor'
-import Container from '../Layout/container'
 
-export default class BasicDemo extends React.Component {
-  state = {
-    editorState: BraftEditor.createEditorState(''), // 设置编辑器初始内容
-    outputHTML: '',
+export default function BasicDemo(props) {
+  const [editorState, setEditorState] = React.useState(
+    BraftEditor.createEditorState('')
+  )
+  const handleChange = (editorState) => {
+    setEditorState(editorState)
+    if (props.onChange) props.onChange(editorState)
   }
+  React.useEffect(() => {
+    if (props.defaultContent) {
+      setEditorState(BraftEditor.createEditorState(props.defaultContent))
+    } else {
+      setEditorState(BraftEditor.createEditorState(''))
+    }
+  }, [props.defaultContent])
 
-  componentDidMount() {
-    this.isLivinig = true
-    setTimeout(this.setEditorContentAsync, 0)
-    /// time
-  }
-
-  componentWillUnmount() {
-    this.isLivinig = false
-  }
-
-  handleChange = (editorState) => {
-    this.setState({
-      editorState: editorState,
-      outputHTML: editorState.toHTML(),
-    })
-    console.log(editorState.toRAW())
-  }
-
-  setEditorContentAsync = () => {
-    this.isLivinig &&
-      this.setState({
-        editorState: BraftEditor.createEditorState(''),
-      })
-  }
-  preview = () => {
+  const preview = () => {
     if (window.previewWindow) {
       window.previewWindow.close()
     }
 
     window.previewWindow = window.open()
-    window.previewWindow.document.write(this.buildPreviewHtml())
+    window.previewWindow.document.write(buildPreviewHtml())
     window.previewWindow.document.close()
   }
 
-  buildPreviewHtml() {
+  const buildPreviewHtml = () => {
     return `
       <!Doctype html>
       <html>
@@ -95,34 +80,29 @@ export default class BasicDemo extends React.Component {
           </style>
         </head>
         <body>
-          <div class="container">${this.state.editorState.toHTML()}</div>
+          <div class="container">${editorState.toHTML()}</div>
         </body>
       </html>
     `
   }
 
-  render() {
-    const { editorState, outputHTML } = this.state
-    const extendControls = [
-      {
-        key: 'custom-button',
-        type: 'button',
-        text: 'Preview',
-        onClick: this.preview,
-      },
-    ]
-
-    return (
-      <>
-        <div className="editor-wrapper bo">
-          <BraftEditor
-            language="en"
-            value={editorState}
-            onChange={this.handleChange}
-            extendControls={extendControls}
-          />
-        </div>
-      </>
-    )
-  }
+  return (
+    <>
+      <div className="editor-wrapper bo">
+        <BraftEditor
+          language="en"
+          value={editorState}
+          onChange={handleChange}
+          extendControls={[
+            {
+              key: 'custom-button',
+              type: 'button',
+              text: 'Preview',
+              onClick: preview,
+            },
+          ]}
+        />
+      </div>
+    </>
+  )
 }

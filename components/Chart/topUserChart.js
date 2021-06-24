@@ -42,6 +42,7 @@ const chartOption = {
   colors: colors,
   plotOptions: {
     bar: {
+      columnWidth: '20%',
       borderRadius: 6,
       distributed: true,
     },

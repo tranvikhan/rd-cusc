@@ -29,6 +29,23 @@ export default async (req, res) => {
   }
 
   try {
+    const db_res_1 = await excuteQuery({
+      query: 'SELECT `avatar` FROM `user` WHERE `id`=?',
+      values: [parseInt(user_id)],
+    })
+    if (db_res_1.error) {
+      result.BadRequest(res, db_res_1)
+      return
+    }
+
+    if (db_res_1[0] && db_res_1[0].avatar) {
+      let old_path = db_res_1[0].avatar
+      if (old_path !== 'upload/userAvatar/default.jpg') {
+        fs.unlink('./public/' + old_path, () => {
+          return
+        })
+      }
+    }
     const form = new formidable.IncomingForm()
     form.uploadDir = './public/upload/userAvatar/'
     //xử lý upload

@@ -3,7 +3,7 @@ import Container from '../../components/Layout/container'
 import Header from '../../components/Layout/header'
 import Link from 'next/link'
 import WebHead from '../../components/Layout/head'
-import { Pagination } from 'antd'
+import { Carousel, Pagination } from 'antd'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
@@ -26,17 +26,41 @@ export default function Projects() {
       <Header>
         <Container>
           <div className="pb-8">
-            <NewProject
-              href="/news/123456"
-              imageURL="/assets/img/famer.jpg"
-              title="Dự án nông nghiệp thông minh"
-              content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-              author={{
-                avatar: '/assets/img/users/thViet.jpg',
-                name: 'Trần Hoàng Việt',
-              }}
-              createAt="04/05/2021"
-            />
+            <Carousel autoplay>
+              <NewProject
+                href="/news/123456"
+                imageURL="/assets/img/famer.jpg"
+                title="Dự án nông nghiệp thông minh"
+                content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                author={{
+                  avatar: '/assets/img/users/thViet.jpg',
+                  name: 'Trần Hoàng Việt',
+                }}
+                createAt="04/05/2021"
+              />
+              <NewProject
+                href="/news/123456"
+                imageURL="/assets/img/famer.jpg"
+                title="Dự án nông nghiệp thông minh"
+                content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                author={{
+                  avatar: '/assets/img/users/thViet.jpg',
+                  name: 'Trần Hoàng Việt',
+                }}
+                createAt="04/05/2021"
+              />
+              <NewProject
+                href="/news/123456"
+                imageURL="/assets/img/famer.jpg"
+                title="Dự án nông nghiệp thông minh"
+                content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                author={{
+                  avatar: '/assets/img/users/thViet.jpg',
+                  name: 'Trần Hoàng Việt',
+                }}
+                createAt="04/05/2021"
+              />
+            </Carousel>
           </div>
         </Container>
       </Header>

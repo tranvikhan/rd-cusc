@@ -59,8 +59,20 @@
         "h1":"Diversity of research genres"    
     },
     "session4":{
-        "h3":"HIGHLIGHTS SOLUTIONS",
-        "h1":"FROM RESEARCH TO PRACTICE DEPARTMENT"    
+        "h3":"RESEARCH PROCESS",
+        "h1":"FROM RESEARCH IDEAS TO PRODUCTS",
+        "card1":{
+            "h1":"Feasibility study",
+            "p":"Determine the feasibility of ideas, applied technology solutions and estimate resources"
+        },
+        "card2":{
+            "h1":"Implement implementation",
+            "p":"Research and build products according to the software development process"
+        },
+        "card3":{
+            "h1":"Output products",
+            "p":"Deploy products to customers, maintain products"
+        }    
     },
     "session5":{
         "h1":"TRUSTED BY PARTNERS"

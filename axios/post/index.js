@@ -37,11 +37,13 @@ exports.getDetailPostAdminAPI = async function (id, jwt) {
   })
 }
 exports.uploadPostImageAPI = async function (file, id, jwt) {
+  let formData = new FormData()
+  formData.append('file', file)
   return await AxiosClient({
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data', Authorization: jwt },
-    data: { file: file },
-    url: 'api/post/admin/upload-image/' + id,
+    data: formData,
+    url: '/api/post/admin/upload-image/' + id,
   })
 }
 
@@ -107,7 +109,7 @@ exports.editPostAPI = async function (id, values, jwt) {
     }
   } */
 
-exports.addPostAPI = async function (id, values, jwt) {
+exports.addPostAPI = async function (values, jwt) {
   return await AxiosClient({
     method: 'post',
     headers: { 'Content-Type': 'application/json', Authorization: jwt },

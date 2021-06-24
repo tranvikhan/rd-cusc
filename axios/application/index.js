@@ -31,7 +31,7 @@ exports.addAppAPI = async function (values, jwt) {
 } */
 exports.editAppAPI = async function (id, values, jwt) {
   return await AxiosClient({
-    method: 'post',
+    method: 'patch',
     headers: { 'Content-Type': 'application/json', Authorization: jwt },
     data: { ...values },
     url: '/api/application/' + id,
@@ -39,10 +39,12 @@ exports.editAppAPI = async function (id, values, jwt) {
 }
 
 exports.uploadAppImageAPI = async function (file, id, jwt) {
+  let formData = new FormData()
+  formData.append('file', file)
   return await AxiosClient({
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data', Authorization: jwt },
-    data: { file: file },
+    data: formData,
     url: '/api/application/upload-image/' + id,
   })
 }

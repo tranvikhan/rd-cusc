@@ -40,8 +40,18 @@ export default async (req, res) => {
         return
       }
       let obj = {}
-      for (let i = 0; i < db_res.length; ++i)
-        obj[db_res[i].setting_name] = db_res[i].setting_value
+      for (let i = 0; i < db_res.length; ++i) {
+        let key = db_res[i].setting_name
+        let value = db_res[i].setting_value
+        let type = db_res[i].value_type
+        if (type === 'number') {
+          obj[key] = parseInt(value)
+        } else if (type === 'boolean') {
+          obj[key] = value === '1'
+        } else {
+          obj[key] = value
+        }
+      }
 
       result.Ok(res, obj)
       return
@@ -66,12 +76,14 @@ export default async (req, res) => {
       let arr_options = []
       let sql_option = ''
       Object.keys(req.body).forEach((key, index) => {
-        sql_option =
-          sql_option +
-          'UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=? ;'
-        let value = req.body[key]
-        arr_options.push(value)
-        arr_options.push(key)
+        if (req.body[key] != null) {
+          sql_option =
+            sql_option +
+            'UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=? ;'
+          let value = req.body[key]
+          arr_options.push(value)
+          arr_options.push(key)
+        }
       })
 
       if (arr_options.length > 0) {

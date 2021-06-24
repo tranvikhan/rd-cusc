@@ -35,7 +35,7 @@ exports.registerAPI = async function (values, jwt) {
 } */
 exports.resetPassowrdAPI = async function (values, jwt) {
   return await AxiosClient({
-    method: 'post',
+    method: 'patch',
     headers: { 'Content-Type': 'application/json', Authorization: jwt },
     data: { ...values },
     url: '/api/auth/reset-password',
@@ -49,7 +49,7 @@ exports.resetPassowrdAPI = async function (values, jwt) {
 
 exports.resetPassowrRootAPI = async function (values, jwt) {
   return await AxiosClient({
-    method: 'post',
+    method: 'patch',
     headers: { 'Content-Type': 'application/json', Authorization: jwt },
     data: { ...values },
     url: '/api/auth/reset-password-root',

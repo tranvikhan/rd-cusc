@@ -27,7 +27,7 @@ export default function About() {
       <Header className="transform  -translate-y-16">
         <Container className="transform  -translate-y-16">
           <img
-            src="/assets/img/cuscsoft2.jpg"
+            src="/assets/img/cuscsoft2-small.jpg"
             alt="Ảnh tập thể nhóm R&D"
             className="object-cover  w-full rounded-lg  shadow-xl  transform  xl:translate-y-32 lg:translate-y-44 translate-y-32"
           />

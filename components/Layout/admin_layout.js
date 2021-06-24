@@ -35,6 +35,7 @@ import {
   ProjectOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  EditOutlined,
 } from '@ant-design/icons'
 import { useAuth } from '../../hook/useAuth'
 import useSWR from 'swr'
@@ -136,11 +137,9 @@ function AdminLayout({ children }) {
                   <Link href="/admin/post">Bài viết</Link>
                 </Menu.Item>
 
-                {user.role !== 'user' && (
-                  <Menu.Item key="user" icon={<TeamOutlined />}>
-                    <Link href="/admin/user">Thành viên</Link>
-                  </Menu.Item>
-                )}
+                <Menu.Item key="user" icon={<TeamOutlined />}>
+                  <Link href="/admin/user">Thành viên</Link>
+                </Menu.Item>
 
                 <Menu.Item key="app" icon={<AppstoreOutlined />}>
                   <Link href="/admin/app">Ứng dụng</Link>
@@ -253,12 +252,19 @@ function AdminLayout({ children }) {
                             <Menu.Item
                               icon={<InfoCircleOutlined />}
                               onClick={() => {
-                                router.push('/admin/user/profile/' + user.id)
+                                router.push('/profile/' + user.id)
                               }}
                             >
                               Thông tin
                             </Menu.Item>
-
+                            <Menu.Item
+                              icon={<EditOutlined />}
+                              onClick={() => {
+                                router.push('/admin/user/profile/' + user.id)
+                              }}
+                            >
+                              Chỉnh sửa
+                            </Menu.Item>
                             <Menu.Item
                               danger
                               icon={<LogoutOutlined />}

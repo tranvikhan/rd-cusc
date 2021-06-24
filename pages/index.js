@@ -6,6 +6,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import ReactTooltip from 'react-tooltip'
+import { useRouter } from 'next/router'
+import { addFeedbackAPI } from '../axios/feedback'
+import { message } from 'antd'
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -15,6 +18,7 @@ export const getStaticProps = async ({ locale }) => ({
 
 export default function Home() {
   const { t } = useTranslation('home')
+  const router = useRouter()
   return (
     <article>
       <WebHead
@@ -188,16 +192,16 @@ export default function Home() {
           </h1>
           <div class="grid lg:grid-cols-3 gap-8  grid-cols-1 mt-10 ">
             <CatoryViewSolution
-              title="One powerful platform"
-              content="Streamline your payments through one unified API that evolves with you and responds to change as it happens."
+              title={t('session4.card1.h1')}
+              content={t('session4.card1.p')}
             />
             <CatoryViewSolution
-              title="One powerful platform"
-              content="Streamline your payments through one unified API that evolves with you and responds to change as it happens."
+              title={t('session4.card2.h1')}
+              content={t('session4.card2.p')}
             />
             <CatoryViewSolution
-              title="One powerful platform"
-              content="Streamline your payments through one unified API that evolves with you and responds to change as it happens."
+              title={t('session4.card3.h1')}
+              content={t('session4.card3.p')}
             />
           </div>
         </Container>
@@ -221,7 +225,11 @@ export default function Home() {
             <PartnerView
               imageURL="/assets/img/doitac/Vuon Uom CN Viet Nam.png"
               link="/"
-              name="Vườn Ươm Công Nghệ Việt Nam"
+              name={
+                router.locale === 'vi'
+                  ? 'Vườn Ươm Công Nghệ Việt Nam'
+                  : 'Vietnam Technology Incubator'
+              }
             />
             <PartnerView
               imageURL="/assets/img/doitac/Kobe Digital Labo.png"
@@ -236,22 +244,39 @@ export default function Home() {
             <PartnerView
               imageURL="/assets/img/doitac/NLU.png"
               link="/"
-              name="Đại Học Nông Lâm"
+              name={
+                router.locale === 'vi'
+                  ? 'Đại Học Nông Lâm'
+                  : 'Nong Lam University'
+              }
             />
             <PartnerView
               imageURL="/assets/img/doitac/CTU.png"
               link="/"
-              name="Đại học Cần Thờ"
+              name={
+                router.locale === 'vi'
+                  ? 'Đại Học Cần Thơ'
+                  : 'Can Tho University'
+              }
             />
             <PartnerView
               imageURL="/assets/img/doitac/CTUMP.png"
               link="/"
-              name="Đại học Y Dược Cần Thơ"
+              name={
+                router.locale === 'vi'
+                  ? 'Đại Học Y Dược Cần Thơ'
+                  : 'Can Tho University of Medicine and Pharmacy'
+              }
             />
             <PartnerView
               imageURL="/assets/img/doitac/HG HPT.png"
               link="/"
-              name="Bệnh viện đa khoa Tỉnh Hậu Giang"
+              name={
+                router.locale === 'vi'
+                  ? 'Bệnh viện đa khoa Tỉnh Hậu Giang'
+                  : 'Hau Giang Provincial General Hospital'
+              }
+              name=""
             />
             <div className="hidden lg:block">
               <PartnerView
@@ -287,7 +312,12 @@ const PartnerView = (props) => (
 )
 
 const CatoryViewSolution = (props) => (
-  <div className="hover:shadow-2xl rounded-lg p-8 border shadow-lg cursor-pointer  transition duration-300 ease-in-out bg-white ">
+  <div className="relative hover:shadow-2xl rounded-lg p-8 border shadow-lg cursor-pointer  transition duration-300 ease-in-out bg-white ">
+    <img
+      alt="arrrow"
+      src="/assets/img/svg_icons/Arrow right.svg"
+      className="absolute bottom-4 right-4 transform lg:rotate-0 rotate-90"
+    />
     <h1 className="text-blue-800 text-lg leading-7 font-bold">{props.title}</h1>
     <p className="text-gray-800 text-sm leading-5 font-medium py-2">
       {props.content}
@@ -339,23 +369,90 @@ const CatoryView = (props) => (
   </div>
 )
 
-const ContactForm = (props) => (
-  <div className="text-sm text-gray-700 font-light mt-5 max-w-lg">
-    <from className="flex flex-row space-x-2">
-      <input
-        type="text"
-        placeholder={props.placeholder}
-        className="flex-grow border-2 rounded px-3 py-1 w-full focus:outline-none focus:border-indigo-500 focus:shadow"
-      />
-      <div className="flex-none">
-        <button className="bg-indigo-600 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors">
+const ContactForm = (props) => {
+  const [email, setEmail] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
+  const router = useRouter()
+  return (
+    <div className="text-sm text-gray-700 font-light mt-5 max-w-lg">
+      <form
+        className="flex flex-row space-x-2"
+        onSubmit={(e) => {
+          e.preventDefault()
+          setLoading(true)
+          addFeedbackAPI({
+            name: '',
+            type: 'get-news',
+            content: '',
+            email: email,
+          })
+            .then((res) => {
+              setLoading(false)
+              message.success(
+                router.locale === 'vi'
+                  ? res.message
+                  : 'Send message successfully',
+                2
+              )
+              setEmail('')
+            })
+            .catch((err) => {
+              setLoading(false)
+              message.error(
+                router.locale === 'vi'
+                  ? err.info
+                  : 'You have submitted this form before',
+                2
+              )
+            })
+        }}
+      >
+        <input
+          required
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            e.preventDefault()
+          }}
+          type="email"
+          name="email"
+          placeholder={props.placeholder}
+          className="flex-grow border-2 rounded px-3 py-1 w-full focus:outline-none focus:border-indigo-500 focus:shadow"
+        />
+
+        <button
+          type="submit"
+          className="flex-none inline-flex bg-indigo-600 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
+        >
+          {loading && (
+            <svg
+              class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          )}
           {props.btnText}
         </button>
-      </div>
-    </from>
-    <p className="text-xs text-blue-300 font-light mt-5">{props.sub}</p>
-  </div>
-)
+      </form>
+      <p className="text-xs text-blue-300 font-light mt-5">{props.sub}</p>
+    </div>
+  )
+}
 
 const CallOutAndText = (props) => (
   <div className="bg-white bg-opacity-10 cursor-pointer rounded backdrop-blur-2xl px-2 py-2 flex flex-none flex-row text-blue-50 space-x-4 items-center hover:bg-opacity-5 transform  ease-in-out lg:text-base text-sm">
