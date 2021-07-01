@@ -126,7 +126,7 @@ export default function AdminApp() {
                       <img
                         className="object-cover h-44 w-full filter brightness-90"
                         alt={appItem.name_vi}
-                        src={'/' + appItem.image}
+                        src={'/api/' + appItem.image}
                       />
                     }
                   >

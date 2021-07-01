@@ -17,7 +17,7 @@ const ImageUpload = (props) => {
         uid: '-1',
         name: 'default',
         status: 'done',
-        url: '/' + props.defaultFileURL,
+        url: '/api/' + props.defaultFileURL,
       })
     } else {
       setMyFile(null)

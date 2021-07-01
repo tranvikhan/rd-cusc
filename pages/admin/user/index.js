@@ -170,7 +170,7 @@ export default function AdminUser() {
                       <img
                         className="object-cover h-44 w-full filter brightness-90"
                         alt={userItem.name_vi}
-                        src={'/' + userItem.avatar}
+                        src={'/api/' + userItem.avatar}
                       />
                     }
                   >

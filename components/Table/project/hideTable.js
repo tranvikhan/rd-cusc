@@ -129,7 +129,7 @@ export default function ProjectHideTable(props) {
       key: 'image',
       render: (image) => (
         <img
-          src={'/' + image}
+          src={'/api/' + image}
           alt="famer"
           className="object-cover h-14 w-20 rounded"
         />

@@ -9,7 +9,7 @@ const fs = require('fs')
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: '10240kb',
+      sizeLimit: '50mb',
     },
   },
 }

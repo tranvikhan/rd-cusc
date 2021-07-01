@@ -278,7 +278,7 @@ function AdminLayout({ children }) {
                         }
                       >
                         <div className="rounded-full mb-1 cursor-pointer">
-                          <Avatar src={'/' + user.avatar} />
+                          <Avatar src={'/api/' + user.avatar} />
                         </div>
                       </Dropdown>
                     </Space>

@@ -623,7 +623,7 @@ const CustomeSlect = (props) => {
           <Select.Option value={item.id} name={item[props.titleKey]}>
             <div className="flex space-x-2 items-center">
               <img
-                src={'/' + item[props.imageKey]}
+                src={'/api/' + item[props.imageKey]}
                 className="w-14 h-8 object-cover rounded flex-none"
               />
               <span className="flex-grow">

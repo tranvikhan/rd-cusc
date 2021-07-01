@@ -130,7 +130,7 @@ export default function PostHideTable(props) {
       width: 120,
       render: (image) => (
         <img
-          src={'/' + image}
+          src={'/api/' + image}
           alt="famer"
           className="object-cover h-14 w-20 rounded"
         />

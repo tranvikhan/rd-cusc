@@ -146,7 +146,7 @@ export default function AdminUser() {
             title={
               data ? (
                 <Space align="center">
-                  <Avatar src={'/' + data.avatar} />
+                  <Avatar src={'/api/' + data.avatar} />
                   <Typography.Text level={5}>{data.name_vi}</Typography.Text>
                 </Space>
               ) : (

@@ -7,6 +7,13 @@ import ApprovedPostNoti from '../../../../helper/notification/approvedPost'
 import DeletePostNoti from '../../../../helper/notification/deletePost'
 const fs = require('fs')
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb',
+    },
+  },
+}
 export default async (req, res) => {
   await NextCors(req, res, {
     // Options
